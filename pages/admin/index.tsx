@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 // Components
 import BackendLayout from '../../components/Backend/Layout'
 
-const Admin: NextPage = () => {
+const Dashboard: NextPage = () => {
   return (
     <BackendLayout>
       <span>Backend Content</span>
@@ -11,4 +11,4 @@ const Admin: NextPage = () => {
   )
 }
 
-export default Admin
+export default Dashboard

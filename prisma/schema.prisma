@@ -44,6 +44,7 @@ model User {
 
   // Relations
   orders Order[]
+
   @@map(name: "users")
 }
 
@@ -53,6 +54,7 @@ model PasswordResetRequest {
   reset_key String
   createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @map(name: "updated_at") @db.Timestamp(6)
+
   @@map(name: "password_reset_request")
 }
 
@@ -72,6 +74,7 @@ model Account {
   @@index([providerAccountId], name: "providerAccountId")
   @@index([providerId], name: "providerId")
   @@index([userId], name: "userId")
+
   @@map(name: "accounts")
 }
 
@@ -83,6 +86,7 @@ model Session {
   expires      DateTime
   createdAt    DateTime @default(now()) @map(name: "created_at")
   updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
   @@map(name: "sessions")
 }
 
@@ -112,10 +116,10 @@ model Category {
 model Order {
   ID         String   @id @default(uuid())
   status     String   @default("pending-payment") @db.VarChar(50)
+  customerID String   @map(name: "customer_id")
   attributes Json[]
   createdAt  DateTime @default(now()) @map(name: "created_at")
   updatedAt  DateTime @default(now()) @map(name: "updated_at")
-  customerID String
 
   // Relations
   customer    User          @relation(references: [ID], fields: [customerID])
@@ -144,7 +148,7 @@ model OrderStatus {
 
 model Invoice {
   ID        String   @id @default(uuid())
-  orderId   String   @unique
+  orderId   String   @unique @map(name: "order_id")
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
@@ -155,19 +159,20 @@ model Invoice {
 model Setting {
   name      String   @id @db.VarChar(100)
   value     String   @db.VarChar(255)
+  autoload  Boolean  @default(false)
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 }
 
 model Transaction {
-  ID                  String   @id @default(uuid())
-  orderId             String   @unique
-  paymentGateway      String
-  transactionId       String   @db.VarChar(255)
-  transactionStatus   String
-  status              TransactionStatus
-  createdAt           DateTime @default(now()) @map(name: "created_at")
-  updatedAt           DateTime @default(now()) @map(name: "updated_at")
+  ID                  String              @id @default(uuid())
+  orderId             String              @unique @map(name: "order_id")
+  paymentGateway      String              @map(name: "payment_gateway")
+  transactionId       String              @db.VarChar(255) @map(name: "transaction_id")
+  transactionStatus   String              @map(name: "transaction_status")
+  status              TransactionStatus   @default(PENDING)
+  createdAt           DateTime            @default(now()) @map(name: "created_at")
+  updatedAt           DateTime            @default(now()) @map(name: "updated_at")
 
   // Relations
   Order Order @relation(references: [ID], fields: [orderId])

@@ -33,5 +33,5 @@ const makeStore = (context: Context) => {
   };
 
 // export an assembled wrapper
-const wrapper_config = {debug: ! is_producation}
+const wrapper_config = {debug: false}
 export const wrapper = createWrapper<Store>(makeStore, wrapper_config);
