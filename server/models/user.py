@@ -1,52 +1,51 @@
-from sqlalchemy import orm, types, sql
-import sqlalchemy
+from sqlalchemy import types, sql, Column
 
-from server.models import Base
-from server.utils.helpers import generate_uuid
+from ..models import Base
+from ..utils.helpers.core import generate_uuid
 
 
 class User(Base):
   __tablename__ = 'users'
 
-  ID = sqlalchemy.Column(
+  ID = Column(
     types.String(),
     primary_key=True,
     default=generate_uuid()
   )
 
-  first_name = sqlalchemy.Column(
+  first_name = Column(
     types.String(length=50)
   )
 
-  last_name = sqlalchemy.Column(
+  last_name = Column(
     types.String(length=50)
   )
 
-  username = sqlalchemy.Column(
+  username = Column(
     types.String(length=50),
     unique=True
   )
 
-  email = sqlalchemy.Column(
+  email = Column(
     types.String(length=50),
     unique=True
   )
 
-  verified = sqlalchemy.Column(
+  verified = Column(
     types.Boolean(),
     default=False
   )
 
-  password = sqlalchemy.Column(
+  password = Column(
     types.String(length=255)
   )
 
-  created_at = sqlalchemy.Column(
+  created_at = Column(
     types.DateTime(timezone=True),
     server_default=sql.func.now()
   )
 
-  updated_at = sqlalchemy.Column(
+  updated_at = Column(
     types.DateTime(timezone=True),
     onupdate=sql.func.now()
   )

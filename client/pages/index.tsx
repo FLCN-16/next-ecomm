@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 
 // Components
-import FontendLayout from '../components/Frontend/Layout'
+import FontendLayout from '../containers/Frontend/Layout'
 
 const Home: NextPage = () => {
   return (

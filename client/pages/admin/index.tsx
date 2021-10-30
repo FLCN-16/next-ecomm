@@ -1,7 +1,11 @@
 import type { NextPage } from 'next'
 
 // Components
-import BackendLayout from '../../components/Backend/Layout'
+import BackendLayout from '../../containers/Backend/Layout'
+
+// HOCs
+import withAuth from '../../hoc/withAuth'
+
 
 const Dashboard: NextPage = () => {
   return (
@@ -11,4 +15,4 @@ const Dashboard: NextPage = () => {
   )
 }
 
-export default Dashboard
+export default withAuth(Dashboard)

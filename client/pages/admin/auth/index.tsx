@@ -1,13 +1,14 @@
 import type { NextPage } from 'next'
 
 // Components
-import BackendHead from '../../../components/Backend/Layout/Head'
+import BackendHead from '../../../containers/Backend/Layout/Head'
+import LoginComponent from '../../../containers/Backend/Auth/Login'
 
 const AdminLogin: NextPage = () => {
   return (
     <div>
       <BackendHead />
-      <span>Admin login</span>
+      <LoginComponent />
     </div>
   )
 }

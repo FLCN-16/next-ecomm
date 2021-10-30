@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 
 // Components
-import BackendHead from '../../../components/Backend/Layout/Head'
+import BackendHead from '../../../containers/Backend/Layout/Head'
 
 const AdminForgot: NextPage = () => {
   return (
