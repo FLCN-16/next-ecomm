@@ -4,8 +4,8 @@ from ...models import Base
 from ...utils.helpers.core import generate_uuid
 
 
-class Product(Base):
-  __tablename__ = 'products'
+class ProductMedia(Base):
+  __tablename__ = 'product_media'
 
   ID = Column(
     types.String(),
@@ -17,16 +17,16 @@ class Product(Base):
     types.String(length=100)
   )
 
-  description = Column(
-    types.Text()
-  )
-
   created_at = Column(
     types.DateTime(timezone=True),
+    nullable=False,
+    server_default=sql.func.now(),
     server_default=sql.func.now()
   )
 
   updated_at = Column(
     types.DateTime(timezone=True),
+    nullable=False,
+    server_default=sql.func.now(),
     onupdate=sql.func.now()
   )

@@ -1,7 +1,7 @@
 import falcon
 import logging
 from gunicorn.app.base import BaseApplication
-from server import settings
+from app import settings
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ class Application(BaseApplication):
 
 
 def init_app() -> falcon.API:
-  from server.app import create_app
+  from .app import create_app
   return create_app()
 
 

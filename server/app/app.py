@@ -1,10 +1,10 @@
 import falcon
 
-from server import settings
-from server.utils import error
+from . import settings
+from .utils import error
 
-from server.resources.routes import server_routes
-from server.graphql.resource import GraphqlResource
+from .resources.routes import server_routes
+from .graphql.resource import GraphqlResource
 
 
 def create_app() -> falcon.App:

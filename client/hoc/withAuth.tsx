@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
 import LoadingComponent from '../containers/Backend/Loading'
 
@@ -10,10 +10,10 @@ function withAuth(WrappedComponent: React.ComponentType) {
     const [auth, setAuth] = useState<AuthType>(null)
     const router = useRouter()
 
-    useLayoutEffect( () => {
+    useEffect( () => {
       if ( auth !== null ) return;
 
-      setTimeout(() => setAuth(false), 5000)
+      setAuth(false)
     }, [auth])
 
     if ( auth === false ) {

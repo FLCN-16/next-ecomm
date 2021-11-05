@@ -1,4 +1,4 @@
-from server.settings import DATABASE_URL
+from ..settings import DATABASE_URL
 from sqlalchemy import create_engine, orm as sqlAlchemyORM
 
 

@@ -17,4 +17,4 @@ RUN pip install -r requirements.txt
 COPY . /app/server
 
 # run server
-CMD python3 -m server
+CMD python3 -m app

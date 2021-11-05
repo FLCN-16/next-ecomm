@@ -1,7 +1,7 @@
-from sqlalchemy import types, sql, Column
+from sqlalchemy import sql, types, Column
 
-from ..models import Base
-from ..utils.helpers.core import generate_uuid
+from ...models import Base
+from ...utils.helpers.core import generate_uuid
 
 
 class User(Base):
@@ -31,21 +31,29 @@ class User(Base):
     unique=True
   )
 
+  password = Column(
+    types.String(length=255)
+  )
+
   verified = Column(
     types.Boolean(),
     default=False
   )
 
-  password = Column(
-    types.String(length=255)
+  role = Column(
+    types.String(length=50),
+    sql.ForeignKey('user_roles.ID')
   )
 
   created_at = Column(
     types.DateTime(timezone=True),
-    server_default=sql.func.now()
+    nullable=False,
+    server_default=sql.func.now(),
   )
 
   updated_at = Column(
     types.DateTime(timezone=True),
+    nullable=False,
+    server_default=sql.func.now(),
     onupdate=sql.func.now()
   )

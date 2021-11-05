@@ -1,7 +1,6 @@
 import graphene
 from graphene.relay import PageInfo
 from graphql.error import GraphQLError
-from graphql_relay.connection.arrayconnection import connection_from_list_slice
 from graphene_sqlalchemy import SQLAlchemyConnectionField
 
 
@@ -24,6 +23,12 @@ def patch_pagination_args(field: SQLAlchemyConnectionField):
   )
 
 class BaseConnectionField(graphene.ConnectionField):
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    patch_pagination_args(self)
+
+
+class BaseSQLAlchemyConnectionField(SQLAlchemyConnectionField):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     patch_pagination_args(self)

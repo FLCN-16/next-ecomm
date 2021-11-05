@@ -1,5 +1,6 @@
 import graphene
 
+from ..core.fields import BaseSQLAlchemyConnectionField
 from .types.product import Product
 
 
@@ -17,4 +18,11 @@ class ProductQueries(graphene.ObjectType):
     description="Look up a product by ID.",
   )
 
-  products = graphene.List(Product)
+  products = BaseSQLAlchemyConnectionField(
+    Product,
+    description="List of the products.",
+  )
+
+
+class ProductMutations(graphene.ObjectType):
+  pass

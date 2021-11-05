@@ -11,6 +11,9 @@ graphene = "*"
 graphene-sqlalchemy = "*"
 graphql-core = "*"
 psycopg2-binary = "*"
+graphene-federation = "*"
+alembic = "*"
+click = "*"
 
 [dev-packages]
 

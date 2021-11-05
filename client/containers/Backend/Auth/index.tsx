@@ -13,15 +13,16 @@ const AuthComponent: React.FC<Props> = ({children}) => {
     <styled.Wrapper>
       <styled.ContentContainer>
         <styled.backgroundImage
-          src="/assets/images/login-bg.jpg"
+          src="/assets/images/login-bg2.jpg"
           layout="fill"
           objectFit="cover"
           objectPosition="cover"
         />
+
+        <styled.FormContainer>
+          {children}
+        </styled.FormContainer>
       </styled.ContentContainer>
-      <styled.FormContainer>
-        {children}
-      </styled.FormContainer>
     </styled.Wrapper>
   )
 }

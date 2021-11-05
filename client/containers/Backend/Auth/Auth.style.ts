@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import Image from 'next/image'
 
 
@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 
 export const backgroundImage = styled(Image)`
   z-index: 0;
-  filter: grayscale(40%);
+  filter: grayscale(40%) contrast(125%);
 `
 
 export const ContentContainer = styled.div`
@@ -19,9 +19,12 @@ export const ContentContainer = styled.div`
 `
 
 export const FormContainer = styled.div`
-  flex: 0 0 460px;
-  backdrop-filter: blur(16px) saturate(171%);
-  -webkit-backdrop-filter: blur(16px) saturate(171%);
+  display: block;
+  align-self: center;
+  margin: 0 auto;
+  width: 460px;
+  max-width: 90%;
+  backdrop-filter: blur(10px) saturate(171%);
   background-color: rgba(255, 255, 255, 0.18);
   border-radius: 12px;
   border: 1px solid rgba(209, 213, 219, 0.3);
@@ -45,11 +48,15 @@ export const Label = styled.label`
 export const Input = styled.input`
   display: block;
   width: 100%;
-  background: rgba(0, 0, 0, 0.075);
+  background: rgba(0, 0, 0, 0.15);
   padding: 6px 12px;
   border-radius: 4px;
   color: #000000;
   outline: none;
+
+  &::placeholder {
+    color: #333333;
+  }
 `
 
 export const ActionContainer = styled.div`

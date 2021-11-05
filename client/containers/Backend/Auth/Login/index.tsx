@@ -7,6 +7,10 @@ import styled from './Login.style'
 
 
 const LoginComponent = () => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
+
   return (
     <AuthComponent>
       <styled.Wrapper>

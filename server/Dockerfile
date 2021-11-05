@@ -14,8 +14,8 @@ RUN pip install -r /app/server/requirements.txt
 COPY . /app/server
 
 # set working directory
-WORKDIR /app
+WORKDIR /app/server
 
 # run server
 EXPOSE 5000
-CMD python3 -m server
+CMD python3 -m app
