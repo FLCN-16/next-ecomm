@@ -19,7 +19,7 @@ const Title = styled.span`
 
 `
 
-const Content = styled.div`
+const Content = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: 30px;

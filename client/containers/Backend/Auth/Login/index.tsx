@@ -1,4 +1,5 @@
 import React from 'react'
+import { useForm } from 'react-hook-form';
 
 import AuthComponent from '..'
 import { ActionContainer, FieldContainer, Label, Input } from '../Auth.style'
@@ -6,9 +7,18 @@ import { ActionContainer, FieldContainer, Label, Input } from '../Auth.style'
 import styled from './Login.style'
 
 
+interface LoginInput {
+  login: string,
+  password: string,
+  remember?: string
+}
+
+
 const LoginComponent = () => {
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data: LoginInput) => {
+    console.log(data)
   }
 
   return (
@@ -31,13 +41,14 @@ const LoginComponent = () => {
           </styled.Brand>
         </styled.Header>
 
-        <styled.Content>
+        <styled.Content onSubmit={handleSubmit(onSubmit)}>
           <FieldContainer>
             <Label>Email</Label>
             <Input
               type="text"
               placeholder="Email or Username"
               autoComplete="username"
+              {...register('login')}
             />
           </FieldContainer>
 
@@ -46,12 +57,13 @@ const LoginComponent = () => {
             <Input
               type="password"
               placeholder="Password"
+              {...register('password')}
             />
           </FieldContainer>
 
           <ActionContainer>
             <Label>
-              <styled.Checkbox type="checkbox" />
+              <styled.Checkbox type="checkbox" {...register('remember')} />
               <span>Remember</span>
             </Label>
 
