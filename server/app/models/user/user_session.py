@@ -19,7 +19,7 @@ class UserSession(Base):
   )
 
   token = Column(
-    types.String(36),
+    types.String(255),
     nullable=False
   )
 

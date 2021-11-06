@@ -1,7 +1,16 @@
-from sqlalchemy import sql, orm, types, Column
+import enum
+from sqlalchemy import sql, schema, orm, types, Column
 
 from ...models import Base
 from ...utils.helpers.core import generate_uuid
+
+@enum.unique
+class UserTokenType(enum.Enum):
+  """
+  Enum for user token types.
+  """
+  EMAIL_VERIFICATION = 'email_verification'
+  RESET_PASSWORD = 'reset_password'
 
 
 class UserToken(Base):
@@ -15,11 +24,11 @@ class UserToken(Base):
 
   user_id = Column(
     types.String(),
-    sql.ForeignKey('users.ID')
+    schema.ForeignKey('users.ID')
   )
 
-  type = Column(
-    types.Enum('email_verification', 'reset_password'),
+  token_type = Column(
+    types.Enum(UserTokenType),
     nullable=False
   )
 

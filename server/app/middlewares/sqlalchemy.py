@@ -1,6 +1,8 @@
 from ..settings import DATABASE_URL
 from sqlalchemy import create_engine, orm as sqlAlchemyORM
 
+from ..models import Base, user
+
 
 class SQLAlchemySessionManager:
   """
@@ -17,6 +19,8 @@ class SQLAlchemySessionManager:
     scoped_session = sqlAlchemyORM.scoped_session(session_maker)
 
     self.db_session = scoped_session
+
+    Base.metadata.create_all(db_engine)
 
   def process_resource(self, req, resp, resource, params):
     resource.db_session = self.db_session()

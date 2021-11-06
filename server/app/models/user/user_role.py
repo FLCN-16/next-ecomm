@@ -1,4 +1,4 @@
-from sqlalchemy import sql, types, Column
+from sqlalchemy import sql, orm, types, Column
 
 from ...models import Base
 from ...utils.helpers.core import generate_uuid
@@ -41,7 +41,7 @@ class UserRole(Base):
   )
 
   #Relationships
-  users = sql.orm.relationship(
+  users = orm.relationship(
     'User',
     backref='user_role',
     lazy='dynamic'

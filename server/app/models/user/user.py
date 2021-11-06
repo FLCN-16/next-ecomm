@@ -1,7 +1,8 @@
-from sqlalchemy import sql, types, Column
+from sqlalchemy import sql, schema, types, Column
 
 from ...models import Base
-from ...utils.helpers.core import generate_uuid
+from app.utils.helpers.core import generate_uuid
+from app.utils.hashing import hash_password, verify_password
 
 
 class User(Base):
@@ -42,7 +43,7 @@ class User(Base):
 
   role = Column(
     types.String(length=50),
-    sql.ForeignKey('user_roles.ID')
+    schema.ForeignKey('user_roles.slug')
   )
 
   created_at = Column(
@@ -57,3 +58,9 @@ class User(Base):
     server_default=sql.func.now(),
     onupdate=sql.func.now()
   )
+
+  def __init__(self, password: str) -> None:
+    self.password = hash_password(password)
+
+  def verify_password(self, password: str) -> bool:
+    return verify_password(password, self.password)

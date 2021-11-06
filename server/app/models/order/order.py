@@ -1,4 +1,4 @@
-from sqlalchemy import types, sql, Column
+from sqlalchemy import types, schema, sql, Column
 
 from ...models import Base
 from ...utils.helpers.core import generate_uuid
@@ -20,7 +20,7 @@ class Order(Base):
 
   status = Column(
     types.String(36),
-    sql.ForeignKey('order_statuses.slug'),
+    schema.ForeignKey('order_statuses.slug'),
     index=True,
   )
 

@@ -7,19 +7,7 @@ const Wrapper = styled.div`
   padding: 75px 50px;
 `
 
-const Brand = styled.div`
-  
-`
-
-const Header = styled.div`
-
-`
-
-const Title = styled.span`
-
-`
-
-const Content = styled.form`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: 30px;
@@ -50,10 +38,7 @@ const Checkbox = styled.input`
 
 export default {
   Wrapper,
-  Brand,
-  Header,
-  Title,
-  Content,
+  Form,
   LoginButton,
   Checkbox
 }

@@ -1,4 +1,4 @@
-from sqlalchemy import sql, types, Column
+from sqlalchemy import sql, orm, schema, types, Column
 
 from ...models import Base
 from ...utils.helpers.core import generate_uuid
@@ -18,7 +18,7 @@ class UserAddress(Base):
   )
 
   type = Column(
-    types.Enum('home', 'work', 'other'),
+    types.Enum('home', 'work', 'other', name='user_address_type'),
   )
 
   street = Column(
@@ -46,7 +46,7 @@ class UserAddress(Base):
 
   user_id = Column(
     types.String(),
-    sql.ForeignKey('user.ID'),
+    schema.ForeignKey('users.ID'),
     nullable=False
   )
 
@@ -64,4 +64,4 @@ class UserAddress(Base):
   )
 
   #Relationships
-  user = sql.orm.relationship('User', back_populates='addresses')
+  # user = orm.relationship('User', back_populates='addresses')

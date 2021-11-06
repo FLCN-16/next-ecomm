@@ -1,6 +1,6 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import React from 'react'
+import { useRouter } from 'next/router'
 
 // Intl
 import { IntlProvider } from 'react-intl'
@@ -11,11 +11,18 @@ import {wrapper} from '../store';
 
 
 export interface AppProviderProps {
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[]
 }
 
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+  const router = useRouter()
   const currentAppLocale = AppLocale['en'];
+  const isAdmin = !! router.pathname.match(/^\/admin\//)
+  const isAdminAuth = !! router.pathname.match(/^\/admin\/auth\/?/)
+
+  if ( ! isAdmin || isAdminAuth ) {
+    require('../styles/globals.css')
+  }
 
   return (
     <>

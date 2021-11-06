@@ -57,6 +57,10 @@ export const Input = styled.input`
   &::placeholder {
     color: #333333;
   }
+
+  &:hover, &:focus {
+    background: rgba(0, 0, 0, 0.25);
+  }
 `
 
 export const ActionContainer = styled.div`

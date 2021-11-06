@@ -1,4 +1,4 @@
-from sqlalchemy import types, sql, Column
+from sqlalchemy import types, schema, sql, Column
 
 from ...models import Base
 from ...utils.helpers.core import generate_uuid
@@ -15,14 +15,14 @@ class OrderItems(Base):
 
   order_id = Column(
     types.String(36),
-    sql.ForeignKey('order.ID'),
+    schema.ForeignKey('order.ID'),
     nullable=False,
     index=True
   )
 
   product_id = Column(
     types.String(36),
-    sql.ForeignKey('product.ID'),
+    schema.ForeignKey('product.ID'),
     nullable=False,
     index=True
   )

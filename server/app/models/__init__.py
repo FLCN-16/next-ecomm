@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import as_declarative
 
 
 metadata = sqlalchemy.MetaData(
@@ -10,5 +10,11 @@ metadata = sqlalchemy.MetaData(
     "pk": "pk_%(table_name)s"
   }
 )
+
 # create declarative base
-Base = declarative_base(metadata=metadata)
+@as_declarative(metadata=metadata)
+class Base(object):
+
+  @classmethod
+  def as_dict(self):
+    return {c.name: getattr(self, c.name) for c in self.__table__.columns}
