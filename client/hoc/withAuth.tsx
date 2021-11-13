@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 import LoadingComponent from '../containers/Backend/Loading'
 
 
-type AuthType = object | false | null
+type AuthType = object | boolean | null
 
-function withAuth(WrappedComponent: React.ComponentType) {
+function withAuth(WrappedComponent: React.ComponentType, capabilities: string[] = []) {
   const AuthComponent = (props: any) => {
     const [auth, setAuth] = useState<AuthType>(null)
     const router = useRouter()
@@ -13,7 +13,7 @@ function withAuth(WrappedComponent: React.ComponentType) {
     useEffect( () => {
       if ( auth !== null ) return;
 
-      setAuth(false)
+      setAuth(true)
     }, [auth])
 
     if ( auth === false ) {

@@ -1,60 +1,94 @@
-import React from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form';
+import React, { FormEvent } from 'react'
+import Link from 'next/link'
+
+import {
+  Form, FormLayout, TextField,
+  Checkbox, Button, Card
+} from '@shopify/polaris'
 
 import AuthContainer from '..'
-
-import { ActionContainer, FieldContainer, Label, Input } from '../Auth.style'
 
 import styled from './Login.style'
 
 
-interface LoginInput {
-  login: string,
-  password: string,
-  remember: boolean
-}
-
-
 const LoginContainer = () => {
-  const { register, handleSubmit } = useForm();
+  const [login, setLogin] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [remember, setRemember] = React.useState(true);
+  const [errors, setErrors] = React.useState({ login: '', password: '' });
 
-  const onSubmit: SubmitHandler<LoginInput> = data => {
-    console.log(data)
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
+    // Reset errors
+    setErrors({ login: '', password: '' });
+
+    if (! login || ! password) {
+      setErrors({
+        login: ! login ? 'Login is required' : '',
+        password: ! password ? 'Password is required' : ''
+      });
+
+      return;
+    }
   }
 
   return (
     <AuthContainer>
-      <styled.Form onSubmit={handleSubmit(onSubmit)}>
-        <FieldContainer>
-          <Label>Email</Label>
-          <Input
-            type="text"
-            placeholder="Email or Username"
-            autoComplete="username"
-            {...register('login')}
-          />
-        </FieldContainer>
+      <Card sectioned>
+        <Form onSubmit={onSubmit}>
+          <FormLayout>
+            <TextField
+              type="text"
+              label="Login"
+              name="login"
+              value={login}
+              placeholder="Username or Email"
+              onChange={setLogin}
+              autoComplete="email"
+              requiredIndicator={true}
+              error={errors.login}
+            />
 
-        <FieldContainer>
-          <Label>Password</Label>
-          <Input
-            type="password"
-            placeholder="Password"
-            {...register('password')}
-          />
-        </FieldContainer>
+            <TextField
+              type="password"
+              label="Password"
+              name="password"
+              value={password}
+              placeholder="Password"
+              onChange={setPassword}
+              autoComplete="off"
+              requiredIndicator={true}
+              error={errors.password}
+            />
 
-        <ActionContainer>
-          <Label className="cursor-pointer">
-            <styled.Checkbox type="checkbox" {...register('remember')} />
-            <span>Remember</span>
-          </Label>
+            <styled.ActionWrapper>
+              <Checkbox
+                label="Remember Me"
+                checked={remember}
+                onChange={setRemember}
+              />
 
-          <styled.LoginButton
-            type="submit"
-          >Login</styled.LoginButton>
-        </ActionContainer>
-      </styled.Form>
+              <Button
+                size="slim"
+                primary
+                submit
+                loading={false}
+              >Sign In</Button>
+            </styled.ActionWrapper>
+
+            <div style={{textAlign: 'center'}}>
+              Forgot your account password? {' '}
+              <Link href="/admin/auth/forgot-password">
+                <Button
+                  plain
+                  monochrome
+                >Click here</Button>
+              </Link>
+            </div>
+          </FormLayout>
+        </Form>
+      </Card>
     </AuthContainer>
   )
 }

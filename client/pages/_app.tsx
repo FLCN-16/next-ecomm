@@ -17,22 +17,21 @@ export interface AppProviderProps {
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const router = useRouter()
   const currentAppLocale = AppLocale['en'];
-  const isAdmin = !! router.pathname.match(/^\/admin\//)
-  const isAdminAuth = !! router.pathname.match(/^\/admin\/auth\/?/)
+  const isAdmin = !! router.pathname.match(/^\/admin\/?/)
 
-  if ( ! isAdmin || isAdminAuth ) {
+  if ( ! isAdmin ) {
     require('../styles/globals.css')
   }
 
   return (
-    <>
+    <React.Fragment>
       <IntlProvider
         locale={currentAppLocale.locale}
         messages={currentAppLocale.messages}
       >
         {children}
       </IntlProvider>
-    </>
+    </React.Fragment>
   )
 }
 
