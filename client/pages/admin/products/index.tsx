@@ -11,7 +11,7 @@ import withAuth from '../../../hoc/withAuth'
 const ProductEmptyState = () => (
   <EmptyState
     heading="Manage your shop products"
-    action={{content: 'Add product'}}
+    action={{content: 'Add product', url: '/admin/products/new'}}
     image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
   >
     <p>Add products to your E-Commerce store.</p>

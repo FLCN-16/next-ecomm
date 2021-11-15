@@ -96,8 +96,8 @@ const Sidebar: React.FC = () => {
         <Navigation.Section
           items={[
             {
-              url: '/admin/customers',
-              label: 'Customers',
+              url: '/admin/users',
+              label: 'Users',
               icon: CustomersMajor,
             },
           ]}
