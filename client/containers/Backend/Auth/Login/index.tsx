@@ -1,90 +1,120 @@
-import React, { FormEvent } from 'react'
-import Link from 'next/link'
-
+import React from 'react'
+import { useForm, Controller, SubmitHandler  } from "react-hook-form";
 import {
   Form, FormLayout, TextField,
-  Checkbox, Button, Card
+  Checkbox, Button, Card, Banner
 } from '@shopify/polaris'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { startLoading, stopLoading } from '@flcn-ecomm/store/auth/action'
 
 import AuthContainer from '..'
 
 import styled from './Login.style'
 
 
+interface IFormInput {
+  login: string
+  password: string
+  remember: boolean
+}
+
+
 const LoginContainer = () => {
-  const [login, setLogin] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [remember, setRemember] = React.useState(true);
-  const [errors, setErrors] = React.useState({ login: '', password: '' });
-
-  const onSubmit = (event: FormEvent) => {
-    event.preventDefault();
-
-    // Reset errors
-    setErrors({ login: '', password: '' });
-
-    if (! login || ! password) {
-      setErrors({
-        login: ! login ? 'Login is required' : '',
-        password: ! password ? 'Password is required' : ''
-      });
-
-      return;
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      login: '',
+      password: '',
+      remember: false
     }
+  });
+
+  const dispatch = useDispatch()
+  const loading = useSelector(state => state.auth.get('loading'))
+
+  const onSubmit: SubmitHandler<IFormInput> = data => {
+    dispatch(startLoading())
+
+    setTimeout(() => {
+      dispatch(stopLoading())
+    }, 2000)
   }
 
   return (
     <AuthContainer>
-      <Card sectioned>
-        <Form onSubmit={onSubmit}>
+      <Card
+        title="Store Login"
+        sectioned
+      >
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <FormLayout>
-            <TextField
-              type="text"
-              label="Login"
+            <Controller
+              control={control}
+              rules={{
+                required: true
+              }}
               name="login"
-              value={login}
-              placeholder="Username or Email"
-              onChange={setLogin}
-              autoComplete="email"
-              requiredIndicator={true}
-              error={errors.login}
+              render={({ field: { ref, ...field_props } }) => (
+                <TextField
+                  id="login"
+                  label="Login"
+                  placeholder="Username or Email"
+                  autoComplete="email"
+                  requiredIndicator={true}
+                  disabled={loading}
+                  error={errors.login?.type && 'Login is required'}
+                  {...field_props}
+                />
+              )}
             />
 
-            <TextField
-              type="password"
-              label="Password"
+            <Controller
+              control={control}
+              rules={{
+                required: true
+              }}
               name="password"
-              value={password}
-              placeholder="Password"
-              onChange={setPassword}
-              autoComplete="off"
-              requiredIndicator={true}
-              error={errors.password}
+              render={({ field: { ref, ...field_props } }) => (
+                <TextField
+                  id="password"
+                  type="password"
+                  label="Password"
+                  placeholder="Password"
+                  autoComplete="off"
+                  requiredIndicator={true}
+                  disabled={loading}
+                  error={errors.password?.type && 'Password is required'}
+                  {...field_props}
+                />
+              )}
             />
 
             <styled.ActionWrapper>
-              <Checkbox
-                label="Remember Me"
-                checked={remember}
-                onChange={setRemember}
+              <Controller
+                control={control}
+                name="remember"
+                render={({ field: { value, ref, ...field_props } }) => (
+                  <Checkbox
+                    id="remember"
+                    label="Remember Me"
+                    checked={value}
+                    disabled={loading}
+                    {...field_props}
+                  />
+                )}
               />
 
               <Button
                 size="slim"
                 primary
                 submit
-                loading={false}
+                loading={loading}
               >Sign In</Button>
             </styled.ActionWrapper>
 
             <div style={{textAlign: 'center'}}>
               Forgot your account password? {' '}
-              <Link href="/admin/auth/forgot-password">
-                <Button
-                  plain
-                  monochrome
-                >Click here</Button>
-              </Link>
+              <Button url="/admin/auth/forgot" disabled={loading} plain monochrome>Click here</Button>
             </div>
           </FormLayout>
         </Form>

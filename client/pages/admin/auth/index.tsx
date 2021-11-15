@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 
 // Components
-import BackendHead from '../../../containers/Backend/Layout/Head'
-import LoginComponent from '../../../containers/Backend/Auth/Login'
+import BackendHead from '@flcn-ecomm/container/Backend/Layout/Head'
+import LoginComponent from '@flcn-ecomm/container/Backend/Auth/Login'
 
 const AdminLogin: NextPage = () => {
   return (

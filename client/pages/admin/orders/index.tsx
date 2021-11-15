@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 
 // Components
-import BackendLayout from '../../../containers/Backend/Layout'
+import BackendLayout from '@flcn-ecomm/container/Backend/Layout'
 
 // HOCs
 import withAuth from '../../../hoc/withAuth'

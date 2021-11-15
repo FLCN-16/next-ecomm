@@ -1,9 +1,12 @@
 import React, { FormEvent } from 'react'
 import type { NextPage } from 'next'
-import { Page, Card, Layout, Form, TextField } from '@shopify/polaris'
+import {
+  Page, Card, Layout, Form, TextField,
+  ContextualSaveBar, Button,
+} from '@shopify/polaris'
 
 // Components
-import BackendLayout from '../../../../containers/Backend/Layout'
+import BackendLayout from '@flcn-ecomm/container/Backend/Layout'
 
 // HOCs
 import withAuth from '../../../../hoc/withAuth'
@@ -25,40 +28,51 @@ const ProductsComponent: NextPage = () => {
         compactTitle
         fullWidth
       >
-        <Form onSubmit={handleSubmit}>
-          <Layout>
-            <Layout.Section>
-              <Card
-                title={(
-                  <TextField
-                    type="text"
-                    label="Product Name"
-                    name="name"
-                    value={name}
-                    onChange={setName}
-                    placeholder="Enter product name"
-                    autoComplete="off"
-                    labelHidden
-                    showCharacterCount
-                    maxLength={180}
-                  />
-                )}
-                sectioned
-              >
-              </Card>
-            </Layout.Section>
+        <ContextualSaveBar
+          message="Your changes have been saved."
+          saveAction={{
+            onAction: () => console.log('add form submit logic'),
+            loading: false,
+            disabled: false,
+          }}
+          discardAction={{
+            onAction: () => console.log('add clear form logic'),
+          }}
+          fullWidth
+        />
 
-            <Layout.Section secondary>
-              <Card title="Product Actions" sectioned>
-                <p>Add tags to your order.</p>
-              </Card>
+        <Layout>
+          <Layout.Section>
+            <Card
+              title={(
+                <TextField
+                  type="text"
+                  label="Product Name"
+                  name="name"
+                  value={name}
+                  onChange={setName}
+                  placeholder="Enter product name"
+                  autoComplete="off"
+                  labelHidden
+                  showCharacterCount
+                  maxLength={180}
+                />
+              )}
+              sectioned
+            >
+            </Card>
+          </Layout.Section>
 
-              <Card title="Product Meta" sectioned>
-                <p>Add tags to your order.</p>
-              </Card>
-            </Layout.Section>
-          </Layout>
-        </Form>
+          <Layout.Section secondary>
+            <Card title="Product Actions" sectioned>
+              <p>Add tags to your order.</p>
+            </Card>
+
+            <Card title="Product Meta" sectioned>
+              <p>Add tags to your order.</p>
+            </Card>
+          </Layout.Section>
+        </Layout>
       </Page>
     </BackendLayout>
   )

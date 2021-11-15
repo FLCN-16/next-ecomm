@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { Page, Card } from '@shopify/polaris'
 
 // Components
-import BackendLayout from '../../../containers/Backend/Layout'
+import BackendLayout from '@flcn-ecomm/container/Backend/Layout'
 
 // HOCs
 import withAuth from '../../../hoc/withAuth'

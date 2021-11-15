@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, Store, StoreEnhancer } from 'redux'
 import { createWrapper, Context } from 'next-redux-wrapper'
-import createSagaMiddleware, { SagaMiddleware, Task } from 'redux-saga'
+import createSagaMiddleware, { SagaMiddleware } from 'redux-saga'
 
 import rootReducer from './rootReducer'
 import rootSaga from './rootSaga'

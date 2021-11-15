@@ -3,6 +3,8 @@ import { AppProvider } from '@shopify/polaris';
 
 import theme from '../theme'
 
+import Link from '../../../components/Backend/Link'
+
 // Styling
 import '@shopify/polaris/build/esm/styles.css';
 import styled from './Auth.style'
@@ -15,7 +17,7 @@ interface Props {
 
 const AuthContainer: React.FC<Props> = ({children}) => {
   return (
-    <AppProvider i18n={{}} theme={theme}>
+    <AppProvider i18n={{}} linkComponent={Link} theme={theme}>
       <styled.Wrapper>
         <styled.FormContainer>
           {children}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { AppProvider, Frame } from '@shopify/polaris';
+import translations from '@shopify/polaris/locales/en.json';
 
 // Components
 import Header from './Header'
@@ -20,7 +21,7 @@ export interface Props {
 
 const LayoutComponent: React.FC<Props> = ({children}) => {
   return (
-    <AppProvider i18n={{}} linkComponent={Link} theme={theme}>
+    <AppProvider i18n={translations} linkComponent={Link} theme={theme}>
       <Frame
         topBar={<Header />}
         navigation={<Sidebar />}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRouter } from 'next/router';
+import { withRouter, NextRouter } from 'next/router';
 
 import { Navigation } from '@shopify/polaris';
 import {
@@ -9,9 +9,11 @@ import {
 } from '@shopify/polaris-icons'
 
 
-const Sidebar: React.FC = () => {
-  const router = useRouter()
+interface Props {
+  router: NextRouter
+}
 
+const Sidebar: React.FC<Props> = ({router}) => {
   const handleClick = () => {
     console.log()
   }
@@ -120,4 +122,4 @@ const Sidebar: React.FC = () => {
   )
 }
 
-export default Sidebar
+export default withRouter(Sidebar)
