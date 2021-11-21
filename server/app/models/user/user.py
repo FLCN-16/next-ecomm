@@ -1,11 +1,12 @@
 from sqlalchemy import sql, schema, types, Column
+from sqlalchemy_serializer import SerializerMixin
 
 from ...models import Base
 from app.utils.helpers.core import generate_uuid
 from app.utils.hashing import hash_password, verify_password
 
 
-class User(Base):
+class User(Base, SerializerMixin):
   __tablename__ = 'users'
 
   ID = Column(

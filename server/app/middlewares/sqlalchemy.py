@@ -1,7 +1,7 @@
-from ..settings import DATABASE_URL
+from app.settings import DATABASE_URL
 from sqlalchemy import create_engine, orm as sqlAlchemyORM
 
-from ..models import Base, user
+from app.models import Base, user
 
 
 class SQLAlchemySessionManager:

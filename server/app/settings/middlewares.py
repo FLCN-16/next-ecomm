@@ -1,9 +1,8 @@
-from ..middlewares import RouterMiddleware
-from ..middlewares import CorsMiddleware
-from ..middlewares import SQLAlchemySessionManager
+from app import middlewares
 
 MIDDLEWARES = [
-  RouterMiddleware(),
-  CorsMiddleware(),
-  SQLAlchemySessionManager()
+  middlewares.RouterMiddleware(),
+  middlewares.CorsMiddleware(),
+  middlewares.SQLAlchemySessionManager(),
+  middlewares.AuthMiddleware()
 ]

@@ -1,7 +1,7 @@
 import falcon, datetime
 
-from app.models.user import User, UserRole, UserSession
-from app.utils.hashing import hash_password, verify_password, generate_session_id
+from app.models.user import User, UserSession
+from app.utils.hashing import verify_password, generate_session_id
 
 
 class LoginResource:
@@ -11,11 +11,11 @@ class LoginResource:
     remember = req.get_param_as_bool('remember') or False
 
     user = self.db_session.query(User).filter(User.username==username).first()
-    if user is None:
-      raise falcon.HTTPNotFound(title='User not found', description='Invalid Username or Password.')
-    
-    if not verify_password(user.password, password):
-      raise falcon.HTTPNotFound(title='User not found', description='Invalid Username or Password.')
+    if user is None or not verify_password(user.password, password):
+      raise falcon.HTTPNotFound(
+        title='User not found',
+        description='Invalid Username or Password.'
+      )
 
     session_token = generate_session_id()
     session_exipres = 60 * 60 * 24 * 7 if remember else 60 * 60 * 24 * 1

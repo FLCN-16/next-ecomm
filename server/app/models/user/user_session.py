@@ -41,3 +41,6 @@ class UserSession(Base):
     server_default=sql.func.now(),
     onupdate=sql.func.now()
   )
+
+  def is_valid(self):
+    return self.expires > sql.func.now()

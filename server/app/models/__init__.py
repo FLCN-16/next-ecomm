@@ -14,7 +14,4 @@ metadata = sqlalchemy.MetaData(
 # create declarative base
 @as_declarative(metadata=metadata)
 class Base(object):
-
-  @classmethod
-  def as_dict(self):
-    return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+  pass

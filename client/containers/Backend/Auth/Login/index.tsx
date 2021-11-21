@@ -50,9 +50,7 @@ const LoginContainer = () => {
           <FormLayout>
             <Controller
               control={control}
-              rules={{
-                required: true
-              }}
+              rules={{ required: true }}
               name="login"
               render={({ field: { ref, ...field_props } }) => (
                 <TextField
@@ -62,7 +60,7 @@ const LoginContainer = () => {
                   autoComplete="email"
                   requiredIndicator={true}
                   disabled={loading}
-                  error={errors.login?.type && 'Login is required'}
+                  error={errors.login?.type === 'required' && 'Login is required'}
                   {...field_props}
                 />
               )}
@@ -70,9 +68,7 @@ const LoginContainer = () => {
 
             <Controller
               control={control}
-              rules={{
-                required: true
-              }}
+              rules={{ required: true }}
               name="password"
               render={({ field: { ref, ...field_props } }) => (
                 <TextField
@@ -83,7 +79,7 @@ const LoginContainer = () => {
                   autoComplete="off"
                   requiredIndicator={true}
                   disabled={loading}
-                  error={errors.password?.type && 'Password is required'}
+                  error={errors.password?.type === 'required' && 'Password is required'}
                   {...field_props}
                 />
               )}
@@ -104,12 +100,7 @@ const LoginContainer = () => {
                 )}
               />
 
-              <Button
-                size="slim"
-                primary
-                submit
-                loading={loading}
-              >Sign In</Button>
+              <Button size="slim" primary submit loading={loading}>Sign In</Button>
             </styled.ActionWrapper>
 
             <div style={{textAlign: 'center'}}>

@@ -6,14 +6,15 @@ name = "pypi"
 [packages]
 falcon = "*"
 gunicorn = "*"
-sqlalchemy = "*"
-graphene = "*"
+SQLAlchemy = "*"
 graphene-sqlalchemy = "*"
 graphql-core = "*"
 psycopg2-binary = "*"
 graphene-federation = "*"
 alembic = "*"
 click = "*"
+SQLAlchemy-serializer = "*"
+pyjwt = "*"
 
 [dev-packages]
 
