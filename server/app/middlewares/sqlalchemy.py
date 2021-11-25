@@ -2,6 +2,7 @@ from app.settings import DATABASE_URL
 from sqlalchemy import create_engine, orm as sqlAlchemyORM
 
 from app.models import Base, user
+from app.models.seeder import Seeder
 
 
 class SQLAlchemySessionManager:
@@ -21,6 +22,9 @@ class SQLAlchemySessionManager:
     self.db_session = scoped_session
 
     Base.metadata.create_all(db_engine)
+
+    # Seeder
+    Seeder(self.db_session)
 
   def process_resource(self, req, resp, resource, params):
     resource.db_session = self.db_session()

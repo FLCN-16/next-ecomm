@@ -1,4 +1,8 @@
-import falcon, datetime
+import falcon
+import datetime
+import jwt
+
+from app.settings import SECRET_KEY
 
 from app.models.user import User, UserSession
 from app.utils.hashing import verify_password, generate_session_id
@@ -26,12 +30,18 @@ class LoginResource:
     self.db_session.add(session)
     self.db_session.commit()
 
+    session_token = jwt.encode({
+      'user_id': user.ID,
+      'session_id': session.ID,
+      'exp': session_expire_date.timestamp()
+    }, SECRET_KEY, algorithm='HS256')
+
     response = {
       'status': True,
+      'token': session_token,
       'user': {
         'username': user.username,
-        'role': user.role,
-        'id': user.ID
+        'role': user.role
       }
     }
 

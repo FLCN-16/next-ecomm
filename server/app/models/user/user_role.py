@@ -1,16 +1,19 @@
-from sqlalchemy import sql, orm, types, Column
+from sqlalchemy import sql, schema, orm, types, Column
+from sqlalchemy_serializer import SerializerMixin, serializer
 
-from ...models import Base
-from ...utils.helpers.core import generate_uuid
+from app.models import Base
+from app.utils.helpers.core import generate_uuid
 
 
-class UserRole(Base):
+class UserRole(Base, SerializerMixin):
   __tablename__ = 'user_roles'
+
+  serialize_only = ('ID', 'name', 'slug', 'description')
 
   ID = Column(
     types.String(),
     primary_key=True,
-    default=generate_uuid()
+    default=generate_uuid
   )
 
   name = Column(
@@ -58,13 +61,15 @@ class UserRole(Base):
     return self.capabilties.filter(Capability.slug == cap).count() > 0
 
 
-class Capability(Base):
+class Capability(Base, SerializerMixin):
   __tablename__ = 'capabilities'
+
+  serialize_only = ('ID', 'name', 'slug', 'description')
 
   ID = Column(
     types.String(),
     primary_key=True,
-    default=generate_uuid()
+    default=generate_uuid
   )
 
   name = Column(
@@ -100,18 +105,18 @@ class UserRoleCapability(Base):
   ID = Column(
     types.String(),
     primary_key=True,
-    default=generate_uuid()
+    default=generate_uuid
   )
 
   user_role_id = Column(
     types.String(),
-    sql.ForeignKey('user_roles.ID'),
+    schema.ForeignKey('user_roles.ID'),
     nullable=False
   )
 
   capability_id = Column(
     types.String(),
-    sql.ForeignKey('capabilities.ID'),
+    schema.ForeignKey('capabilities.ID'),
     nullable=False
   )
 

@@ -1,3 +1,5 @@
+import typing
+
 from sqlalchemy import sql, schema, types, Column
 from sqlalchemy_serializer import SerializerMixin
 
@@ -9,10 +11,15 @@ from app.utils.hashing import hash_password, verify_password
 class User(Base, SerializerMixin):
   __tablename__ = 'users'
 
+  serialize_only = (
+    'ID', 'first_name', 'last_name', 'username',
+    'email', 'role', 'verified'
+  )
+
   ID = Column(
     types.String(),
     primary_key=True,
-    default=generate_uuid()
+    default=generate_uuid
   )
 
   first_name = Column(
@@ -60,7 +67,16 @@ class User(Base, SerializerMixin):
     onupdate=sql.func.now()
   )
 
-  def __init__(self, password: str) -> None:
+  def __init__(
+    self, username: str, email: str, password: str, role: str,
+    first_name: str = None, last_name: str = None, verified: bool = False
+  ) -> None:
+    self.first_name = first_name
+    self.last_name = last_name
+    self.username = username
+    self.email = email
+    self.role = role
+    self.verified = verified
     self.password = hash_password(password)
 
   def verify_password(self, password: str) -> bool:

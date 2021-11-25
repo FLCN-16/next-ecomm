@@ -10,7 +10,7 @@ class Product(Base):
   ID = Column(
     types.String(),
     primary_key=True,
-    default=generate_uuid(),
+    default=generate_uuid,
   )
 
   name = Column(
