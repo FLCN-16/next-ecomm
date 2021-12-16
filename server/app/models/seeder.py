@@ -1,4 +1,4 @@
-from app.models.user import UserRole, User
+from app.models.user import UserRole, User, Capability
 
 
 class Seeder:
@@ -6,31 +6,71 @@ class Seeder:
     self.db_session = db_session
 
     self.seed()
+    # try:
+    #   self.seed()
+    # except Exception as e:
+    #   print(e)
 
     self.db_session.close()
 
   def seed(self):
+    self.create_role_capabilities()
     self.create_roles()
     self.create_users()
 
     self.db_session.commit()
+  
+  def create_role_capabilities(self):
+    capabilities = [
+      Capability(
+        name="Access Admin",
+        slug="access_admin",
+        description="Can access Admin Panel"
+      ),
+      Capability(
+        name="Create User",
+        slug="create_user",
+        description="Can Create User"
+      ),
+      Capability(
+        name="Create Role",
+        slug="create_role",
+        description="Can Create Role"
+      )
+    ]
+
+    self.db_session.add_all(capabilities)
 
   def create_roles(self):
     roles = [
       UserRole(
         name="Admin",
         slug="admin",
-        description="Administrator"
+        description="Administrator",
+        capabilities=[
+          "access_admin",
+          "create_user",
+          "create_role"
+        ]
       ),
       UserRole(
         name="Manager",
         slug="manager",
-        description="Shop Manager"
+        description="Shop Manager",
+        capabilities=[
+          "access_admin",
+          "create_user"
+        ]
       ),
       UserRole(
         name="Developer",
         slug="developer",
-        description="Developer"
+        description="Developer",
+        capabilities=[
+          "access_admin",
+          "create_user",
+          "create_role"
+        ]
       )
     ]
 

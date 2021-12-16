@@ -1,10 +1,11 @@
 import falcon
 import datetime
 import jwt
+from sqlalchemy.orm import lazyload
 
 from app.settings import SECRET_KEY
 
-from app.models.user import User, UserSession
+from app.models.user import User, UserSession, UserRole
 from app.utils.hashing import verify_password, generate_session_id
 
 
@@ -14,7 +15,7 @@ class LoginResource:
     password = req.get_param('password') or ''
     remember = req.get_param_as_bool('remember') or False
 
-    user = self.db_session.query(User).filter(User.username==username).first()
+    user = self.db_session.query(User).filter(User.username == username).first()
     if user is None or not verify_password(user.password, password):
       raise falcon.HTTPNotFound(
         title='User not found',
@@ -31,17 +32,21 @@ class LoginResource:
     self.db_session.commit()
 
     session_token = jwt.encode({
-      'user_id': user.ID,
-      'session_id': session.ID,
+      'token': session_token,
       'exp': session_expire_date.timestamp()
     }, SECRET_KEY, algorithm='HS256')
+
+    role = self.db_session.query(UserRole).options(
+      lazyload(UserRole.capabilities)
+    ).filter(UserRole.slug==user.role).first()
 
     response = {
       'status': True,
       'token': session_token,
       'user': {
         'username': user.username,
-        'role': user.role
+        'role': role.slug,
+        'caps': role.capabilities
       }
     }
 

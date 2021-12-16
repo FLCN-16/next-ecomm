@@ -47,18 +47,29 @@ class UserRole(Base, SerializerMixin):
   users = orm.relationship(
     'User',
     backref='user_role',
-    lazy='dynamic'
+    lazy='select'
   )
 
-  capabilties = orm.relationship(
+  capabilities = orm.relationship(
     'Capability',
     secondary='user_role_capabilities',
     backref='user_roles',
-    lazy='dynamic'
+    lazy='select'
   )
 
+  def __init__(self, name, slug, description, capabilities=None):
+    self.name = name
+    self.slug = slug
+    self.description = description
+
+    if capabilities:
+      self.capabilities = capabilities
+
+    if self.ID is None:
+      self.ID = generate_uuid()
+
   def has_cap(self, cap):
-    return self.capabilties.filter(Capability.slug == cap).count() > 0
+    return self.capabilities.filter(Capability.slug == cap).count() > 0
 
 
 class Capability(Base, SerializerMixin):
