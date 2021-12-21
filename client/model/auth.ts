@@ -1,10 +1,10 @@
 import request from '@flcn-ecomm/lib/helper/request'
 
 
-export class Auth {
-  login(email: string, password: string, remember: boolean) {
-    return request.post('/auth/login', {
-      email,
+export default class Auth {
+  public static login(login: string, password: string, remember: boolean) {
+    return request.post('auth/login', {
+      login,
       password,
       remember
     })

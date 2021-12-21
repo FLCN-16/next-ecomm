@@ -10,16 +10,16 @@ from app.utils.hashing import verify_password, generate_session_id
 
 
 class LoginResource:
-  def on_get(self, req, resp):
-    username = req.get_param('username') or ''
-    password = req.get_param('password') or ''
-    remember = req.get_param_as_bool('remember') or False
+  def on_post(self, req, resp):
+    login = req.media.get('login') or ''
+    password = req.media.get('password') or ''
+    remember = req.media.get('remember') or False
 
-    user = self.db_session.query(User).filter(User.username == username).first()
+    user = self.db_session.query(User).filter(User.username == login).first()
     if user is None or not verify_password(user.password, password):
       raise falcon.HTTPNotFound(
         title='User not found',
-        description='Invalid Username or Password.'
+        description='Invalid Username or Password.',
       )
 
     session_token = generate_session_id()
@@ -40,13 +40,15 @@ class LoginResource:
       lazyload(UserRole.capabilities)
     ).filter(UserRole.slug==user.role).first()
 
+    user_capabilities = [cap.slug for cap in role.capabilities]
+
     response = {
       'status': True,
       'token': session_token,
       'user': {
         'username': user.username,
         'role': role.slug,
-        'caps': role.capabilities
+        'caps': user_capabilities
       }
     }
 

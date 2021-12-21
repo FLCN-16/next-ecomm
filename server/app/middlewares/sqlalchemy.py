@@ -1,5 +1,4 @@
-from app.settings import DATABASE_URL
-from sqlalchemy import create_engine, orm as sqlAlchemyORM
+from app.utils.database import Database
 
 from app.models import Base, user
 from app.models.seeder import Seeder
@@ -13,15 +12,9 @@ class SQLAlchemySessionManager:
 
   def __init__(self):
     # Setup Database
-    db_engine = create_engine(DATABASE_URL, echo=True)
+    self.db_session = Database.get_session()
 
-    # Prepare a DB session
-    session_maker = sqlAlchemyORM.sessionmaker(bind=db_engine)
-    scoped_session = sqlAlchemyORM.scoped_session(session_maker)
-
-    self.db_session = scoped_session
-
-    Base.metadata.create_all(db_engine)
+    Base.metadata.create_all(Database.get_engine())
 
     # Seeder
     Seeder(self.db_session)

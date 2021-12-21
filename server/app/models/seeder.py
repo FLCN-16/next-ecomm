@@ -5,13 +5,10 @@ class Seeder:
   def __init__(self, db_session):
     self.db_session = db_session
 
-    self.seed()
-    # try:
-    #   self.seed()
-    # except Exception as e:
-    #   print(e)
-
-    self.db_session.close()
+    try:
+      self.seed()
+    except Exception as e:
+      print(e)
 
   def seed(self):
     self.create_role_capabilities()
@@ -19,7 +16,7 @@ class Seeder:
     self.create_users()
 
     self.db_session.commit()
-  
+
   def create_role_capabilities(self):
     capabilities = [
       Capability(

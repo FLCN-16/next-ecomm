@@ -1,6 +1,7 @@
 from sqlalchemy import sql, schema, orm, types, Column
-from sqlalchemy_serializer import SerializerMixin, serializer
+from sqlalchemy_serializer import SerializerMixin
 
+from app.utils.database import Database
 from app.models import Base
 from app.utils.helpers.core import generate_uuid
 
@@ -10,25 +11,10 @@ class UserRole(Base, SerializerMixin):
 
   serialize_only = ('ID', 'name', 'slug', 'description')
 
-  ID = Column(
-    types.String(),
-    primary_key=True,
-    default=generate_uuid
-  )
-
-  name = Column(
-    types.String(length=50),
-    unique=True
-  )
-
-  slug = Column(
-    types.String(length=50),
-    unique=True
-  )
-
-  description = Column(
-    types.String(length=255)
-  )
+  ID = Column(types.String(), primary_key=True, default=generate_uuid)
+  name = Column(types.String(length=50), unique=True)
+  slug = Column(types.String(length=50), unique=True)
+  description = Column(types.String(length=255))
 
   created_at = Column(
     types.DateTime(timezone=True),
@@ -44,26 +30,21 @@ class UserRole(Base, SerializerMixin):
   )
 
   #Relationships
-  users = orm.relationship(
-    'User',
-    backref='user_role',
-    lazy='select'
-  )
-
-  capabilities = orm.relationship(
-    'Capability',
-    secondary='user_role_capabilities',
-    backref='user_roles',
-    lazy='select'
-  )
+  users = orm.relationship('User', backref='user_role', lazy='dynamic')
+  capabilities = orm.relationship('Capability',
+                                  secondary='user_role_capabilities',
+                                  backref='user_roles',
+                                  lazy='dynamic')
 
   def __init__(self, name, slug, description, capabilities=None):
+    obj_session = Database.get_session()()
+
     self.name = name
     self.slug = slug
     self.description = description
 
     if capabilities:
-      self.capabilities = capabilities
+      self.capabilities = obj_session.query(Capability).filter(Capability.slug.in_(capabilities)).all()
 
     if self.ID is None:
       self.ID = generate_uuid()

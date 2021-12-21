@@ -1,11 +1,14 @@
 import { AnyAction } from "redux"
 import { Map } from "immutable"
 
-import { LOADING_START, LOADING_STOP } from './action'
+import { LOADING_START, LOADING_STOP, AUTH_ACCOUNT_SUCCESS, AUTH_ACCOUNT_FAILED } from './action'
 
 
 const initialState = Map({
-  loading: false
+  loading: false,
+  isAuthenticated: false,
+  account: null,
+  authToken: null,
 })
 
 export default function authReducer(state = initialState, action: AnyAction) {
@@ -13,6 +16,16 @@ export default function authReducer(state = initialState, action: AnyAction) {
     case LOADING_START:
       return state.set('loading', true);
     case LOADING_STOP:
+      return state.set('loading', false);
+    case AUTH_ACCOUNT_SUCCESS:
+      state.set('isAuthenticated', true);
+      state.set('account', action.payload.user);
+      state.set('authToken', action.payload.token);
+      return state.set('loading', false);
+    case AUTH_ACCOUNT_FAILED:
+      state.set('isAuthenticated', false);
+      state.set('account', null);
+      state.set('authToken', null);
       return state.set('loading', false);
     default:
       return state

@@ -5,7 +5,8 @@ const isProduction = process.env.NODE_ENV === 'production'
 module.exports = {
   reactStrictMode: true,
   env: {
-    isProduction
+    isProduction,
+    API_ROUTE: isProduction ? 'https://api.nextjs-starter.com' : 'http://localhost:8080/api/',
   },
   pageExtensions: ['tsx'],
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
