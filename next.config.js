@@ -6,7 +6,7 @@ module.exports = {
   reactStrictMode: true,
   env: {
     isProduction,
-    API_ROUTE: isProduction ? 'https://api.nextjs-starter.com' : 'http://localhost:8080/api/',
+    API_ROUTE: isProduction ? '/api/' : '/api/',
   },
   pageExtensions: ['tsx'],
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -14,7 +14,7 @@ module.exports = {
     config.resolve.alias['@flcn-ecomm/component'] = path.join(__dirname, 'components')
     config.resolve.alias['@flcn-ecomm/assets'] = path.join(__dirname, 'public')
     config.resolve.alias['@flcn-ecomm/store'] = path.join(__dirname, 'store')
-    config.resolve.alias['@flcn-ecomm/lib'] = path.join(__dirname, 'libs')
+    config.resolve.alias['@flcn-ecomm/lib'] = path.join(__dirname, 'lib')
     config.resolve.alias['@flcn-ecomm'] = path.join(__dirname, '/')
 
     config.watchOptions = {
