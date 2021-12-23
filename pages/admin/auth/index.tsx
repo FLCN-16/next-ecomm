@@ -15,7 +15,7 @@ import BackendHead from '@flcn-ecomm/container/Backend/Layout/Head'
 import AuthContainer from '@flcn-ecomm/container/Backend/Auth'
 
 // Style
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const ActionWrapper = styled.div`
   display: flex;

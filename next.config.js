@@ -8,7 +8,7 @@ module.exports = {
     isProduction,
     API_ROUTE: isProduction ? '/api/' : '/api/',
   },
-  pageExtensions: ['tsx'],
+  pageExtensions: ['tsx', 'ts'],
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.resolve.alias['@flcn-ecomm/container'] = path.join(__dirname, 'containers')
     config.resolve.alias['@flcn-ecomm/component'] = path.join(__dirname, 'components')

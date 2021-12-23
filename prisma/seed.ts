@@ -1,4 +1,4 @@
-const prisma = require('../lib/database');
+import prisma from '../lib/prisma';
 
 
 async function seedUserRoleCaps() {
