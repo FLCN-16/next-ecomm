@@ -1,11 +1,12 @@
 import type { ApiRequest, ApiResponse } from '@flcn-ecomm/lib/types/api'
 import { ApolloServer } from 'apollo-server-micro';
 import Cors from 'micro-cors';
-import { typeDefs } from '../../graphql/schema';
+import { schema } from '../../graphql/schema';
 import { resolvers } from '../../graphql/resolvers';
+import { createContext } from '../../graphql/context';
 
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+const apolloServer = new ApolloServer({ schema, resolvers, context: createContext });
 const startServer = apolloServer.start();
 
 const cors = Cors();
