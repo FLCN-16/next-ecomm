@@ -108,9 +108,8 @@ model Account {
 
 model Session {
   ID           String   @id @default(uuid())
-  userId       Int      @map(name: "user_id")
+  userId       String   @map(name: "user_id")
   sessionToken String   @unique @map(name: "session_token")
-  accessToken  String   @unique @map(name: "access_token")
   expires      DateTime
   createdAt    DateTime @default(now()) @map(name: "created_at")
   updatedAt    DateTime @default(now()) @map(name: "updated_at")
@@ -131,11 +130,12 @@ model Product {
 }
 
 model Category {
-  ID        String   @id @default(uuid())
-  title     String   @db.VarChar(50)
-  slug      String   @unique @db.VarChar(50)
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  ID             String   @id @default(uuid())
+  title          String   @db.VarChar(50)
+  slug           String   @unique @db.VarChar(50)
+  description    String   @db.Text
+  createdAt      DateTime @default(now()) @map(name: "created_at")
+  updatedAt      DateTime @default(now()) @map(name: "updated_at")
 
   // Relations
   products Product[] @relation(references: [ID])

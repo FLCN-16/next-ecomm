@@ -2,7 +2,7 @@ import type { ApiRequest, ApiResponse } from '@flcn-ecomm/lib/types/api'
 import { PrismaClient } from '@prisma/client';
 
 
-export default async (
+export default () => async (
   req: ApiRequest, res: ApiResponse,
   result: (req: ApiRequest, res: ApiResponse) => object
 ) => {
@@ -10,5 +10,5 @@ export default async (
 
   req.prisma = prisma;
 
-  return result(req, res);
+  result(req, res);
 }

@@ -13,7 +13,7 @@ export const defaultOptions = {
 export default (next: any, options = defaultOptions) => async (req: ApiRequest, res: ApiResponse) => {
   try {
     const middlewares = [
-      prismaMiddleware,
+      prismaMiddleware(),
       authMiddleware(options.capabilities),
     ].filter(Boolean);
 
