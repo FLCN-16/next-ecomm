@@ -2,27 +2,17 @@ import type { NextPage } from 'next'
 import { useForm, Controller, SubmitHandler  } from "react-hook-form";
 import {
   Form, FormLayout, TextField,
-  Checkbox, Button, Card, Banner
+  Checkbox, Button, Card
 } from '@shopify/polaris'
 
 // Store
 import { useDispatch, useSelector } from 'react-redux'
-import { startLoading, stopLoading, authAccount } from '@flcn-ecomm/store/auth/action'
+import { authAccount } from '@flcn-ecomm/store/auth/action'
 import { AuthForm } from '@flcn-ecomm/store/auth/types'
 
 // Containers
 import BackendHead from '@flcn-ecomm/container/Backend/Layout/Head'
 import AuthContainer from '@flcn-ecomm/container/Backend/Auth'
-
-// Style
-import styled from '@emotion/styled'
-
-const ActionWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-`
 
 
 const AdminLogin: NextPage = () => {
@@ -88,7 +78,7 @@ const AdminLogin: NextPage = () => {
                 )}
               />
 
-              <ActionWrapper>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
                 <Controller
                   control={control}
                   name="remember"
@@ -104,7 +94,7 @@ const AdminLogin: NextPage = () => {
                 />
 
                 <Button size="slim" primary submit loading={loading}>Sign In</Button>
-              </ActionWrapper>
+              </div>
 
               <div style={{textAlign: 'center'}}>
                 Forgot your account password? {' '}

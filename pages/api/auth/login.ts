@@ -1,4 +1,5 @@
 import type { ApiRequest, ApiResponse } from '@flcn-ecomm/lib/types/api';
+import type { CapabilitiesOnRole } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -34,7 +35,7 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
   let isValid = await bcrypt.compare(password, user.password);
   if (!isValid) return res.status(401).json({ error: 'Invalid credentials' });
 
-  user.capabilities = user.user_role.capabilities.map(cap => cap.capabilityId);
+  user.capabilities = user.user_role.capabilities.map((cap: CapabilitiesOnRole) => cap.capabilityId);
 
   delete user.user_role;
   delete user.password;

@@ -32,10 +32,10 @@ type Query {
   capabilities: [Capability]
   categories: [Category]
   category(ID: String): Category
-  me(token: String): User
+  me(token: String!): User
   product(ID: String): Product
   products: [Product]
-  user(ID: String): User
+  user(ID: String!): User
   users: [User]
 }
 

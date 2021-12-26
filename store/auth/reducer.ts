@@ -8,7 +8,6 @@ const initialState = Map({
   loading: false,
   isAuthenticated: false,
   account: null,
-  authToken: null,
 })
 
 export default function authReducer(state = initialState, action: AnyAction) {
@@ -19,13 +18,11 @@ export default function authReducer(state = initialState, action: AnyAction) {
       return state.set('loading', false);
     case AUTH_ACCOUNT_SUCCESS:
       state.set('isAuthenticated', true);
-      state.set('account', action.payload.user);
-      state.set('authToken', action.payload.token);
+      state.set('account', action.payload);
       return state.set('loading', false);
     case AUTH_ACCOUNT_FAILED:
       state.set('isAuthenticated', false);
       state.set('account', null);
-      state.set('authToken', null);
       return state.set('loading', false);
     default:
       return state

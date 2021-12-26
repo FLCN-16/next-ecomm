@@ -26,5 +26,11 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "paths": {
+    "@flcn-ecomm/container/*": [ "./containers/*" ],
+    "@flcn-ecomm/component/*": [ "./components/*" ],
+    "@flcn-ecomm/assets/*": [ "./public/*" ],
+    "@flcn-ecomm/*": [ "./*" ],
+  },
 }

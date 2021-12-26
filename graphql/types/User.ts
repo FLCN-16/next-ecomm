@@ -1,4 +1,4 @@
-import { enumType, intArg, objectType, stringArg } from 'nexus';
+import { enumType, intArg, objectType, stringArg, nonNull, nullable } from 'nexus';
 import { extendType } from 'nexus';
 import jwt from 'jsonwebtoken'
 
@@ -71,9 +71,11 @@ export const UserQuery = extendType({
     t.field('user', {
       type: User,
       args: {
-        ID: stringArg(),
+        ID: nonNull(stringArg()),
       },
       resolve: async (root, args, ctx) => {
+        if (!args.ID) return null;
+
         const user = await ctx.prisma.user.findUnique({
           where: { ID: args.ID },
         });
@@ -91,14 +93,18 @@ export const MeQuery = extendType({
     t.field('me', {
       type: User,
       args: {
-        token: stringArg(),
+        token: nonNull(stringArg()),
       },
       resolve: async (root, args, ctx) => {
+        if (!args.token) return null;
+
         let tokenDecoded = { ID: null };
         try {
           tokenDecoded = jwt.verify(args.token, process.env.JWT_SECRET);
           if (!tokenDecoded) return null;
         } catch(error) { return null; }
+
+        if (!tokenDecoded.ID) return null;
 
         const user = await ctx.prisma.user.findUnique({
           where: { ID: tokenDecoded.ID },

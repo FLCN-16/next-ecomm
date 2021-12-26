@@ -17,10 +17,10 @@ function* authAccount(action: AnyAction) {
 
   const session = yield call(authModel.login, login, password, remember);
 
-  if ( session.statusText === 'status' && session.data.status === true ) {
-    yield put({ type: VALIDATE_SESSION_SUCCESS, payload: session.data });
+  if ( ! session.error ) {
+    yield put({ type: AUTH_ACCOUNT_SUCCESS, payload: session });
   } else {
-    yield put({ type: VALIDATE_SESSION_FAILURE });
+    yield put({ type: AUTH_ACCOUNT_FAILED });
   }
 
   yield put({ type: LOADING_STOP }); // Stop Loading
