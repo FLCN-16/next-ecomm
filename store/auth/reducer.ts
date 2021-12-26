@@ -1,10 +1,17 @@
 import { AnyAction } from "redux"
 import { Map } from "immutable"
+import type { ImmutableMap } from "@flcn-ecomm/lib/types/common"
 
 import { LOADING_START, LOADING_STOP, AUTH_ACCOUNT_SUCCESS, AUTH_ACCOUNT_FAILED } from './action'
 
 
-const initialState = Map({
+export type AuthState = ImmutableMap<{
+  loading: boolean
+  isAuthenticated: boolean
+  account: Map<string, any>
+}>
+
+const initialState: AuthState = Map({
   loading: false,
   isAuthenticated: false,
   account: null,

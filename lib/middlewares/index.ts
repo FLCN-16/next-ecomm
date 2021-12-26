@@ -4,13 +4,18 @@ import type { ApiRequest, ApiResponse } from '@flcn-ecomm/lib/types/api'
 import prismaMiddleware from './prisma'
 import authMiddleware from './auth'
 
+export type MiddlewareOptions = {
+  needAuth: boolean,
+  capabilities: string[],
+}
+export type CallBack = (response: any) => void
 
 export const defaultOptions = {
   needAuth: false,
   capabilities: [],
 }
 
-export default (next: any, options = defaultOptions) => async (req: ApiRequest, res: ApiResponse) => {
+export default (next: any, options: MiddlewareOptions = defaultOptions) => async (req: ApiRequest, res: ApiResponse) => {
   try {
     const middlewares = [
       prismaMiddleware(),
@@ -20,7 +25,7 @@ export default (next: any, options = defaultOptions) => async (req: ApiRequest, 
     // each middleware will then be wrapped within its own promise
     const promises = middlewares.map(middleware => {
       const promise = new Promise((resolve, reject) => {
-        middleware(req, res, (result: () => object) =>
+        middleware(req, res, result =>
           result instanceof Error ? reject(result) : resolve(result),
         );
       });

@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { authAccount } from '@flcn-ecomm/store/auth/action'
 import { AuthForm } from '@flcn-ecomm/store/auth/types'
 
+import type { RootState } from '@flcn-ecomm/store/rootReducer'
+
 // Containers
 import BackendHead from '@flcn-ecomm/container/Backend/Layout/Head'
 import AuthContainer from '@flcn-ecomm/container/Backend/Auth'
@@ -25,7 +27,7 @@ const AdminLogin: NextPage = () => {
   });
 
   const dispatch = useDispatch()
-  const loading = useSelector(state => state.auth.get('loading'))
+  const loading = useSelector((state: RootState) => state.auth.get('loading'))
 
   const onSubmit: SubmitHandler<AuthForm> = data => {
     dispatch(authAccount(data))

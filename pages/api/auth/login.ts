@@ -35,10 +35,7 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
   let isValid = await bcrypt.compare(password, user.password);
   if (!isValid) return res.status(401).json({ error: 'Invalid credentials' });
 
-  user.capabilities = user.user_role.capabilities.map((cap: CapabilitiesOnRole) => cap.capabilityId);
-
-  delete user.user_role;
-  delete user.password;
+  let capabilities = user.user_role.capabilities.map(cap => cap.capabilityId);
 
   const dayInSeconds = 60 * 60 * 24;
   const expiresIn = dayInSeconds * ( remember ? 7 : 1 );
@@ -60,7 +57,7 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
       createdAt: user.createdAt,
       sessionToken
     },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET!,
     { expiresIn }
   );
   if (!token) return res.status(500).json({ error: 'Internal server error' });
@@ -68,7 +65,7 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
   return res.status(200).json({
     firstName: user.first_name,
     lastName: user.last_name,
-    capabilities: user.capabilities,
+    capabilities,
     token,
     expires: expiresIn,
   });

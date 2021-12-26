@@ -2,7 +2,7 @@ import type { PrismaClient } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 
-type User = {
+export type User = {
   ID: string;
   username: string;
   capabilities: string[];

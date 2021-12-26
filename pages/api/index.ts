@@ -1,5 +1,5 @@
 import type { ApiRequest, ApiResponse } from '@flcn-ecomm/lib/types/api'
-import withMiddlewares from '../../lib/middlewares'
+import withMiddlewares from '@flcn-ecomm/lib/middlewares'
 
 
 const handle = (req: ApiRequest, res: ApiResponse) => {

@@ -1,6 +1,7 @@
-import { enumType, intArg, objectType, stringArg, nonNull, nullable } from 'nexus';
+import { objectType, stringArg, nonNull } from 'nexus';
 import { extendType } from 'nexus';
 import jwt from 'jsonwebtoken'
+import type { JwtPayload } from 'jsonwebtoken'
 
 
 export const User = objectType({
@@ -22,7 +23,7 @@ export const User = objectType({
           where: { slug: 'admin' },
         }).capabilities({ select: { capability: true } });
 
-        return capabilities.map(cap => cap.capability);
+        return capabilities.map((cap: any) => cap.capability);
       }
     });
   },
@@ -98,13 +99,13 @@ export const MeQuery = extendType({
       resolve: async (root, args, ctx) => {
         if (!args.token) return null;
 
-        let tokenDecoded = { ID: null };
+        let tokenDecoded: JwtPayload;
         try {
-          tokenDecoded = jwt.verify(args.token, process.env.JWT_SECRET);
+          tokenDecoded = jwt.verify(args.token, process.env.JWT_SECRET!) as JwtPayload;
           if (!tokenDecoded) return null;
         } catch(error) { return null; }
 
-        if (!tokenDecoded.ID) return null;
+        if (!tokenDecoded?.ID) return null;
 
         const user = await ctx.prisma.user.findUnique({
           where: { ID: tokenDecoded.ID },

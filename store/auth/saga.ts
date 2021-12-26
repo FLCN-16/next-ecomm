@@ -1,4 +1,5 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { LoginResponse } from '@flcn-ecomm/model/auth';
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { AnyAction } from 'redux';
 
 import {
@@ -15,11 +16,11 @@ function* authAccount(action: AnyAction) {
 
   const {login, password, remember} = action.payload
 
-  const session = yield call(authModel.login, login, password, remember);
+  try {
+    const session: LoginResponse = yield call(authModel.login, login, password, remember);
 
-  if ( ! session.error ) {
     yield put({ type: AUTH_ACCOUNT_SUCCESS, payload: session });
-  } else {
+  } catch (error) {
     yield put({ type: AUTH_ACCOUNT_FAILED });
   }
 

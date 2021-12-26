@@ -1,7 +1,13 @@
 import { AnyAction } from "redux"
 import { Map } from "immutable"
+import type { ImmutableMap } from "@flcn-ecomm/lib/types/common"
 
-const initialState = Map({
+export type AppState = ImmutableMap<{
+  ready: boolean;
+  locale: string;
+}>
+
+const initialState: AppState = Map({
   ready: false,
   locale: 'en'
 })

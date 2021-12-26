@@ -9,16 +9,12 @@ export interface LoginResponse {
   expires: number,
 }
 
-export interface ErrorResponse {
-  error: string,
-}
-
 export default class Auth {
-  public static async login(login: string, password: string, remember: boolean): Promise<LoginResponse | ErrorResponse> {
+  public static async login(login: string, password: string, remember: boolean): Promise<LoginResponse> {
     try {
       const response = await request.post('auth/login', { login,  password, remember });
 
       return response.data;
-    } catch (error) { return { error: 'Internal Server Error!' }; }
+    } catch (error) { throw new Error('Internal Server Error!') }
   }
 }

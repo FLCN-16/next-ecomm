@@ -17,7 +17,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@flcn-ecomm/container/*": [ "./containers/*" ],
+      "@flcn-ecomm/component/*": [ "./components/*" ],
+      "@flcn-ecomm/assets/*": [ "./public/*" ],
+      "@flcn-ecomm/*": [ "./*" ],
+    },
   },
   "include": [
     "next-env.d.ts",
@@ -26,11 +32,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "paths": {
-    "@flcn-ecomm/container/*": [ "./containers/*" ],
-    "@flcn-ecomm/component/*": [ "./components/*" ],
-    "@flcn-ecomm/assets/*": [ "./public/*" ],
-    "@flcn-ecomm/*": [ "./*" ],
-  },
+  ]
 }

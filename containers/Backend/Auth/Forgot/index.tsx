@@ -1,10 +1,9 @@
 import React from 'react'
-import Link from 'next/link'
 import { useForm, Controller, SubmitHandler  } from "react-hook-form";
 
 import {
   Form, FormLayout, TextField,
-  Checkbox, Button, Card
+  Button, Card
 } from '@shopify/polaris'
 
 import AuthContainer from '..'

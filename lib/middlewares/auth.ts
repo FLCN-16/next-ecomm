@@ -1,13 +1,13 @@
-import type { ApiRequest, ApiResponse } from '@flcn-ecomm/lib/types/api'
+import type { ApiRequest, ApiResponse, User } from '@flcn-ecomm/lib/types/api'
 import intersection from 'lodash/intersection'
 import jwt from 'jsonwebtoken'
 
 
 export default (capabilities: string[]) => async (
   req: ApiRequest, res: ApiResponse,
-  result: (req: ApiRequest, res: ApiResponse) => object
+  callback: (result: Error | string) => void
 ) => {
-  if (!req.headers.authorization) return result(req, res);
+  if (!req.headers.authorization) return callback('No authorization header');
 
   const token = req.headers.authorization.split(' ')[1];
   if (!token) {
@@ -15,7 +15,7 @@ export default (capabilities: string[]) => async (
   }
 
   try {
-    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = jwt.verify(token, process.env.JWT_SECRET!) as User;
     if (!req.user) {
       return res.status(403).json({ status: false, message: 'Failed to authenticate token' });
     }
@@ -25,7 +25,7 @@ export default (capabilities: string[]) => async (
       return res.status(403).json({ status: false, message: 'You do not have the required capability' });
     }
 
-    return result(req, res);
+    return callback('OK');
   } catch (error) {
     return res.status(403).json({ status: false, message: 'Failed to authenticate token' });
   }

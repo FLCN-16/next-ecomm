@@ -4,7 +4,6 @@ import translations from '@shopify/polaris/locales/en.json';
 
 // Components
 import Header from './Header'
-import Footer from './Footer'
 import Sidebar from './Sidebar'
 import Link from '../../../components/Backend/Link'
 

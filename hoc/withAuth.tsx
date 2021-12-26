@@ -5,7 +5,7 @@ import LoadingComponent from '../containers/Backend/Loading'
 
 type AuthType = object | boolean | null
 
-function withAuth(WrappedComponent: React.ComponentType, capabilities: string[] = []) {
+function withAuth(WrappedComponent: React.ComponentType, capabilities: string | string[] = []) {
   const AuthComponent = (props: any) => {
     const [auth, setAuth] = useState<AuthType>(null)
     const router = useRouter()
