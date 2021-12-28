@@ -1,12 +1,12 @@
 import type { NextPage, GetServerSideProps } from 'next'
 
 // Components
-import FontendLayout from '../containers/Frontend/Layout'
+import FontendLayout from '@flcn-ecomm/container/Frontend/Layout'
 
-const Home: NextPage = () => {
+const Shop: NextPage = () => {
   return (
     <FontendLayout>
-      <span>Frontend Content</span>
+      <span>Shop</span>
     </FontendLayout>
   )
 }
@@ -19,4 +19,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-export default Home
+export default Shop
