@@ -1,0 +1,207 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DECLIEND
+}
+
+model UserRole {
+  ID           String    @id @default(uuid())
+  name         String    @db.VarChar(50)
+  slug         String    @db.VarChar(50) @unique
+  desc         String    @db.VarChar(100)
+  createdAt    DateTime  @default(now()) @map(name: "created_at") @db.Timestamp(6)
+  updatedAt    DateTime  @default(now()) @map(name: "updated_at") @db.Timestamp(6)
+
+  // Relations
+  users        User[]
+  capabilities CapabilitiesOnRole[]
+
+  @@map(name: "user_role")
+}
+
+model RoleCapability {
+  ID             String   @id @default(uuid())
+  name           String   @db.VarChar(50)
+  slug           String   @db.VarChar(50) @unique
+  desc           String   @db.VarChar(100)
+  createdAt      DateTime @default(now()) @map(name: "created_at") @db.Timestamp(6)
+  updatedAt      DateTime @default(now()) @map(name: "updated_at") @db.Timestamp(6)
+
+  // Relations
+  roles          CapabilitiesOnRole[]
+
+  @@map(name: "role_capability")
+}
+
+model CapabilitiesOnRole {
+  role            UserRole @relation(fields: [roleId], references: [slug])
+  roleId          String   @db.VarChar(50)
+  capability      RoleCapability @relation(fields: [capabilityId], references: [slug])
+  capabilityId    String   @db.VarChar(50)
+  assignedAt      DateTime @default(now())
+
+  @@id([roleId, capabilityId])
+}
+
+model User {
+  ID         String   @id @default(uuid())
+  first_name String?  @db.VarChar(50)
+  last_name  String?  @db.VarChar(50)
+  username   String   @unique @db.VarChar(50)
+  email      String   @unique @db.VarChar(50)
+  verified   Boolean  @default(false)
+  password   String   @db.VarChar(255)
+  role       String   @db.VarChar(50)
+  createdAt  DateTime @default(now()) @map(name: "created_at") @db.Timestamp(6)
+  updatedAt  DateTime @default(now()) @map(name: "updated_at") @db.Timestamp(6)
+
+  // Relations
+  orders     Order[]
+  user_role  UserRole @relation(fields: [role], references: [slug])
+
+  @@map(name: "users")
+}
+
+model PasswordResetRequest {
+  ID        String   @id @default(uuid())
+  userID    String
+  reset_key String
+  expiresAt DateTime @db.Timestamp(6)
+  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @map(name: "updated_at") @db.Timestamp(6)
+
+  @@map(name: "password_reset_request")
+}
+
+model Account {
+  ID                 String    @id @default(uuid())
+  compoundId         String    @unique @map(name: "compound_id")
+  userId             String    @map(name: "user_id")
+  providerType       String    @map(name: "provider_type")
+  providerId         String    @map(name: "provider_id")
+  providerAccountId  String    @map(name: "provider_account_id")
+  refreshToken       String?   @map(name: "refresh_token")
+  accessToken        String?   @map(name: "access_token")
+  accessTokenExpires DateTime? @map(name: "access_token_expires")
+  createdAt          DateTime  @default(now()) @map(name: "created_at") @db.Timestamp(6)
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at") @db.Timestamp(6)
+
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+
+  @@map(name: "accounts")
+}
+
+model Session {
+  ID           String   @id @default(uuid())
+  userId       String   @map(name: "user_id")
+  sessionToken String   @unique @map(name: "session_token")
+  expires      DateTime
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sessions")
+}
+
+model Product {
+  ID          String   @id @default(uuid())
+  title       String   @db.VarChar(50)
+  slug        String   @unique @db.VarChar(50)
+  description String   @db.Text
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+
+  // Relations
+  categories Category[]
+}
+
+model Category {
+  ID             String   @id @default(uuid())
+  title          String   @db.VarChar(50)
+  slug           String   @unique @db.VarChar(50)
+  description    String   @db.Text
+  createdAt      DateTime @default(now()) @map(name: "created_at")
+  updatedAt      DateTime @default(now()) @map(name: "updated_at")
+
+  // Relations
+  products Product[] @relation(references: [ID])
+}
+
+model Order {
+  ID         String   @id @default(uuid())
+  status     String   @default("pending-payment") @db.VarChar(50)
+  customerID String   @map(name: "customer_id")
+  attributes Json[]
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+
+  // Relations
+  customer    User          @relation(references: [ID], fields: [customerID])
+  Invoice     Invoice?
+  OrderItem   OrderItem[]
+  Transaction Transaction[]
+}
+
+model OrderItem {
+  ID        String   @id @default(uuid())
+  orderId   String   @map(name: "order_id")
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  // Relation
+  Order Order @relation(references: [ID], fields: [orderId])
+}
+
+model OrderStatus {
+  ID        String   @id @default(uuid())
+  name      String   @db.VarChar(50)
+  slug      String   @unique @db.VarChar(50)
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+}
+
+model Invoice {
+  ID        String   @id @default(uuid())
+  orderId   String   @unique @map(name: "order_id")
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  // Relations
+  Order Order @relation(references: [ID], fields: [orderId])
+}
+
+model Setting {
+  name      String   @id @db.VarChar(100)
+  value     String   @db.VarChar(255)
+  autoload  Boolean  @default(false)
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+}
+
+model Transaction {
+  ID                  String              @id @default(uuid())
+  orderId             String              @unique @map(name: "order_id")
+  paymentGateway      String              @map(name: "payment_gateway")
+  transactionId       String              @db.VarChar(255) @map(name: "transaction_id")
+  transactionStatus   String              @map(name: "transaction_status")
+  status              TransactionStatus   @default(PENDING)
+  createdAt           DateTime            @default(now()) @map(name: "created_at")
+  updatedAt           DateTime            @default(now()) @map(name: "updated_at")
+
+  // Relations
+  Order Order @relation(references: [ID], fields: [orderId])
+}
