@@ -6,8 +6,12 @@ import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
 import AppLocale from '../intl'
 
+// Graphql
+import { ApolloProvider } from "@apollo/client";
+import graphql from '@flcn-ecomm/lib/graphql';
+
 // Store
-import {wrapper} from '../store';
+import { wrapper } from '../store';
 
 
 export interface AppProviderProps {
@@ -35,13 +39,16 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   )
 }
 
+const AppProviderComponent = wrapper.withRedux(AppProvider);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AppProvider>
-      <Component {...pageProps} />
-    </AppProvider>
+    <ApolloProvider client={graphql}>
+      <AppProviderComponent>
+        <Component {...pageProps} />
+      </AppProviderComponent>
+    </ApolloProvider>
   )
 }
 
-export default wrapper.withRedux(MyApp)
+export default MyApp
