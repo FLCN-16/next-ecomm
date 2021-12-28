@@ -4,11 +4,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prismaMiddleware = () => async (
   req: ApiRequest, res: ApiResponse,
-  callback: (result: Error | string) => void
+  callback: (result?: Error | string) => void
 ) => {
   const prisma = new PrismaClient();
 
   req.prisma = prisma;
+
+  callback()
 }
 
 export default prismaMiddleware;

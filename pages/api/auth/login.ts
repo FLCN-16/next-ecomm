@@ -1,5 +1,4 @@
 import type { ApiRequest, ApiResponse } from '@flcn-ecomm/lib/types/api';
-import type { CapabilitiesOnRole } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -57,7 +56,7 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
       createdAt: user.createdAt,
       sessionToken
     },
-    process.env.JWT_SECRET!,
+    process.env.APP_SECRET!,
     { expiresIn }
   );
   if (!token) return res.status(500).json({ error: 'Internal server error' });

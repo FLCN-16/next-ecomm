@@ -16,8 +16,8 @@ const moduleExports = {
     config.resolve.alias['@flcn-ecomm'] = path.join(__dirname, '/')
 
     config.watchOptions = {
-      poll: 1000,
-      aggregateTimeout: 300,
+      poll: 5000,
+      aggregateTimeout: 2500,
     };
 
     return config

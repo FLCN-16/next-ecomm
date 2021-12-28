@@ -3,7 +3,7 @@ import { AppProvider } from '@shopify/polaris';
 
 import theme from '../theme'
 
-import Link from '../../../components/Backend/Link'
+import Link from '@flcn-ecomm/component/Backend/Link'
 
 // Styling
 import '@shopify/polaris/build/esm/styles.css';

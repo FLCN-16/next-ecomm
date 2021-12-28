@@ -1,5 +1,5 @@
-import type { NextPage } from 'next'
-import { useForm, Controller, SubmitHandler  } from "react-hook-form";
+import type { NextPage } from 'next';
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import {
   Form, FormLayout, TextField,
   Checkbox, Button, Card
@@ -98,7 +98,7 @@ const AdminLogin: NextPage = () => {
                 <Button size="slim" primary submit loading={loading}>Sign In</Button>
               </div>
 
-              <div style={{textAlign: 'center'}}>
+              <div style={{ textAlign: 'center' }}>
                 Forgot your account password? {' '}
                 <Button url="/admin/auth/forgot" disabled={loading} plain monochrome>Click here</Button>
               </div>

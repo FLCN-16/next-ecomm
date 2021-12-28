@@ -1,5 +1,8 @@
-import prisma from '../lib/prisma';
+import bcrypt from 'bcrypt';
+import { PrismaClient } from '@prisma/client';
 
+
+let prisma: PrismaClient = new PrismaClient();
 
 async function seedUserRoleCaps() {
   let userRoleCaps = [
@@ -72,11 +75,13 @@ async function seedUserRoles() {
 }
 
 async function seedUsers() {
+  let password = await bcrypt.hash('admin', 10);
+
   let users = [
     {
       username: 'admin',
       email: 'admin@email.com',
-      password: 'admin',
+      password,
       verified: true,
       user_role: {
         connect: { slug: 'admin' },

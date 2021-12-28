@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 
 
 export const Wrapper = styled.div`
@@ -53,7 +53,9 @@ export const ActionContainer = styled.div`
 `
 
 
-export default {
+const Styles = {
   Wrapper,
   FormContainer
 }
+
+export default Styles

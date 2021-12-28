@@ -15,28 +15,31 @@ export const defaultOptions = {
   capabilities: [],
 }
 
-export default (next: any, options: MiddlewareOptions = defaultOptions) => async (req: ApiRequest, res: ApiResponse) => {
+const rootMiddleware = (next: any, options: MiddlewareOptions = defaultOptions) => async (req: ApiRequest, res: ApiResponse) => {
   try {
     const middlewares = [
       prismaMiddleware(),
-      authMiddleware(options.capabilities),
+      defaultOptions.needAuth && authMiddleware(options.capabilities),
     ].filter(Boolean);
 
     // each middleware will then be wrapped within its own promise
     const promises = middlewares.map(middleware => {
+      if ( ! middleware ) return;
       const promise = new Promise((resolve, reject) => {
         middleware(req, res, result =>
-          result instanceof Error ? reject(result) : resolve(result),
+          result instanceof Error ? reject(result) : resolve(result || 'OK'),
         );
       });
       return promise;
     });
-
+    
     await Promise.all(promises);
 
     return next(req, res);
-  } catch(error) {
+  } catch (error) {
     // if any middleware fails, throws a 400 error
     return res.status(400).send(error);
   }
 }
+
+export default rootMiddleware
