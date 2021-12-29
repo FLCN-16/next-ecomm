@@ -101,7 +101,7 @@ export const MeQuery = extendType({
 
         let tokenDecoded: JwtPayload;
         try {
-          tokenDecoded = jwt.verify(args.token, process.env.APP_SECRET!) as JwtPayload;
+          tokenDecoded = jwt.verify(args.token, process.env.JWT_SECRET!) as JwtPayload;
           if (!tokenDecoded) return null;
         } catch(error) { return null; }
 

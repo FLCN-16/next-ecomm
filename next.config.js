@@ -20,6 +20,13 @@ const moduleExports = {
       aggregateTimeout: 2500,
     };
 
+    config.plugins.push(
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      })
+    )
+
     return config
   },
   client: {

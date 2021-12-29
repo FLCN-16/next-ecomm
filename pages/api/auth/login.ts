@@ -56,7 +56,7 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
       createdAt: user.createdAt,
       sessionToken
     },
-    process.env.APP_SECRET!,
+    process.env.JWT_SECRET!,
     { expiresIn }
   );
   if (!token) return res.status(500).json({ error: 'Internal server error' });

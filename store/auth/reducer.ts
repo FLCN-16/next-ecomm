@@ -2,7 +2,10 @@ import { AnyAction } from "redux"
 import { Map } from "immutable"
 import type { ImmutableMap } from "@flcn-ecomm/lib/types/common"
 
-import { LOADING_START, LOADING_STOP, AUTH_ACCOUNT_SUCCESS, AUTH_ACCOUNT_FAILED } from './action'
+import {
+  LOADING_START, LOADING_STOP, AUTH_ACCOUNT_SUCCESS, AUTH_ACCOUNT_FAILED,
+  VALIDATE_SESSION_SUCCESS, VALIDATE_SESSION_FAILURE, AUTH_ACCOUNT_LOGGEDOUT
+} from './action'
 
 
 export type AuthState = ImmutableMap<{
@@ -24,10 +27,12 @@ export default function authReducer(state = initialState, action: AnyAction) {
     case LOADING_STOP:
       return state.set('loading', false);
     case AUTH_ACCOUNT_SUCCESS:
+    case VALIDATE_SESSION_SUCCESS:
       state = state.set('isAuthenticated', true);
       state = state.set('account', action.payload);
       return state.set('loading', false);
     case AUTH_ACCOUNT_FAILED:
+    case AUTH_ACCOUNT_LOGGEDOUT:
       state = state.set('isAuthenticated', false);
       state = state.set('account', null);
       return state.set('loading', false);

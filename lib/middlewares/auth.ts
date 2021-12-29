@@ -13,7 +13,7 @@ const authMiddleware = (capabilities: string[]) => async (
   if (!token) return callback(new Error('No token provided'));
 
   try {
-    req.user = jwt.verify(token, process.env.APP_SECRET!) as User;
+    req.user = jwt.verify(token, process.env.JWT_SECRET!) as User;
     if (!req.user) return callback(new Error('Failed to authenticate token'));
 
     const userCapabilities = intersection(req.user.capabilities, capabilities);

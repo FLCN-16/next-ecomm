@@ -2,6 +2,11 @@ import type { AppProps } from 'next/app'
 import React from 'react'
 import { useRouter } from 'next/router'
 
+// State
+import type { RootState } from '@flcn-ecomm/store/rootReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { initialize } from '@flcn-ecomm/store/app/action'
+
 // Intl
 import { IntlProvider } from 'react-intl'
 import AppLocale from '../intl'
@@ -20,12 +25,18 @@ export interface AppProviderProps {
 
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const currentAppLocale = AppLocale['en'];
   const isAdmin = !! router.pathname.match(/^\/admin\/?/)
+  const isAppReady = useSelector((state: RootState) => state.app.get('ready'))
 
   if ( ! isAdmin ) {
     require('../styles/globals.css')
   }
+
+  React.useEffect(() => {
+    dispatch(initialize())
+  }, [dispatch])
 
   return (
     <React.Fragment>

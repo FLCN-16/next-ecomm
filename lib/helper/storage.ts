@@ -1,4 +1,4 @@
-import idb from 'idb-keyval';
+import * as idb from 'idb-keyval';
 
 
 class Storage {
@@ -6,7 +6,7 @@ class Storage {
     return 'flcn_ecomm_' + key;
   }
 
-  public static async set(key: String, value) {
+  public static async set(key: String, value: any) {
     key = Storage.prefixKey(key);
 
     return await idb.set(key, value);

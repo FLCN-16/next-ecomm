@@ -1,6 +1,11 @@
 import React from 'react'
 import BackendHead from '../Head'
 
+// State
+import type { RootState } from '@flcn-ecomm/store/rootReducer'
+import { useSelector, useDispatch } from 'react-redux'
+import { logoutAccount } from '@flcn-ecomm/store/auth/action'
+
 import { TopBar, Icon } from '@shopify/polaris';
 import { ArrowLeftMinor, NotificationMajor, LogOutMinor } from '@shopify/polaris-icons'
 
@@ -30,26 +35,28 @@ const ActionsMenu = () => {
 }
 
 const UserMenuMarkup = () => {
-    const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false);
+  const dispatch = useDispatch()
+  const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false);
+  const account: any = useSelector((state: RootState) => state.auth.get('account') || {});
 
-    return (
-      <TopBar.UserMenu
-        actions={[
-          {
-            items: [{content: 'Back to Shopify', icon: ArrowLeftMinor}],
-          },
-          {
-            items: [{content: 'Sign out', icon: LogOutMinor, onAction: () => {}}],
-          },
-        ]}
-        name="Dharma"
-        detail="Jaded Pixel"
-        initials="D"
-        open={isUserMenuOpen}
-        onToggle={() => setIsUserMenuOpen(!isUserMenuOpen)}
-      />
-    )
-  };
+  return (
+    <TopBar.UserMenu
+      actions={[
+        {
+          items: [{content: 'Profile', icon: ArrowLeftMinor}],
+        },
+        {
+          items: [{ content: 'Sign out', icon: LogOutMinor, onAction: () => dispatch(logoutAccount())}],
+        },
+      ]}
+      name={`${account.firstName} ${account.lastName}`}
+      detail={account.username}
+      initials="D"
+      open={isUserMenuOpen}
+      onToggle={() => setIsUserMenuOpen(!isUserMenuOpen)}
+    />
+  )
+};
 
 const Header: React.FC = () => {
   const handleNavigationToggle = () => {
