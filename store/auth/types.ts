@@ -5,5 +5,6 @@ export interface Session {
 export interface AuthForm {
   login: string
   password: string
-  remember: boolean
+  remember: boolean,
+  redirectTo?: string
 }
