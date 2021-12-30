@@ -28,11 +28,17 @@ export default function authReducer(state = initialState, action: AnyAction) {
       return state.set('loading', false);
     case AUTH_ACCOUNT_SUCCESS:
     case VALIDATE_SESSION_SUCCESS:
+      // Assigning jwt auth token to global variable for easy access across application
+      global.authToken = action.payload.token;
+
       state = state.set('isAuthenticated', true);
       state = state.set('account', action.payload);
       return state.set('loading', false);
     case AUTH_ACCOUNT_FAILED:
     case AUTH_ACCOUNT_LOGGEDOUT:
+      // Removing auth token from global variable
+      global.authToken = null;
+
       state = state.set('isAuthenticated', false);
       state = state.set('account', null);
       return state.set('loading', false);

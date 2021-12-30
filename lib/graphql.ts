@@ -1,9 +1,25 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-export { gql } from '@apollo/client'
+import { ApolloClient, HttpLink, ApolloLink, InMemoryCache, concat } from '@apollo/client';
 
-let graphql: ApolloClient = new ApolloClient({
-    uri: process.env.GRAPHQL_API || '/api/graphql',
+const httpLink = new HttpLink({ uri: process.env.GRAPHQL_API || '/api/graphql' });
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: global.authToken || null,
+    }
+  }));
+
+  return forward(operation);
+})
+
+const graphql: ApolloClient = new ApolloClient({
+    link: concat(authMiddleware, httpLink),
     cache: new InMemoryCache()
 });
+
+// Exports
+export { gql } from '@apollo/client'
 
 export default graphql;
