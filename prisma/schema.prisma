@@ -205,3 +205,22 @@ model Transaction {
   // Relations
   Order Order @relation(references: [ID], fields: [orderId])
 }
+
+model Notification {
+  ID                  String              @id @default(uuid())
+  activityType        String              @map(name: "activity_type")
+  message             String              @db.Text
+  authorId            String              @map(name: "author_id")
+  createdAt           DateTime            @default(now()) @map(name: "created_at")
+  updatedAt           DateTime            @default(now()) @map(name: "updated_at")
+}
+
+model UserNotification {
+  ID                  Int                 @id
+  notificationId      String              @map(name: "notification_id")
+  senderId            String              @map(name: "sender_id")
+  receiverId          String              @map(name: "receiver_id)
+  isSeen              Boolean             @default(false)
+  createdAt           DateTime            @default(now()) @map(name: "created_at")
+  updatedAt           DateTime            @default(now()) @map(name: "updated_at")
+}
