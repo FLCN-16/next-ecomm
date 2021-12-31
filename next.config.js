@@ -4,6 +4,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 const moduleExports = {
   reactStrictMode: true,
+  swcMinify: true,
   env: {
     isProduction,
     API_ROUTE: isProduction ? '/api/' : '/api/',
@@ -33,7 +34,11 @@ const moduleExports = {
     service: "flcn-ecomm",
     includes: ["./**/*.ts"],
     excludes: ["**/__tests__/**", "./node_modules/**"]
-  }
+  },
+  experimental: {
+    // ssr and displayName are configured by default
+    styledComponents: true,
+  },
 }
 
 module.exports = moduleExports;
