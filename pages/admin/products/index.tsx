@@ -5,7 +5,7 @@ import { Page, Card, Filters, EmptyState, IndexTable, useIndexResourceState } fr
 import BackendLayout from '@flcn-ecomm/container/Backend/Layout'
 
 // HOCs
-import withAuth from '../../../hoc/withAuth'
+import withAuth from '@flcn-ecomm/hoc/withAuth'
 
 
 const ProductEmptyState = () => (

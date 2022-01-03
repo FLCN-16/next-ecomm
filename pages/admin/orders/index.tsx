@@ -15,4 +15,4 @@ const OrdersComponent: NextPage = () => {
   )
 }
 
-export default withAuth(OrdersComponent)
+export default withAuth(OrdersComponent, 'manage_orders')

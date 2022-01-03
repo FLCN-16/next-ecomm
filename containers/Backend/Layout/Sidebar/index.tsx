@@ -68,7 +68,7 @@ const Sidebar: React.FC<Props> = ({router}) => {
                   label: 'Add Product'
                 },
                 {
-                  url: '/admin/products/categories',
+                  url: '/admin/category/list',
                   disabled: false,
                   label: 'Categories',
                 },

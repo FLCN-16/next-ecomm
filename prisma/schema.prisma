@@ -219,7 +219,7 @@ model UserNotification {
   ID                  Int                 @id
   notificationId      String              @map(name: "notification_id")
   senderId            String              @map(name: "sender_id")
-  receiverId          String              @map(name: "receiver_id)
+  receiverId          String              @map(name: "receiver_id")
   isSeen              Boolean             @default(false)
   createdAt           DateTime            @default(now()) @map(name: "created_at")
   updatedAt           DateTime            @default(now()) @map(name: "updated_at")

@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux'
 import { intersection } from 'lodash'
 
 import type { RootState } from '@flcn-ecomm/store/rootReducer'
-import LoadingComponent from '../containers/Backend/Loading'
+import LoadingComponent from '@flcn-ecomm/containers/Backend/Loading'
+import UnauthorizedContainer from '@flcn-ecomm/containers/Backend/Unauthorized'
 
 
 type AuthType = object | boolean | null
@@ -35,9 +36,13 @@ function withAuth(WrappedComponent: React.ComponentType, capabilities: string | 
     useEffect( () => {
       if ( auth !== null || ! isReady ) return;
 
-      let authenticated = isAuthenticated && validateCapability();
+      let haveCapability = isAuthenticated ? validateCapability() : false;
 
-      setAuth(authenticated)
+      if ( isAuthenticated && ! haveCapability ) {
+        WrappedComponent = UnauthorizedContainer
+      }
+
+      setAuth(isAuthenticated)
     }, [auth, isReady, isAuthenticated, account])
 
     if ( auth === false ) {

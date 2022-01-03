@@ -14,6 +14,8 @@ export const User = objectType({
     t.string('email');
     t.boolean('verified');
     t.string('role');
+    t.string('createdAt');
+    t.string('updatedAt');
     t.list.field('capabilities', {
       type: Capability,
       resolve: async (root, args, ctx) => {
@@ -82,7 +84,17 @@ export const UserQuery = extendType({
         });
         if (!user) return null;
 
-        return user;
+        return {
+          ID: user.ID,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          verified: user.verified,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        };
       },
     })
   }

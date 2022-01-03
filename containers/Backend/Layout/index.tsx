@@ -5,7 +5,7 @@ import translations from '@shopify/polaris/locales/en.json';
 // Components
 import Header from './Header'
 import Sidebar from './Sidebar'
-import Link from '../../../components/Backend/Link'
+import Link from '@flcn-ecomm/components/Backend/Link'
 
 // Theme
 import theme from '../theme'

@@ -21,6 +21,51 @@ async function seedUserRoleCaps() {
       slug: 'create_role',
       desc: 'Can Create Role',
     },
+    {
+      name: 'Manage Categories',
+      slug: 'manage_categories',
+      desc: 'Can Manage Categories',
+    },
+    {
+      name: 'Create Category',
+      slug: 'create_category',
+      desc: 'Can Create Category',
+    },
+    {
+      name: 'Manage Users',
+      slug: 'manage_users',
+      desc: 'Can Manage Users',
+    },
+    {
+      name: 'Create User',
+      slug: 'create_user',
+      desc: 'Can Create User',
+    },
+    {
+      name: 'Create Product',
+      slug: 'create_product',
+      desc: 'Can Create Product',
+    },
+    {
+      name: 'Manage Products',
+      slug: 'manage_products',
+      desc: 'Can Manage Products',
+    },
+    {
+      name: 'Manage Orders',
+      slug: 'manage_orders',
+      desc: 'Can Manage Orders',
+    },
+    {
+      name: 'Manage Settings',
+      slug: 'manage_settings',
+      desc: 'Can Manage Settings',
+    },
+    {
+      name: 'Manage Payment Settings',
+      slug: 'manage_payment_settings',
+      desc: 'Can Manage Payment Settings',
+    },
   ];
 
   for ( let userRoleCap of userRoleCaps ) {
@@ -37,7 +82,17 @@ async function seedUserRoles() {
       capabilities: [
         'access_admin',
         'create_user',
-        'create_role'
+        'create_role',
+        'manage_categories',
+        'create_category',
+        'manage_products',
+        'create_product',
+        'manage_orders',
+        'manage_users',
+        'create_user',
+        'issue_refunds',
+        'manage_settings',
+        'manage_payment_settings',
       ]
     },
     {
@@ -102,7 +157,7 @@ async function main() {
 
 main().catch(e => {
   console.log(e);
-  process.exit(1);
+  // process.exit(1);
 }).finally(() => {
   prisma.$disconnect()
 })
