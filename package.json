@@ -14,7 +14,7 @@
   "dependencies": {
     "@apollo/client": "^3.5.6",
     "@shopify/polaris": "7.5.0",
-    "apollo-server-micro": "^3.5.0",
+    "apollo-server-micro": "^3.6.1",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "graphql": "^15.5.1",
