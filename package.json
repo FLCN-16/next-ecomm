@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
+    "@nexus/schema": "^0.20.1",
     "@shopify/polaris": "7.5.0",
     "apollo-server-micro": "^3.6.1",
     "axios": "^0.24.0",
@@ -28,6 +29,7 @@
     "next": "12.0.7",
     "next-redux-wrapper": "^7.0.5",
     "nexus": "^1.1.0",
+    "nexus-plugin-prisma": "^0.35.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.19.0",
@@ -51,6 +53,7 @@
     "babel-plugin-styled-components": "^2.0.2",
     "eslint": "8",
     "eslint-config-next": "12.0.7",
+    "graphql-scalars": "^1.14.1",
     "postcss": "^8.3.11",
     "prisma": "^3.7.0",
     "redux-devtools-extension": "^2.13.9",

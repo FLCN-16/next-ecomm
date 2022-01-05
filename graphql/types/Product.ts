@@ -12,7 +12,9 @@ export const Product = objectType({
     t.list.field('categories', {
       type: Category,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.product.findUnique({
+        if ( ! root.ID ) return [];
+
+        return ctx.prisma.product.findUnique({
           where: { ID: root.ID },
         }).categories();
       }
@@ -46,7 +48,7 @@ export const ProductQuery = extendType({
         ID: stringArg(),
       },
       resolve: async (root, { ID }, ctx) => {
-        return await ctx.prisma.product.findUnique({
+        return ctx.prisma.product.findUnique({
           where: { ID }
         });
       }
@@ -54,7 +56,7 @@ export const ProductQuery = extendType({
     t.list.field('products', {
       type: Product,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.product.findMany();
+        return ctx.prisma.product.findMany();
       }
     });
   }
@@ -69,7 +71,7 @@ export const CategoryQuery = extendType({
         ID: stringArg(),
       },
       resolve: async (root, { ID }, ctx) => {
-        return await ctx.prisma.category.findUnique({
+        return ctx.prisma.category.findUnique({
           where: { ID }
         });
       }
@@ -77,7 +79,7 @@ export const CategoryQuery = extendType({
     t.list.field('categories', {
       type: Category,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.category.findMany();
+        return ctx.prisma.category.findMany();
       }
     });
   }

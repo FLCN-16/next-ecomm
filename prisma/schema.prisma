@@ -58,8 +58,8 @@ model CapabilitiesOnRole {
 
 model User {
   ID         String   @id @default(uuid())
-  first_name String?  @db.VarChar(50)
-  last_name  String?  @db.VarChar(50)
+  firstName String?   @db.VarChar(50) @map(name: "first_name")
+  lastName  String?   @db.VarChar(50) @map(name: "last_name")
   username   String   @unique @db.VarChar(50)
   email      String   @unique @db.VarChar(50)
   verified   Boolean  @default(false)

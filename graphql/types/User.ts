@@ -37,7 +37,7 @@ export const UsersQuery = extendType({
     t.list.field('users', {
       type: User,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.user.findMany({
+        return ctx.prisma.user.findMany({
           where: {
             username: 'admin'
           }
@@ -62,7 +62,7 @@ export const CapabilitiesQuery = extendType({
     t.list.field('capabilities', {
       type: Capability,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.roleCapability.findMany();
+        return ctx.prisma.roleCapability.findMany();
       },
     });
   }

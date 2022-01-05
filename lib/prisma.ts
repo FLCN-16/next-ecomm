@@ -55,7 +55,7 @@ const timestampMiddleware: Prisma.Middleware = async (params: Prisma.MiddlewareP
 
 // Apply Middlewares
 prisma.$use(userMiddleware);
-prisma.$use(timestampMiddleware);
+// prisma.$use(timestampMiddleware);
 
 
 export default prisma;
