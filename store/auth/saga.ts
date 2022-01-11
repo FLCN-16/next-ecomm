@@ -21,6 +21,7 @@ function* authAccount(action: AnyAction) {
 
   try {
     let account: LoginResponse = yield call(authModel.login, login, password, remember);
+    console.log(account)
 
     yield put({ type: AUTH_ACCOUNT_SUCCESS, payload: account });
     yield call(Storage.set, 'account', account);
@@ -29,7 +30,7 @@ function* authAccount(action: AnyAction) {
     yield Router.push({ pathname: redirectTo } );
   } catch (error) {
     yield put({ type: AUTH_ACCOUNT_FAILED });
-    yield call(Storage.set, 'account', null);
+    yield call(Storage.delete, 'account');
   }
 
   yield put({ type: LOADING_STOP }); // Stop Loading
