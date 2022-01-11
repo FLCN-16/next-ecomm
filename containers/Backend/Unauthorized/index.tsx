@@ -4,11 +4,7 @@ import { EmptyState } from '@shopify/polaris'
 import Layout from '../Layout'
 
 
-export interface Props {
-  required_caps: string | string[]
-}
-
-const UnauthorizedContainer: React.FC<Props> = ({ required_caps }) => {
+const UnauthorizedContainer: React.FC = () => {
   return (
     <Layout>
       <EmptyState

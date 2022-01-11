@@ -1,13 +1,13 @@
 import type { NextPage, GetServerSideProps } from 'next'
 
 // Components
-import FontendLayout from '../containers/Frontend/Layout'
+import FrontendLayout from '../containers/Frontend/Layout'
 
 const Home: NextPage = () => {
   return (
-    <FontendLayout>
+    <FrontendLayout>
       <span>Frontend Content</span>
-    </FontendLayout>
+    </FrontendLayout>
   )
 }
 

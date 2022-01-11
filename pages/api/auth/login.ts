@@ -13,8 +13,8 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
     select: {
       ID: true,
       username: true,
-      first_name: true,
-      last_name: true,
+      firstName: true,
+      lastName: true,
       email: true,
       role: true,
       password: true,
@@ -62,8 +62,8 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
   if (!token) return res.status(500).json({ error: 'Internal server error' });
 
   return res.status(200).json({
-    firstName: user.first_name,
-    lastName: user.last_name,
+    firstName: user.firstName,
+    lastName: user.lastName,
     capabilities,
     token,
     expires: expiresIn,

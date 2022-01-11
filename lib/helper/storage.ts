@@ -2,17 +2,17 @@ import * as idb from 'idb-keyval';
 
 
 class Storage {
-  public static prefixKey(key: String) {
+  public static prefixKey(key: string) {
     return 'flcn_ecomm_' + key;
   }
 
-  public static async set(key: String, value: any) {
+  public static async set(key: string, value: any) {
     key = Storage.prefixKey(key);
 
     return await idb.set(key, value);
   }
 
-  public static async get(key: String, defaultValue = null) {
+  public static async get(key: string, defaultValue = null) {
     key = Storage.prefixKey(key);
 
     let value = await idb.get(key);
@@ -20,13 +20,13 @@ class Storage {
     return value || defaultValue;
   }
 
-  public static async delete(key: String) {
+  public static async delete(key: string) {
     key = Storage.prefixKey(key);
 
     return await idb.del(key);
   }
 
-  public static async getMany(keys: String[], defaultValue = {}) {
+  public static async getMany(keys: string[], defaultValue = {}) {
     keys = keys.map(Storage.prefixKey)
 
     let value = await idb.getMany(keys);
@@ -34,7 +34,7 @@ class Storage {
     return value || defaultValue;
   }
 
-  public static async deleteMany(keys: String[]) {
+  public static async deleteMany(keys: string[]) {
     keys = keys.map(Storage.prefixKey)
 
     return await idb.delMany(keys);

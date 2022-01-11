@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { withRouter } from 'next/router'
+import { withRouter, NextRouter } from 'next/router'
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Form, FormLayout, TextField, Checkbox, Button, Card } from '@shopify/polaris';
 
@@ -15,7 +15,11 @@ import BackendHead from '@flcn-ecomm/container/Backend/Layout/Head'
 import AuthContainer from '@flcn-ecomm/container/Backend/Auth'
 
 
-const AdminLogin: NextPage = ({ router }) => {
+interface Props {
+  router: NextRouter;
+}
+
+const AdminLogin: NextPage<Props> = ({ router }) => {
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       login: '',
@@ -28,7 +32,7 @@ const AdminLogin: NextPage = ({ router }) => {
   const loading = useSelector((state: RootState) => state.auth.get('loading'))
 
   const onSubmit: SubmitHandler<AuthForm> = data => {
-    data.redirectTo = router.query.next || '/admin/';
+    data.redirectTo = router.query.next?.toString() || '/admin/';
 
     dispatch(authAccount(data))
   }

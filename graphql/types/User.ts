@@ -1,21 +1,22 @@
-import { objectType, stringArg, nonNull } from 'nexus';
-import { extendType } from 'nexus';
+import { objectType, stringArg, nonNull, extendType } from 'nexus';
+import prisma from 'nexus-prisma'
 import jwt from 'jsonwebtoken'
 import type { JwtPayload } from 'jsonwebtoken'
 
 
 export const User = objectType({
-  name: 'User',
+  name: prisma.User.$name,
+  description: prisma.User.$description,
   definition(t) {
-    t.string('ID');
-    t.string('firstName');
-    t.string('lastName');
-    t.string('username');
-    t.string('email');
-    t.boolean('verified');
-    t.string('role');
-    t.string('createdAt');
-    t.string('updatedAt');
+    t.field(prisma.User.ID);
+    t.field(prisma.User.firstName);
+    t.field(prisma.User.lastName);
+    t.field(prisma.User.username);
+    t.field(prisma.User.email);
+    t.field(prisma.User.verified);
+    t.field(prisma.User.role);
+    t.field(prisma.User.createdAt);
+    t.field(prisma.User.updatedAt);
     t.list.field('capabilities', {
       type: Capability,
       resolve: async (root, args, ctx) => {

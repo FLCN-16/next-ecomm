@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Page, Card, Filters, ChoiceList, Badge, Link, IndexTable, useIndexResourceState } from '@shopify/polaris'
+import type { AppliedFilterInterface } from "@shopify/polaris";
 
 // Components
 import BackendLayout from '@flcn-ecomm/container/Backend/Layout'
@@ -30,6 +31,8 @@ function disambiguateLabel(key: string, value: string[]) {
     case 'roles':
       return value.join(', ');
   }
+
+  return value;
 }
 
 const UsersComponent: NextPage = () => {
@@ -73,11 +76,11 @@ const UsersComponent: NextPage = () => {
   ]
 
   // Applied Filters
-  const appliedFilters = [];
+  const appliedFilters: AppliedFilterInterface[] = [];
   if ( roles.length ) {
     appliedFilters.push({
       key: 'roles',
-      label: disambiguateLabel('roles', roles),
+      label: disambiguateLabel('roles', roles).toString(),
       onRemove: handleResetRoles,
     })
   }
@@ -128,7 +131,7 @@ const UsersComponent: NextPage = () => {
             ]}
             loading={loading}
           >
-            {users.map((user, index: number) => (
+            {users.map((user: any, index: number) => (
               <IndexTable.Row
                 id={user.ID}
                 key={user.ID}
