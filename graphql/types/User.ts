@@ -17,9 +17,9 @@ export const User = objectType({
     t.field(prisma.User.role);
     t.field(prisma.User.createdAt);
     t.field(prisma.User.updatedAt);
-    t.list.field('capabilities', {
+    t.nonNull.list.nonNull.field('capabilities', {
       type: Capability,
-      resolve: async (root, args, ctx) => {
+      resolve: async (_, __, ctx) => {
         if (!root.role) return [];
 
         let capabilities = await ctx.prisma.userRole.findUnique({
@@ -51,9 +51,9 @@ export const UsersQuery = extendType({
 export const Capability = objectType({
   name: 'Capability',
   definition(t) {
-    t.string('ID');
-    t.string('name');
-    t.string('slug');
+    t.field(prisma.RoleCapability.ID);
+    t.field(prisma.RoleCapability.name);
+    t.field(prisma.RoleCapability.slug);
   },
 });
 

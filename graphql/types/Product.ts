@@ -1,14 +1,15 @@
 import { enumType, intArg, objectType, stringArg } from 'nexus';
+import prisma from 'nexus-prisma'
 import { extendType } from 'nexus';
 
 
 export const Product = objectType({
   name: 'Product',
   definition(t) {
-    t.string('ID');
-    t.string('title');
-    t.string('slug');
-    t.string('description');
+    t.field(prisma.Product.ID);
+    t.field(prisma.Product.title);
+    t.field(prisma.Product.slug);
+    t.field(prisma.Product.description);
     t.list.field('categories', {
       type: Category,
       resolve: async (root, args, ctx) => {
@@ -19,23 +20,23 @@ export const Product = objectType({
         }).categories();
       }
     });
-    t.string('createdAt');
-    t.string('updatedAt');
+    t.field(prisma.Product.createdAt);
+    t.field(prisma.Product.updatedAt);
   }
 });
 
 export const Category = objectType({
   name: 'Category',
   definition(t) {
-    t.string('ID');
-    t.string('title');
-    t.string('slug');
-    t.string('description');
+    t.field(prisma.Category.ID);
+    t.field(prisma.Category.title);
+    t.field(prisma.Category.slug);
+    t.field(prisma.Category.description);
     t.list.field('products', {
       type: Product,
     });
-    t.string('createdAt');
-    t.string('updatedAt');
+    t.field(prisma.Category.createdAt);
+    t.field(prisma.Category.updatedAt);
   }
 });
 
