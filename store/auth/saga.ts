@@ -21,7 +21,9 @@ function* authAccount(action: AnyAction) {
 
   try {
     let account: LoginResponse = yield call(authModel.login, login, password, remember);
-    console.log(account)
+    if (account.error) {
+      throw new Error(account.error)
+    }
 
     yield put({ type: AUTH_ACCOUNT_SUCCESS, payload: account });
     yield call(Storage.set, 'account', account);
