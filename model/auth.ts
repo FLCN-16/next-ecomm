@@ -16,11 +16,13 @@ export default class Auth {
     try {
       const response = await request.post('auth/login', { login,  password, remember });
 
+      if (response.data.error) throw new Error(response.data.error)
+
       return response.data;
     } catch (error) { throw new Error('Internal Server Error!') }
   }
 
-  public static async account(token: String) {
+  public static async account(token: string) {
     const query = gql`
       query Me($token: String!) {
         me(token: $token) {
