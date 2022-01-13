@@ -49,7 +49,8 @@ export const UsersQuery = extendType({
 });
 
 export const Capability = objectType({
-  name: 'Capability',
+  name: prisma.RoleCapability.$name,
+  description: prisma.RoleCapability.$description,
   definition(t) {
     t.field(prisma.RoleCapability.ID);
     t.field(prisma.RoleCapability.name);
