@@ -19,8 +19,8 @@ export const User = objectType({
     t.field(prisma.User.updatedAt);
     t.nonNull.list.nonNull.field('capabilities', {
       type: Capability,
-      resolve: async (_, __, ctx) => {
-        if (!root.role) return [];
+      resolve: async (root, args, ctx) => {
+        if (!_.role) return [];
 
         let capabilities = await ctx.prisma.userRole.findUnique({
           where: { slug: 'admin' },
