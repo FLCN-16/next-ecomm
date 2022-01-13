@@ -1,23 +1,21 @@
-import type { AppProps } from 'next/app'
-import React from 'react'
-import { useRouter } from 'next/router'
+import type { AppProps } from "next/app"
+import React from "react"
+import { useRouter } from "next/router"
 
 // State
-import type { RootState } from '@flcn-ecomm/store/rootReducer'
-import { useDispatch, useSelector } from 'react-redux'
-import { initialize } from '@flcn-ecomm/store/app/action'
+import { useDispatch } from "react-redux"
+import { initialize } from "../store/app/action"
 
 // Intl
-import { IntlProvider } from 'react-intl'
-import AppLocale from '../intl'
+import { IntlProvider } from "react-intl"
+import AppLocale from "../intl"
 
 // Graphql
-import { ApolloProvider } from "@apollo/client";
-import graphql from '@flcn-ecomm/lib/graphql';
+import { ApolloProvider } from "@apollo/client"
+import graphql from "../lib/graphql"
 
 // Store
-import { wrapper } from '../store';
-
+import { wrapper } from "../store"
 
 export interface AppProviderProps {
   children: JSX.Element | JSX.Element[]
@@ -26,12 +24,11 @@ export interface AppProviderProps {
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const currentAppLocale = AppLocale['en'];
-  const isAdmin = !! router.pathname.match(/^\/admin\/?/)
-  const isAppReady = useSelector((state: RootState) => state.app.get('ready'))
+  const currentAppLocale = AppLocale["en"]
+  const isAdmin = !!router.pathname.match(/^\/admin\/?/)
 
-  if ( ! isAdmin ) {
-    require('../styles/globals.css')
+  if (!isAdmin) {
+    require("../styles/globals.css")
   }
 
   React.useEffect(() => {
@@ -40,17 +37,14 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   return (
     <React.Fragment>
-      <IntlProvider
-        locale={currentAppLocale.locale}
-        messages={currentAppLocale.messages}
-      >
+      <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
         {children}
       </IntlProvider>
     </React.Fragment>
   )
 }
 
-const AppProviderComponent = wrapper.withRedux(AppProvider);
+const AppProviderComponent = wrapper.withRedux(AppProvider)
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

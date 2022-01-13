@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,18 +15,12 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@flcn-ecomm/container/*": [ "./containers/*" ],
-      "@flcn-ecomm/component/*": [ "./components/*" ],
-      "@flcn-ecomm/assets/*": [ "./public/*" ],
-      "@flcn-ecomm/*": [ "./*" ],
-    },
+      "@flcn-ecomm/container/*": ["./containers/*"],
+      "@flcn-ecomm/component/*": ["./components/*"],
+      "@flcn-ecomm/assets/*": ["./public/*"],
+      "@flcn-ecomm/*": ["./*"]
+    }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["global.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

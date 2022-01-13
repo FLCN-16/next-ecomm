@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-
+import styled from "styled-components"
 
 export const Wrapper = styled.div`
   display: flex;
@@ -43,7 +42,8 @@ export const Input = styled.input`
     color: #333333;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background: rgba(0, 0, 0, 0.25);
   }
 `
@@ -52,10 +52,9 @@ export const ActionContainer = styled.div`
   display: flex;
 `
 
-
 const Styles = {
   Wrapper,
-  FormContainer
+  FormContainer,
 }
 
 export default Styles

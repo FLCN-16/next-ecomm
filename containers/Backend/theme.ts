@@ -1,7 +1,7 @@
-import type { ThemeConfig } from "@shopify/polaris/build/ts/latest/src/utilities/theme";
+import type { ThemeConfig } from "@shopify/polaris/build/ts/latest/src/utilities/theme"
 
 export const Theme: ThemeConfig = {
-  colorScheme: 'inverse'
+  colorScheme: "inverse",
 }
 
-export default Theme;
+export default Theme

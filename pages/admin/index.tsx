@@ -1,11 +1,11 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next"
+import React from "react"
 
 // Components
-import BackendLayout from '@flcn-ecomm/container/Backend/Layout'
+import BackendLayout from "../../containers/Backend/Layout"
 
 // HOCs
-import withAuth from '../../hoc/withAuth'
-
+import withAuth from "../../hoc/withAuth"
 
 const Dashboard: NextPage = () => {
   return (

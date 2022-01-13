@@ -1,10 +1,10 @@
 export interface Session {
-  id: string;
+  id: string
 }
 
 export interface AuthForm {
   login: string
   password: string
-  remember: boolean,
+  remember: boolean
   redirectTo?: string
 }

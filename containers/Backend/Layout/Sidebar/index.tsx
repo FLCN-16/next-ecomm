@@ -1,19 +1,22 @@
-import React from 'react'
-import { withRouter, NextRouter } from 'next/router';
+import React from "react"
+import { withRouter, NextRouter } from "next/router"
 
-import { Navigation } from '@shopify/polaris';
+import { Navigation } from "@shopify/polaris"
 import {
-  HomeMajor, OrdersMajor, ProductsMajor,
-  CustomersMajor, DiscountsMajor, SettingsMajor,
-  MarketingMajor
-} from '@shopify/polaris-icons'
-
+  HomeMajor,
+  OrdersMajor,
+  ProductsMajor,
+  CustomersMajor,
+  DiscountsMajor,
+  SettingsMajor,
+  MarketingMajor,
+} from "@shopify/polaris-icons"
 
 interface Props {
   router: NextRouter
 }
 
-const Sidebar: React.FC<Props> = ({router}) => {
+const Sidebar: React.FC<Props> = ({ router }) => {
   const handleClick = () => {
     console.log()
   }
@@ -25,8 +28,8 @@ const Sidebar: React.FC<Props> = ({router}) => {
         <Navigation.Section
           items={[
             {
-              url: '/admin',
-              label: 'Dashboard',
+              url: "/admin",
+              label: "Dashboard",
               exactMatch: true,
               icon: HomeMajor,
             },
@@ -36,59 +39,59 @@ const Sidebar: React.FC<Props> = ({router}) => {
         <Navigation.Section
           items={[
             {
-              url: '/admin/orders',
-              label: 'Orders',
+              url: "/admin/orders",
+              label: "Orders",
               icon: OrdersMajor,
               subNavigationItems: [
                 {
-                  url: '/admin/orders',
+                  url: "/admin/orders",
                   disabled: false,
-                  label: 'All Orders',
+                  label: "All Orders",
                 },
                 {
-                  url: '/admin/orders/inventory',
+                  url: "/admin/orders/inventory",
                   disabled: false,
-                  label: 'Inventory',
+                  label: "Inventory",
                 },
               ],
             },
             {
-              url: '/admin/products',
-              label: 'Products',
+              url: "/admin/products",
+              label: "Products",
               icon: ProductsMajor,
               subNavigationItems: [
                 {
-                  url: '/admin/products',
+                  url: "/admin/products",
                   disabled: false,
-                  label: 'All Products',
+                  label: "All Products",
                 },
                 {
-                  url: '/admin/products/new',
+                  url: "/admin/products/new",
                   disabled: false,
-                  label: 'Add Product'
+                  label: "Add Product",
                 },
                 {
-                  url: '/admin/category/list',
+                  url: "/admin/category/list",
                   disabled: false,
-                  label: 'Categories',
+                  label: "Categories",
                 },
               ],
             },
             {
-              url: '/admin/marketing',
-              label: 'Marketing',
+              url: "/admin/marketing",
+              label: "Marketing",
               icon: MarketingMajor,
               subNavigationItems: [
                 {
-                  url: '/admin/marketing',
+                  url: "/admin/marketing",
                   disabled: false,
-                  label: 'Analatics',
+                  label: "Analatics",
                 },
                 {
-                  url: '/admin/marketing/coupons',
+                  url: "/admin/marketing/coupons",
                   disabled: false,
-                  label: 'Coupons',
-                }
+                  label: "Coupons",
+                },
               ],
             },
           ]}
@@ -98,8 +101,8 @@ const Sidebar: React.FC<Props> = ({router}) => {
         <Navigation.Section
           items={[
             {
-              url: '/admin/users',
-              label: 'Users',
+              url: "/admin/users",
+              label: "Users",
               icon: CustomersMajor,
             },
           ]}
@@ -110,8 +113,8 @@ const Sidebar: React.FC<Props> = ({router}) => {
         <Navigation.Section
           items={[
             {
-              url: '/admin/settings',
-              label: 'Settings',
+              url: "/admin/settings",
+              label: "Settings",
               icon: SettingsMajor,
             },
           ]}

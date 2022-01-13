@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-
+import styled from "styled-components"
 
 const ActionWrapper = styled.div`
   display: flex;
@@ -8,7 +7,6 @@ const ActionWrapper = styled.div`
   margin-top: 20px;
 `
 
-
 export default {
-  ActionWrapper
+  ActionWrapper,
 }

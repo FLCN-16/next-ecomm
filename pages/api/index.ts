@@ -1,9 +1,11 @@
-import type { ApiRequest, ApiResponse } from '@flcn-ecomm/lib/types/api'
-import withMiddlewares from '@flcn-ecomm/lib/middlewares'
-
+import type { ApiRequest, ApiResponse } from "../../lib/types/api"
+import withMiddlewares from "../../lib/middlewares"
 
 const handle = (req: ApiRequest, res: ApiResponse) => {
-  res.status(200).json({ name: 'John Doe' })
+  res.status(200).json({ name: "John Doe" })
 }
 
-export default withMiddlewares(handle, { needAuth: true, capabilities: ['admin'] })
+export default withMiddlewares(handle, {
+  needAuth: true,
+  capabilities: ["admin"],
+})

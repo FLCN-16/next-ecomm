@@ -1,7 +1,8 @@
-import type { NextPage, GetServerSideProps } from 'next'
+import type { NextPage, GetServerSideProps } from "next"
+import React from "react"
 
 // Components
-import FrontendLayout from '../containers/Frontend/Layout'
+import FrontendLayout from "../containers/Frontend/Layout"
 
 const Home: NextPage = () => {
   return (
@@ -12,10 +13,10 @@ const Home: NextPage = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let products = {};
+  const products = {}
 
   return {
-    props: products
+    props: products,
   }
 }
 

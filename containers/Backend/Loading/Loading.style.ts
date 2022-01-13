@@ -1,5 +1,4 @@
-import styled, { keyframes } from 'styled-components'
-
+import styled, { keyframes } from "styled-components"
 
 const spinAnim = keyframes`
   0% { transform: rotate(0deg); opacity: 1; }
@@ -33,10 +32,9 @@ const Text = styled.span`
   font-size: 18px;
 `
 
-
 export default {
   Wrapper,
   Container,
   Icon,
-  Text
+  Text,
 }

@@ -1,15 +1,14 @@
-import React from 'react'
-
+import React from "react"
 
 // Components
-import Header from './Header'
-import Footer from './Footer'
+import Header from "./Header"
+import Footer from "./Footer"
 
 export interface Props {
   children: JSX.Element[] | JSX.Element
 }
 
-const Layout: React.FC<Props> = ({children}) => {
+const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div id="page">
       <Header />
