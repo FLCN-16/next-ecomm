@@ -1,23 +1,23 @@
 import { objectType, stringArg, nonNull, extendType } from "nexus"
-import prisma from "nexus-prisma"
+import { User, RoleCapability } from "nexus-prisma"
 import jwt from "jsonwebtoken"
 import type { JwtPayload } from "jsonwebtoken"
 
-export const User = objectType({
-  name: prisma.User.$name,
-  description: prisma.User.$description,
+export const UserType = objectType({
+  name: User.$name,
+  description: User.$description,
   definition(t) {
-    t.field(prisma.User.ID)
-    t.field(prisma.User.firstName)
-    t.field(prisma.User.lastName)
-    t.field(prisma.User.username)
-    t.field(prisma.User.email)
-    t.field(prisma.User.verified)
-    t.field(prisma.User.role)
-    t.field(prisma.User.createdAt)
-    t.field(prisma.User.updatedAt)
+    t.field(User.ID)
+    t.field(User.firstName)
+    t.field(User.lastName)
+    t.field(User.username)
+    t.field(User.email)
+    t.field(User.verified)
+    t.field(User.role)
+    t.field(User.createdAt)
+    t.field(User.updatedAt)
     t.nonNull.list.nonNull.field("capabilities", {
-      type: Capability,
+      type: CapabilityType,
       resolve: async (root, args, ctx) => {
         if (!root.role) return []
 
@@ -37,7 +37,7 @@ export const UsersQuery = extendType({
   type: "Query",
   definition(t) {
     t.list.field("users", {
-      type: User,
+      type: UserType,
       resolve: async (root, args, ctx) => {
         return ctx.prisma.user.findMany({
           where: {
@@ -49,13 +49,13 @@ export const UsersQuery = extendType({
   },
 })
 
-export const Capability = objectType({
-  name: prisma.RoleCapability.$name,
-  description: prisma.RoleCapability.$description,
+export const CapabilityType = objectType({
+  name: RoleCapability.$name,
+  description: RoleCapability.$description,
   definition(t) {
-    t.field(prisma.RoleCapability.ID)
-    t.field(prisma.RoleCapability.name)
-    t.field(prisma.RoleCapability.slug)
+    t.field(RoleCapability.ID)
+    t.field(RoleCapability.name)
+    t.field(RoleCapability.slug)
   },
 })
 
@@ -63,7 +63,7 @@ export const CapabilitiesQuery = extendType({
   type: "Query",
   definition(t) {
     t.list.field("capabilities", {
-      type: Capability,
+      type: CapabilityType,
       resolve: async (root, args, ctx) => {
         return ctx.prisma.roleCapability.findMany()
       },
@@ -75,7 +75,7 @@ export const UserQuery = extendType({
   type: "Query",
   definition(t) {
     t.field("user", {
-      type: User,
+      type: UserType,
       args: {
         ID: nonNull(stringArg()),
       },
@@ -97,7 +97,7 @@ export const MeQuery = extendType({
   type: "Query",
   definition(t) {
     t.field("me", {
-      type: User,
+      type: UserType,
       args: {
         token: nonNull(stringArg()),
       },

@@ -1,9 +1,19 @@
-import { makeSchema } from "nexus"
+import { GraphQLScalarType } from "graphql"
+import { JSONObjectResolver, DateTimeResolver } from "graphql-scalars"
+import { asNexusMethod, makeSchema } from "nexus"
 import { join } from "path"
 import * as types from "./types"
 
+const jsonScalar = new GraphQLScalarType({
+  ...JSONObjectResolver,
+  // Override the default 'JsonObject' name with one that matches what Nexus Prisma expects.
+  name: "Json",
+})
+
+const dateTimeScalar = new GraphQLScalarType(DateTimeResolver)
+
 export const schema = makeSchema({
-  types,
+  types: [types, asNexusMethod(jsonScalar, "json"), asNexusMethod(dateTimeScalar, "dateTime")],
   shouldGenerateArtifacts: process.env.NODE_ENV === "development",
   outputs: {
     typegen: join(process.cwd(), "node_modules", "@types", "nexus-typegen", "index.d.ts"),

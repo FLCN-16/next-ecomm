@@ -1,16 +1,16 @@
 import { objectType, stringArg, extendType } from "nexus"
-import prisma from "nexus-prisma"
+import { Product, Category } from "nexus-prisma"
 
-export const Product = objectType({
-  name: prisma.Product.$name,
-  description: prisma.Product.$description,
+export const ProductType = objectType({
+  name: Product.$name,
+  description: Product.$description,
   definition(t) {
-    t.field(prisma.Product.ID)
-    t.field(prisma.Product.title)
-    t.field(prisma.Product.slug)
-    t.field(prisma.Product.description)
+    t.field(Product.ID)
+    t.field(Product.title)
+    t.field(Product.slug)
+    t.field(Product.description)
     t.list.field("categories", {
-      type: Category,
+      type: CategoryType,
       resolve: async (root, args, ctx) => {
         if (!root.ID) return []
 
@@ -21,24 +21,24 @@ export const Product = objectType({
           .categories()
       },
     })
-    t.field(prisma.Product.createdAt)
-    t.field(prisma.Product.updatedAt)
+    t.field(Product.createdAt)
+    t.field(Product.updatedAt)
   },
 })
 
-export const Category = objectType({
-  name: prisma.Category.$name,
-  description: prisma.Category.$description,
+export const CategoryType = objectType({
+  name: Category.$name,
+  description: Category.$description,
   definition(t) {
-    t.field(prisma.Category.ID)
-    t.field(prisma.Category.title)
-    t.field(prisma.Category.slug)
-    t.field(prisma.Category.description)
+    t.field(Category.ID)
+    t.field(Category.title)
+    t.field(Category.slug)
+    t.field(Category.description)
     t.list.field("products", {
-      type: Product,
+      type: ProductType,
     })
-    t.field(prisma.Category.createdAt)
-    t.field(prisma.Category.updatedAt)
+    t.field(Category.createdAt)
+    t.field(Category.updatedAt)
   },
 })
 
@@ -46,7 +46,7 @@ export const ProductQuery = extendType({
   type: "Query",
   definition(t) {
     t.field("product", {
-      type: Product,
+      type: ProductType,
       args: {
         ID: stringArg(),
       },
@@ -57,7 +57,7 @@ export const ProductQuery = extendType({
       },
     })
     t.list.field("products", {
-      type: Product,
+      type: ProductType,
       resolve: async (root, args, ctx) => {
         return ctx.prisma.product.findMany()
       },
@@ -69,7 +69,7 @@ export const CategoryQuery = extendType({
   type: "Query",
   definition(t) {
     t.field("category", {
-      type: Category,
+      type: CategoryType,
       args: {
         ID: stringArg(),
       },
@@ -80,7 +80,7 @@ export const CategoryQuery = extendType({
       },
     })
     t.list.field("categories", {
-      type: Category,
+      type: CategoryType,
       resolve: async (root, args, ctx) => {
         return ctx.prisma.category.findMany()
       },
