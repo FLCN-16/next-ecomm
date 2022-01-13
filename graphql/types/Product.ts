@@ -51,6 +51,8 @@ export const ProductQuery = extendType({
         ID: stringArg(),
       },
       resolve: async (root, args, ctx) => {
+        if (!args.ID) return null
+
         return ctx.prisma.product.findUnique({
           where: { ID: args.ID },
         })
@@ -74,6 +76,8 @@ export const CategoryQuery = extendType({
         ID: stringArg(),
       },
       resolve: async (root, args, ctx) => {
+        if (!args.ID) return null
+
         return ctx.prisma.category.findUnique({
           where: { ID: args.ID },
         })
