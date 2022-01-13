@@ -20,7 +20,7 @@ const makeStore = (context: Context) => {
     // create Enhancer from Middlewares
     let storeEnhancer: StoreEnhancer = applyMiddleware(...middlewares);
     if ( ! is_producation ) {
-      let { composeWithDevTools } = require('redux-devtools-extension')
+      let { composeWithDevTools } = require('@redux-devtools/extension')
       storeEnhancer = composeWithDevTools(storeEnhancer)
     }
 
