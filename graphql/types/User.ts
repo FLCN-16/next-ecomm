@@ -20,7 +20,7 @@ export const User = objectType({
     t.nonNull.list.nonNull.field('capabilities', {
       type: Capability,
       resolve: async (root, args, ctx) => {
-        if (!_.role) return [];
+        if (!root.role) return [];
 
         let capabilities = await ctx.prisma.userRole.findUnique({
           where: { slug: 'admin' },
