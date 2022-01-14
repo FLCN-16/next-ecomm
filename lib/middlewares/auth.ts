@@ -1,4 +1,4 @@
-import type { ApiRequest, ApiResponse, User } from "@flcn-ecomm/lib/types/api"
+import type { ApiRequest, ApiResponse, User } from "../../lib/types/api"
 import intersection from "lodash/intersection"
 import jwt from "jsonwebtoken"
 

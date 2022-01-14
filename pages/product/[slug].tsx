@@ -2,7 +2,7 @@ import type { NextPage, GetServerSideProps } from "next"
 import React from "react"
 
 // Components
-import FontendLayout from "../../containers/Frontend/Layout"
+import FontendLayout from "../../common/containers/Frontend/Layout"
 
 const Product: NextPage = () => {
   return (

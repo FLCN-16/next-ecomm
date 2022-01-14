@@ -1,5 +1,3 @@
-const path = require("path")
-
 const isProduction = process.env.NODE_ENV === "production"
 
 const moduleExports = {
@@ -11,15 +9,10 @@ const moduleExports = {
   },
   pageExtensions: ["tsx", "ts"],
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    config.resolve.alias["@flcn-ecomm/container"] = path.join(__dirname, "containers")
-    config.resolve.alias["@flcn-ecomm/component"] = path.join(__dirname, "components")
-    config.resolve.alias["@flcn-ecomm/assets"] = path.join(__dirname, "public")
-    config.resolve.alias["@flcn-ecomm"] = path.join(__dirname, "/")
-
-    config.watchOptions = {
-      poll: 5000,
-      aggregateTimeout: 2500,
-    }
+    // config.watchOptions = {
+    //   poll: 5000,
+    //   aggregateTimeout: 2500,
+    // }
 
     config.plugins.push(
       new webpack.IgnorePlugin({

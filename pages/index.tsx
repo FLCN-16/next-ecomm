@@ -2,7 +2,7 @@ import type { NextPage, GetServerSideProps } from "next"
 import React from "react"
 
 // Components
-import FrontendLayout from "../containers/Frontend/Layout"
+import FrontendLayout from "../common/containers/Frontend/Layout"
 
 const Home: NextPage = () => {
   return (

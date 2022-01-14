@@ -2,9 +2,9 @@ import React from "react"
 import BackendHead from "../Head"
 
 // State
-import type { RootState } from "../../../../store/rootReducer"
 import { useSelector, useDispatch } from "react-redux"
-import { logoutAccount } from "../../../../store/auth/action"
+import type { RootState } from "../../../../../store/rootReducer"
+import { logoutAccount } from "../../../../../store/auth/action"
 
 import { TopBar, Icon } from "@shopify/polaris"
 import { ArrowLeftMinor, NotificationMajor, LogOutMinor } from "@shopify/polaris-icons"

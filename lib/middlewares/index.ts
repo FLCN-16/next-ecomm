@@ -1,4 +1,4 @@
-import type { ApiRequest, ApiResponse } from "@flcn-ecomm/lib/types/api"
+import type { ApiRequest, ApiResponse } from "../../lib/types/api"
 
 // Middlewares
 import prismaMiddleware from "./prisma"

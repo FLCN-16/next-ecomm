@@ -1,6 +1,6 @@
 import { AnyAction } from "redux"
 import { Map } from "immutable"
-import type { ImmutableMap } from "@flcn-ecomm/lib/types/common"
+import type { ImmutableMap } from "../../lib/types/common"
 
 import { INITIALIZE, INITIALIZED } from "./action"
 

@@ -1,21 +1,20 @@
 import { objectType, stringArg, nonNull, extendType } from "nexus"
-import { User, RoleCapability } from "nexus-prisma"
-import jwt from "jsonwebtoken"
 import type { JwtPayload } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 export const UserType = objectType({
-  name: User.$name,
-  description: User.$description,
+  name: "User",
+  description: "User",
   definition(t) {
-    t.field(User.ID)
-    t.field(User.firstName)
-    t.field(User.lastName)
-    t.field(User.username)
-    t.field(User.email)
-    t.field(User.verified)
-    t.field(User.role)
-    t.field(User.createdAt)
-    t.field(User.updatedAt)
+    t.string("ID")
+    t.string("firstName")
+    t.string("lastName")
+    t.string("username")
+    t.string("email")
+    t.boolean("verified")
+    t.string("role")
+    t.dateTime("createdAt")
+    t.dateTime("updatedAt")
     t.nonNull.list.nonNull.field("capabilities", {
       type: CapabilityType,
       resolve: async (root, args, ctx) => {
@@ -50,12 +49,12 @@ export const UsersQuery = extendType({
 })
 
 export const CapabilityType = objectType({
-  name: RoleCapability.$name,
-  description: RoleCapability.$description,
+  name: "Capability",
+  description: "Capability of a user role",
   definition(t) {
-    t.field(RoleCapability.ID)
-    t.field(RoleCapability.name)
-    t.field(RoleCapability.slug)
+    t.string("ID")
+    t.string("name")
+    t.string("slug")
   },
 })
 

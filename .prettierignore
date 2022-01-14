@@ -1,2 +1,8 @@
 pnpm-lock.yaml
 yarn.lock
+.next/
+.husky/
+.git/
+.github/
+.gitignore
+node_modules/

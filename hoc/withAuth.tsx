@@ -4,13 +4,13 @@ import { useSelector } from "react-redux"
 import { intersection } from "lodash"
 
 import type { RootState } from "../store/rootReducer"
-import LoadingComponent from "../containers/Backend/Loading"
-import UnauthorizedContainer from "../containers/Backend/Unauthorized"
+import LoadingComponent from "../common/containers/Backend/Loading"
+import UnauthorizedContainer from "../common/containers/Backend/Unauthorized"
 
 type AuthType = object | boolean | null
 
 function withAuth(WrappedComponent: React.ComponentType, capabilities: string | string[] = []) {
-  const AuthComponent = (props: any) => {
+  const AuthComponent = () => {
     const [auth, setAuth] = useState<AuthType>(null)
     const router = useRouter()
 
@@ -42,7 +42,7 @@ function withAuth(WrappedComponent: React.ComponentType, capabilities: string | 
       }
 
       setAuth(isAuthenticated)
-    }, [auth, isReady, isAuthenticated, account])
+    }, [auth, isReady, isAuthenticated, validateCapability, account])
 
     if (auth === false) {
       router.push("/admin/auth?next=" + window.encodeURI(router.pathname))

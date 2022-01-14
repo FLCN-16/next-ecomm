@@ -2,7 +2,7 @@ import type { NextPage } from "next"
 import React from "react"
 
 // Components
-import BackendLayout from "../../containers/Backend/Layout"
+import BackendLayout from "../../common/containers/Backend/Layout"
 
 // HOCs
 import withAuth from "../../hoc/withAuth"

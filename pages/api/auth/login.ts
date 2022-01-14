@@ -1,7 +1,7 @@
-import type { ApiRequest, ApiResponse } from "@flcn-ecomm/lib/types/api"
 import { randomBytes } from "crypto"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import type { ApiRequest, ApiResponse } from "../../../lib/types/api"
 import withMiddlewares from "../../../lib/middlewares"
 
 const handle = async (req: ApiRequest, res: ApiResponse) => {

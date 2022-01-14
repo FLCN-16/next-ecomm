@@ -2,8 +2,8 @@ import type { NextPage, GetServerSideProps } from "next"
 import React from "react"
 
 // Components
-import BackendHead from "../../../../containers/Backend/Layout/Head"
-import ForgotComponent from "../../../../containers/Backend/Auth/Forgot"
+import BackendHead from "../../../../common/containers/Backend/Layout/Head"
+import ForgotComponent from "../../../../common/containers/Backend/Auth/Forgot"
 
 const AdminResetPassword: NextPage = () => {
   return (

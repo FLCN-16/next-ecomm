@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt"
 import { PrismaClient, Prisma } from "@prisma/client"
-import { timestampToDate } from "../lib/helper/index"
 
 let prisma: PrismaClient
 
@@ -38,23 +37,9 @@ const userMiddleware: Prisma.Middleware = async (params: Prisma.MiddlewareParams
   return next(params)
 }
 
-const timestampMiddleware: Prisma.Middleware = async (params: Prisma.MiddlewareParams, next) => {
-  console.log(params)
-  if (params.args.data.createdAt) {
-    params.args.data.createdAt = timestampToDate(params.args.data.createdAt)
-  }
-
-  if (params.args.data.updatedAt) {
-    params.args.data.updatedAt = timestampToDate(params.args.data.updatedAt)
-  }
-
-  return next(params)
-}
-
 /************************ Middlewares **********************/
 
 // Apply Middlewares
 prisma.$use(userMiddleware)
-// prisma.$use(timestampMiddleware);
 
 export default prisma

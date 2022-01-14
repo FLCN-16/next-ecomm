@@ -13,14 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    "paths": {
-      "@flcn-ecomm/container/*": ["./containers/*"],
-      "@flcn-ecomm/component/*": ["./components/*"],
-      "@flcn-ecomm/assets/*": ["./public/*"],
-      "@flcn-ecomm/*": ["./*"]
-    }
+    "incremental": true
   },
   "include": ["global.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "next.config.js"]
 }

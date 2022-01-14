@@ -12,8 +12,8 @@ import { AuthForm } from "../../../store/auth/types"
 import type { RootState } from "../../../store/rootReducer"
 
 // Containers
-import BackendHead from "../../../containers/Backend/Layout/Head"
-import AuthContainer from "../../../containers/Backend/Auth"
+import BackendHead from "../../../common/containers/Backend/Layout/Head"
+import AuthContainer from "../../../common/containers/Backend/Auth"
 
 interface Props {
   router: NextRouter

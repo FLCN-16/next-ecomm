@@ -1,6 +1,6 @@
-import type { ApiRequest, ApiResponse } from "@flcn-ecomm/lib/types/api"
 import { ApolloServer } from "apollo-server-micro"
-import Cors from "micro-cors"
+
+import type { ApiRequest, ApiResponse } from "../../lib/types/api"
 import { schema } from "../../graphql/schema"
 import { resolvers } from "../../graphql/resolvers"
 import { createContext } from "../../graphql/context"

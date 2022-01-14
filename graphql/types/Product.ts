@@ -1,14 +1,13 @@
 import { objectType, stringArg, extendType } from "nexus"
-import { Product, Category } from "nexus-prisma"
 
 export const ProductType = objectType({
-  name: Product.$name,
-  description: Product.$description,
+  name: "Product",
+  description: "Product",
   definition(t) {
-    t.field(Product.ID)
-    t.field(Product.title)
-    t.field(Product.slug)
-    t.field(Product.description)
+    t.string("ID")
+    t.string("title")
+    t.string("slug")
+    t.string("description")
     t.list.field("categories", {
       type: CategoryType,
       resolve: async (root, args, ctx) => {
@@ -21,24 +20,24 @@ export const ProductType = objectType({
           .categories()
       },
     })
-    t.field(Product.createdAt)
-    t.field(Product.updatedAt)
+    t.dateTime("createdAt")
+    t.dateTime("updatedAt")
   },
 })
 
 export const CategoryType = objectType({
-  name: Category.$name,
-  description: Category.$description,
+  name: "Category",
+  description: "Category of a product",
   definition(t) {
-    t.field(Category.ID)
-    t.field(Category.title)
-    t.field(Category.slug)
-    t.field(Category.description)
+    t.string("ID")
+    t.string("title")
+    t.string("slug")
+    t.string("description")
     t.list.field("products", {
       type: ProductType,
     })
-    t.field(Category.createdAt)
-    t.field(Category.updatedAt)
+    t.dateTime("createdAt")
+    t.dateTime("updatedAt")
   },
 })
 

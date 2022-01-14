@@ -31,5 +31,6 @@
     "linebreak-style": ["warn", "unix"],
     "quotes": ["warn", "double"],
     "semi": ["warn", "never"]
-  }
+  },
+  "ignorePatterns": ["next.config.js", "global.d.ts", "next-env.d.ts"]
 }

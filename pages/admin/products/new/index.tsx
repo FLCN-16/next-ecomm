@@ -3,7 +3,7 @@ import React, { FormEvent } from "react"
 import { Page, Card, Layout, TextField, ContextualSaveBar } from "@shopify/polaris"
 
 // Components
-import BackendLayout from "../../../../containers/Backend/Layout"
+import BackendLayout from "../../../../common/containers/Backend/Layout"
 
 // HOCs
 import withAuth from "../../../../hoc/withAuth"
