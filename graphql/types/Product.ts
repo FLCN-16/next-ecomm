@@ -20,8 +20,8 @@ export const ProductType = objectType({
           .categories()
       },
     })
-    t.dateTime("createdAt")
-    t.dateTime("updatedAt")
+    t.field("createdAt", { type: "DateTime" })
+    t.field("updatedAt", { type: "DateTime" })
   },
 })
 
@@ -36,8 +36,8 @@ export const CategoryType = objectType({
     t.list.field("products", {
       type: ProductType,
     })
-    t.dateTime("createdAt")
-    t.dateTime("updatedAt")
+    t.field("createdAt", { type: "DateTime" })
+    t.field("updatedAt", { type: "DateTime" })
   },
 })
 

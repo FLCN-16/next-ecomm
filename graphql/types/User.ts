@@ -13,8 +13,6 @@ export const UserType = objectType({
     t.string("email")
     t.boolean("verified")
     t.string("role")
-    t.dateTime("createdAt")
-    t.dateTime("updatedAt")
     t.nonNull.list.nonNull.field("capabilities", {
       type: CapabilityType,
       resolve: async (root, args, ctx) => {
@@ -29,6 +27,8 @@ export const UserType = objectType({
         return capabilities.map((cap: any) => cap.capability)
       },
     })
+    t.field("createdAt", { type: "DateTime" })
+    t.field("updatedAt", { type: "DateTime" })
   },
 })
 
@@ -38,11 +38,7 @@ export const UsersQuery = extendType({
     t.list.field("users", {
       type: UserType,
       resolve: async (root, args, ctx) => {
-        return ctx.prisma.user.findMany({
-          where: {
-            username: "admin",
-          },
-        })
+        return ctx.prisma.user.findMany()
       },
     })
   },
