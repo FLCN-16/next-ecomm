@@ -5,6 +5,7 @@ specifiers:
   '@prisma/client': ^3.7.0
   '@redux-devtools/extension': ^3.1.0
   '@shopify/polaris': 7.5.0
+  '@shopify/polaris-icons': ^4.12.0
   '@types/bcrypt': ^5.0.0
   '@types/jsonwebtoken': ^8.5.6
   '@types/lodash': ^4.14.176
@@ -53,6 +54,7 @@ specifiers:
 dependencies:
   '@apollo/client': 3.5.7_graphql@15.8.0+react@17.0.2
   '@shopify/polaris': 7.5.0_react-dom@17.0.2+react@17.0.2
+  '@shopify/polaris-icons': 4.12.0
   apollo-server-micro: 3.6.1_graphql@15.8.0+micro@9.3.4
   axios: 0.24.0
   bcrypt: 5.0.1

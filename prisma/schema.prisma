@@ -5,10 +5,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator nexusPrisma {
-  provider = "nexus-prisma"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
