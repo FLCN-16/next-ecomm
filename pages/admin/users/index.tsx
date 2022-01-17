@@ -8,7 +8,7 @@ import type { AppliedFilterInterface } from "@shopify/polaris"
 import BackendLayout from "../../../common/containers/Backend/Layout"
 
 // HOCs
-import withAuth from "../../../common/hoc/withAuth"
+import withAuth from "../../../common/hocs/withAuth"
 
 const gqlquery = gql`
   query Users {

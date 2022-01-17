@@ -6,7 +6,7 @@ import { Page, Card, Layout, TextField, ContextualSaveBar } from "@shopify/polar
 import BackendLayout from "../../../../common/containers/Backend/Layout"
 
 // HOCs
-import withAuth from "../../../../common/hoc/withAuth"
+import withAuth from "../../../../common/hocs/withAuth"
 
 const ProductsComponent: NextPage = () => {
   const [name, setName] = React.useState("")
