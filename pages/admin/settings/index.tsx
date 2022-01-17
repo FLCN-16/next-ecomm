@@ -6,7 +6,7 @@ import { Page, Card } from "@shopify/polaris"
 import BackendLayout from "../../../common/containers/Backend/Layout"
 
 // HOCs
-import withAuth from "../../../hoc/withAuth"
+import withAuth from "../../../common/hoc/withAuth"
 
 const SettingsPage: NextPage = () => {
   return (

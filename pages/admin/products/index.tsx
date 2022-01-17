@@ -6,7 +6,7 @@ import { Page, Card, EmptyState, IndexTable, useIndexResourceState } from "@shop
 import BackendLayout from "../../../common/containers/Backend/Layout"
 
 // HOCs
-import withAuth from "../../../hoc/withAuth"
+import withAuth from "../../../common/hoc/withAuth"
 
 const ProductEmptyState = () => (
   <EmptyState

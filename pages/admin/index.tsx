@@ -5,7 +5,7 @@ import React from "react"
 import BackendLayout from "../../common/containers/Backend/Layout"
 
 // HOCs
-import withAuth from "../../hoc/withAuth"
+import withAuth from "../../common/hoc/withAuth"
 
 const Dashboard: NextPage = () => {
   return (
