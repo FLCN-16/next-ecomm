@@ -1,21 +1,22 @@
-import type { NextPage, GetServerSideProps } from 'next'
+import type { NextPage, GetServerSideProps } from "next"
+import React from "react"
 
 // Components
-import FontendLayout from '@flcn-ecomm/container/Frontend/Layout'
+import FrontendLayout from "../common/containers/Frontend/Layout"
 
 const Shop: NextPage = () => {
   return (
-    <FontendLayout>
+    <FrontendLayout>
       <span>Shop</span>
-    </FontendLayout>
+    </FrontendLayout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let products = {};
+  const products = {}
 
   return {
-    props: products
+    props: products,
   }
 }
 

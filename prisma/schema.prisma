@@ -58,8 +58,8 @@ model CapabilitiesOnRole {
 
 model User {
   ID         String   @id @default(uuid())
-  first_name String?  @db.VarChar(50)
-  last_name  String?  @db.VarChar(50)
+  firstName String?   @db.VarChar(50) @map(name: "first_name")
+  lastName  String?   @db.VarChar(50) @map(name: "last_name")
   username   String   @unique @db.VarChar(50)
   email      String   @unique @db.VarChar(50)
   verified   Boolean  @default(false)
@@ -204,4 +204,23 @@ model Transaction {
 
   // Relations
   Order Order @relation(references: [ID], fields: [orderId])
+}
+
+model Notification {
+  ID                  String              @id @default(uuid())
+  activityType        String              @map(name: "activity_type")
+  message             String              @db.Text
+  authorId            String              @map(name: "author_id")
+  createdAt           DateTime            @default(now()) @map(name: "created_at")
+  updatedAt           DateTime            @default(now()) @map(name: "updated_at")
+}
+
+model UserNotification {
+  ID                  Int                 @id
+  notificationId      String              @map(name: "notification_id")
+  senderId            String              @map(name: "sender_id")
+  receiverId          String              @map(name: "receiver_id")
+  isSeen              Boolean             @default(false)
+  createdAt           DateTime            @default(now()) @map(name: "created_at")
+  updatedAt           DateTime            @default(now()) @map(name: "updated_at")
 }

@@ -1,7 +1,7 @@
-import Enlang from './entries/en-US';
+import Enlang from "./entries/en-US"
 
 const AppLocale = {
-  en: Enlang
-};
+  en: Enlang,
+}
 
-export default AppLocale;
+export default AppLocale

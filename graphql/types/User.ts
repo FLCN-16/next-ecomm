@@ -1,119 +1,121 @@
-import { objectType, stringArg, nonNull } from 'nexus';
-import { extendType } from 'nexus';
-import jwt from 'jsonwebtoken'
-import type { JwtPayload } from 'jsonwebtoken'
+import { objectType, stringArg, nonNull, extendType } from "nexus"
+import type { JwtPayload } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
-
-export const User = objectType({
-  name: 'User',
+export const UserType = objectType({
+  name: "User",
+  description: "User",
   definition(t) {
-    t.string('ID');
-    t.string('firstName');
-    t.string('lastName');
-    t.string('username');
-    t.string('email');
-    t.boolean('verified');
-    t.string('role');
-    t.list.field('capabilities', {
-      type: Capability,
+    t.string("ID")
+    t.string("firstName")
+    t.string("lastName")
+    t.string("username")
+    t.string("email")
+    t.boolean("verified")
+    t.string("role")
+    t.nonNull.list.nonNull.field("capabilities", {
+      type: CapabilityType,
       resolve: async (root, args, ctx) => {
-        if (!root.role) return [];
+        if (!root.role) return []
 
-        let capabilities = await ctx.prisma.userRole.findUnique({
-          where: { slug: 'admin' },
-        }).capabilities({ select: { capability: true } });
+        const capabilities = await ctx.prisma.userRole
+          .findUnique({
+            where: { slug: "admin" },
+          })
+          .capabilities({ select: { capability: true } })
 
-        return capabilities.map((cap: any) => cap.capability);
-      }
-    });
+        return capabilities.map((cap: any) => cap.capability)
+      },
+    })
+    t.field("createdAt", { type: "DateTime" })
+    t.field("updatedAt", { type: "DateTime" })
   },
-});
+})
 
 export const UsersQuery = extendType({
-  type: 'Query',
+  type: "Query",
   definition(t) {
-    t.list.field('users', {
-      type: User,
+    t.list.field("users", {
+      type: UserType,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.user.findMany({
-          where: {
-            username: 'admin'
-          }
-        });
+        return ctx.prisma.user.findMany()
       },
-    });
-  }
-});
-
-export const Capability = objectType({
-  name: 'Capability',
-  definition(t) {
-    t.string('ID');
-    t.string('name');
-    t.string('slug');
+    })
   },
-});
+})
+
+export const CapabilityType = objectType({
+  name: "Capability",
+  description: "Capability of a user role",
+  definition(t) {
+    t.string("ID")
+    t.string("name")
+    t.string("slug")
+  },
+})
 
 export const CapabilitiesQuery = extendType({
-  type: 'Query',
+  type: "Query",
   definition(t) {
-    t.list.field('capabilities', {
-      type: Capability,
+    t.list.field("capabilities", {
+      type: CapabilityType,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.roleCapability.findMany();
+        return ctx.prisma.roleCapability.findMany()
       },
-    });
-  }
+    })
+  },
 })
 
 export const UserQuery = extendType({
-  type: 'Query',
+  type: "Query",
   definition(t) {
-    t.field('user', {
-      type: User,
+    t.field("user", {
+      type: UserType,
       args: {
         ID: nonNull(stringArg()),
       },
       resolve: async (root, args, ctx) => {
-        if (!args.ID) return null;
+        if (!args.ID) return null
 
         const user = await ctx.prisma.user.findUnique({
           where: { ID: args.ID },
-        });
-        if (!user) return null;
+        })
+        if (!user) return null
 
-        return user;
+        return user
       },
     })
-  }
-});
+  },
+})
 
 export const MeQuery = extendType({
-  type: 'Query',
+  type: "Query",
   definition(t) {
-    t.field('me', {
-      type: User,
+    t.field("me", {
+      type: UserType,
       args: {
         token: nonNull(stringArg()),
       },
       resolve: async (root, args, ctx) => {
-        if (!args.token) return null;
+        if (!args.token) return null
 
-        let tokenDecoded: JwtPayload;
+        let tokenDecoded: JwtPayload
         try {
-          tokenDecoded = jwt.verify(args.token, process.env.JWT_SECRET!) as JwtPayload;
-          if (!tokenDecoded) return null;
-        } catch(error) { return null; }
+          tokenDecoded = jwt.verify(args.token, process.env.JWT_SECRET!) as JwtPayload
+          if (!tokenDecoded) return null
+        } catch (error) {
+          return null
+        }
 
-        if (!tokenDecoded?.ID) return null;
+        if (!tokenDecoded?.ID) return null
 
         const user = await ctx.prisma.user.findUnique({
           where: { ID: tokenDecoded.ID },
-        });
-        if (!user) return null;
+        })
+        if (!user) return null
 
-        return user;
+        return user
       },
     })
-  }
-});
+  },
+})

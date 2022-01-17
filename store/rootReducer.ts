@@ -1,8 +1,7 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux"
 
-import appReducer from './app/reducer'
-import authReducer from './auth/reducer'
-
+import appReducer from "./app/reducer"
+import authReducer from "./auth/reducer"
 
 export interface RootState {
   app: ReturnType<typeof appReducer>

@@ -1,42 +1,32 @@
-import React, { FormEvent } from 'react'
-import type { NextPage } from 'next'
-import {
-  Page, Card, Layout, Form, TextField,
-  ContextualSaveBar, Button,
-} from '@shopify/polaris'
+import type { NextPage } from "next"
+import React, { FormEvent } from "react"
+import { Page, Card, Layout, TextField, ContextualSaveBar } from "@shopify/polaris"
 
 // Components
-import BackendLayout from '@flcn-ecomm/container/Backend/Layout'
+import BackendLayout from "../../../../common/containers/Backend/Layout"
 
 // HOCs
-import withAuth from '../../../../hoc/withAuth'
-
-
+import withAuth from "../../../../common/hocs/withAuth"
 
 const ProductsComponent: NextPage = () => {
-  const [name, setName] = React.useState('')
+  const [name, setName] = React.useState("")
 
   const handleSubmit = (event: FormEvent) => {
-
+    return true
   }
 
   return (
     <BackendLayout>
-      <Page
-        title="Add Product"
-        subtitle="Add a new product for your shop."
-        compactTitle
-        fullWidth
-      >
+      <Page title="Add Product" subtitle="Add a new product for your shop." compactTitle fullWidth>
         <ContextualSaveBar
           message="Your changes have been saved."
           saveAction={{
-            onAction: () => console.log('add form submit logic'),
+            onAction: () => console.log("add form submit logic"),
             loading: false,
             disabled: false,
           }}
           discardAction={{
-            onAction: () => console.log('add clear form logic'),
+            onAction: () => console.log("add clear form logic"),
           }}
           fullWidth
         />
@@ -44,7 +34,7 @@ const ProductsComponent: NextPage = () => {
         <Layout>
           <Layout.Section>
             <Card
-              title={(
+              title={
                 <TextField
                   type="text"
                   label="Product Name"
@@ -57,10 +47,9 @@ const ProductsComponent: NextPage = () => {
                   showCharacterCount
                   maxLength={180}
                 />
-              )}
+              }
               sectioned
-            >
-            </Card>
+            ></Card>
           </Layout.Section>
 
           <Layout.Section secondary>
@@ -78,5 +67,4 @@ const ProductsComponent: NextPage = () => {
   )
 }
 
-
-export default withAuth(ProductsComponent, ['create_product'])
+export default withAuth(ProductsComponent, ["create_product"])

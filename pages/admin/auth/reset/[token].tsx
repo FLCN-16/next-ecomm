@@ -1,8 +1,9 @@
-import type { NextPage } from 'next'
+import type { NextPage, GetServerSideProps } from "next"
+import React from "react"
 
 // Components
-import BackendHead from '@flcn-ecomm/container/Backend/Layout/Head'
-import ForgotComponent from '@flcn-ecomm/container/Backend/Auth/Forgot'
+import BackendHead from "../../../../common/containers/Backend/Layout/Head"
+import ForgotComponent from "../../../../common/containers/Backend/Auth/Forgot"
 
 const AdminResetPassword: NextPage = () => {
   return (
@@ -13,8 +14,8 @@ const AdminResetPassword: NextPage = () => {
   )
 }
 
-export function getServerSideProps(context) {
-  let product = {};
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const product = {}
 
   return { props: product }
 }

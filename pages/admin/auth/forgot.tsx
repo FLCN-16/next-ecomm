@@ -1,8 +1,9 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next"
+import React from "react"
 
 // Components
-import BackendHead from '@flcn-ecomm/container/Backend/Layout/Head'
-import ForgotComponent from '@flcn-ecomm/container/Backend/Auth/Forgot'
+import BackendHead from "../../../common/containers/Backend/Layout/Head"
+import ForgotComponent from "../../../common/containers/Backend/Auth/Forgot"
 
 const AdminForgot: NextPage = () => {
   return (

@@ -1,84 +1,92 @@
-import { enumType, intArg, objectType, stringArg } from 'nexus';
-import { extendType } from 'nexus';
+import { objectType, stringArg, extendType } from "nexus"
 
-
-export const Product = objectType({
-  name: 'Product',
+export const ProductType = objectType({
+  name: "Product",
+  description: "Product",
   definition(t) {
-    t.string('ID');
-    t.string('title');
-    t.string('slug');
-    t.string('description');
-    t.list.field('categories', {
-      type: Category,
+    t.string("ID")
+    t.string("title")
+    t.string("slug")
+    t.string("description")
+    t.list.field("categories", {
+      type: CategoryType,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.product.findUnique({
-          where: { ID: root.ID },
-        }).categories();
-      }
-    });
-    t.string('createdAt');
-    t.string('updatedAt');
-  }
-});
+        if (!root.ID) return []
 
-export const Category = objectType({
-  name: 'Category',
+        return ctx.prisma.product
+          .findUnique({
+            where: { ID: root.ID },
+          })
+          .categories()
+      },
+    })
+    t.field("createdAt", { type: "DateTime" })
+    t.field("updatedAt", { type: "DateTime" })
+  },
+})
+
+export const CategoryType = objectType({
+  name: "Category",
+  description: "Category of a product",
   definition(t) {
-    t.string('ID');
-    t.string('title');
-    t.string('slug');
-    t.string('description');
-    t.list.field('products', {
-      type: Product,
-    });
-    t.string('createdAt');
-    t.string('updatedAt');
-  }
-});
+    t.string("ID")
+    t.string("title")
+    t.string("slug")
+    t.string("description")
+    t.list.field("products", {
+      type: ProductType,
+    })
+    t.field("createdAt", { type: "DateTime" })
+    t.field("updatedAt", { type: "DateTime" })
+  },
+})
 
 export const ProductQuery = extendType({
-  type: 'Query',
+  type: "Query",
   definition(t) {
-    t.field('product', {
-      type: Product,
+    t.field("product", {
+      type: ProductType,
       args: {
         ID: stringArg(),
       },
-      resolve: async (root, { ID }, ctx) => {
-        return await ctx.prisma.product.findUnique({
-          where: { ID }
-        });
-      }
-    });
-    t.list.field('products', {
-      type: Product,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.product.findMany();
-      }
-    });
-  }
-});
+        if (!args.ID) return null
+
+        return ctx.prisma.product.findUnique({
+          where: { ID: args.ID },
+        })
+      },
+    })
+    t.list.field("products", {
+      type: ProductType,
+      resolve: async (root, args, ctx) => {
+        return ctx.prisma.product.findMany()
+      },
+    })
+  },
+})
 
 export const CategoryQuery = extendType({
-  type: 'Query',
+  type: "Query",
   definition(t) {
-    t.field('category', {
-      type: Category,
+    t.field("category", {
+      type: CategoryType,
       args: {
         ID: stringArg(),
       },
-      resolve: async (root, { ID }, ctx) => {
-        return await ctx.prisma.category.findUnique({
-          where: { ID }
-        });
-      }
-    });
-    t.list.field('categories', {
-      type: Category,
       resolve: async (root, args, ctx) => {
-        return await ctx.prisma.category.findMany();
-      }
-    });
-  }
-});
+        if (!args.ID) return null
+
+        return ctx.prisma.category.findUnique({
+          where: { ID: args.ID },
+        })
+      },
+    })
+    t.list.field("categories", {
+      type: CategoryType,
+      resolve: async (root, args, ctx) => {
+        return ctx.prisma.category.findMany()
+      },
+    })
+  },
+})
