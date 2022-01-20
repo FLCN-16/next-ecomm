@@ -9,8 +9,8 @@ import React from 'react';
  * @param token
  */
 const useJwt = (token: string) => {
-  const [isExpired, setIsExpired] = useState<boolean>(false);
-  const [decodedToken, setDecodedToken] = useState<any>(null);
+  const [isExpired, setIsExpired] = React.useState<boolean>(false);
+  const [decodedToken, setDecodedToken] = React.useState<any>(null);
 
   React.useEffect(() => {
     evaluateToken(token);
@@ -45,7 +45,7 @@ export const decodeToken = (token: string): Object | null => {
     // convert the base64url string to a base64 string
     const base64: string = payload.replace("-", "+").replace("_", "/") + padding;
     // decode and parse to json
-    const decoded = JSON.parse(atob(base64));
+    const decoded = JSON.parse(window.atob(base64));
 
     return decoded;
   } catch (error) {
