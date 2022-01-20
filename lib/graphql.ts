@@ -19,7 +19,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 const graphql: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   link: concat(authMiddleware, httpLink),
   cache: new InMemoryCache({
-    addTypename: false
+    addTypename: false,
   }),
 })
 

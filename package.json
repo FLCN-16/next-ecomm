@@ -33,7 +33,7 @@
     "apollo-server-micro": "^3.6.1",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
-    "graphql": "^16.2.0",
+    "graphql": "^15.8.0",
     "idb-keyval": "^6.0.3",
     "immutable": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
