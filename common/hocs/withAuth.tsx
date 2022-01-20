@@ -3,9 +3,9 @@ import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 import { intersection } from "lodash"
 
-import type { RootState } from "../store/rootReducer"
-import LoadingComponent from "../common/containers/Backend/Loading"
-import UnauthorizedContainer from "../common/containers/Backend/Unauthorized"
+import type { RootState } from "../../store/rootReducer"
+import LoadingComponent from "../containers/Backend/Loading"
+import UnauthorizedContainer from "../containers/Backend/Unauthorized"
 
 type AuthType = object | boolean | null
 
