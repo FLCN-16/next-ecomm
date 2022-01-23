@@ -53,8 +53,18 @@ type Query {
   me(token: String!): User
   product(ID: String): Product
   products: [Product]
+  roles: [UserRole]
   user(ID: String!): User
-  users: [User]
+  users(
+    limit: Int! = 10
+    page: Int! = 1
+
+    """
+    Roles to filter by
+    """
+    roles: [String]
+    search: String!
+  ): [User]
 }
 
 """
@@ -67,8 +77,21 @@ type User {
   email: String
   firstName: String
   lastName: String
+  products(limit: Int! = 10, page: Int! = 1): [Product!]!
   role: String
   updatedAt: DateTime
   username: String
   verified: Boolean
+}
+
+"""
+User role
+"""
+type UserRole {
+  capabilities: [Capability]
+  createdAt: DateTime
+  desc: String
+  name: String
+  slug: String
+  updatedAt: DateTime
 }

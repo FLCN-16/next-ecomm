@@ -29,7 +29,7 @@ const useJwt = (token: string) => {
  * @param token - The JWT that you want to decode
  * @returns Decoded token
  */
-export const decodeToken = (token: string): Object | null => {
+export const decodeToken = (token: string): object | null => {
   try {
     // if the token has more or less than 3 parts or is not a string
     // then is not a valid token

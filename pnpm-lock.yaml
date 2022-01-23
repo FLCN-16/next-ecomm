@@ -43,6 +43,7 @@ specifiers:
   react-dom: 17.0.2
   react-hook-form: ^7.19.0
   react-intl: ^5.24.2
+  react-moment: ^1.1.1
   react-redux: ^7.2.6
   redux: ^4.1.2
   redux-saga: ^1.1.3
@@ -72,6 +73,7 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   react-hook-form: 7.23.0_react@17.0.2
   react-intl: 5.24.2_react@17.0.2+typescript@4.5.4
+  react-moment: 1.1.1_moment@2.29.1+react@17.0.2
   react-redux: 7.2.6_react-dom@17.0.2+react@17.0.2
   redux: 4.1.2
   redux-saga: 1.1.3
@@ -3768,6 +3770,17 @@ packages:
 
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
+    dev: false
+
+  /react-moment/1.1.1_moment@2.29.1+react@17.0.2:
+    resolution: {integrity: sha512-WjwvxBSnmLMRcU33do0KixDB+9vP3e84eCse+rd+HNklAMNWyRgZTDEQlay/qK6lcXFPRuEIASJTpEt6pyK7Ww==}
+    peerDependencies:
+      moment: ^2.29.0
+      prop-types: ^15.7.0
+      react: ^16.0 || ^17.0.0
+    dependencies:
+      moment: 2.29.1
+      react: 17.0.2
     dev: false
 
   /react-redux/7.2.6_react-dom@17.0.2+react@17.0.2:

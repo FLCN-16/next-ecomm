@@ -1,8 +1,9 @@
 import type { NextPage } from "next"
 import React from "react"
-import { gql, useQuery } from "@apollo/client"
+import { gql, useQuery, useLazyQuery } from "@apollo/client"
 import { Page, Card, Filters, ChoiceList, Badge, Link, IndexTable, useIndexResourceState } from "@shopify/polaris"
 import type { AppliedFilterInterface } from "@shopify/polaris"
+import Moment from "react-moment"
 
 // Components
 import BackendLayout from "../../../common/containers/Backend/Layout"
@@ -10,9 +11,9 @@ import BackendLayout from "../../../common/containers/Backend/Layout"
 // HOCs
 import withAuth from "../../../common/hocs/withAuth"
 
-const gqlquery = gql`
-  query Users {
-    users {
+const USERS_QUERY = gql`
+  query Users($roles: [String], $search: String!, $page: Int, $limit: Int) {
+    users(roles: $roles, search: $search, page: $page, limit: $limit) {
       ID
       firstName
       lastName
@@ -26,6 +27,14 @@ const gqlquery = gql`
   }
 `
 
+const ROLES_QUERY = gql`
+  query Roles {
+    roles {
+      name
+      slug
+    }
+  }
+`
 function disambiguateLabel(key: string, value: string[]) {
   switch (key) {
     case "roles":
@@ -38,6 +47,7 @@ function disambiguateLabel(key: string, value: string[]) {
 const UsersComponent: NextPage = () => {
   const [query, setQuery] = React.useState("")
   const [roles, setRoles] = React.useState([])
+  const [page, setPage] = React.useState(1)
 
   const handleRolesChange = React.useCallback((value) => setRoles(value), [])
   const handleResetRoles = React.useCallback(() => setRoles([]), [])
@@ -50,6 +60,12 @@ const UsersComponent: NextPage = () => {
   }, [handleResetRoles, handleResetQuery])
 
   // Filters
+  const { data: rolesData } = useQuery(ROLES_QUERY)
+  const rolesOptions = rolesData?.roles?.map((role: any) => ({
+    label: role.name,
+    value: role.slug,
+  }))
+
   const filters = [
     {
       key: "roles",
@@ -58,11 +74,7 @@ const UsersComponent: NextPage = () => {
         <ChoiceList
           title="Availability"
           titleHidden
-          choices={[
-            { label: "Online Store", value: "Online Store" },
-            { label: "Point of Sale", value: "Point of Sale" },
-            { label: "Buy Button", value: "Buy Button" },
-          ]}
+          choices={rolesOptions}
           selected={roles || []}
           onChange={handleRolesChange}
           allowMultiple
@@ -83,11 +95,13 @@ const UsersComponent: NextPage = () => {
   }
 
   // Fetch Data
-  const { data, loading } = useQuery(gqlquery)
-
-  const users = loading ? [] : data.users
-
+  const [fetchUsers, { loading, error, data }] = useLazyQuery(USERS_QUERY)
+  const users = data?.users || []
   const { selectedResources, allResourcesSelected, handleSelectionChange } = useIndexResourceState(users)
+
+  React.useEffect(() => {
+    fetchUsers({ variables: { roles, page, search: query, limit: 25 } })
+  }, [query, roles])
 
   return (
     <BackendLayout>
@@ -136,8 +150,12 @@ const UsersComponent: NextPage = () => {
                   <Badge status="info">{user.role.toUpperCase()}</Badge>
                 </IndexTable.Cell>
                 <IndexTable.Cell>{user.verified ? "YES" : "NO"}</IndexTable.Cell>
-                <IndexTable.Cell>{user.createdAt}</IndexTable.Cell>
-                <IndexTable.Cell>{user.updatedAt}</IndexTable.Cell>
+                <IndexTable.Cell>
+                  <Moment date={user.createdAt} titleFormat="YYYY-MM-DD h:mm:ss a" fromNow withTitle />
+                </IndexTable.Cell>
+                <IndexTable.Cell>
+                  <Moment date={user.updatedAt} titleFormat="YYYY-MM-DD h:mm:ss a" fromNow withTitle />
+                </IndexTable.Cell>
                 <IndexTable.Cell></IndexTable.Cell>
               </IndexTable.Row>
             ))}

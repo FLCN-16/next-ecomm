@@ -70,6 +70,7 @@ model User {
 
   // Relations
   orders     Order[]
+  products   Product[]
   user_role  UserRole @relation(fields: [role], references: [slug])
 
   @@map(name: "users")
@@ -122,11 +123,13 @@ model Product {
   title       String   @db.VarChar(50)
   slug        String   @unique @db.VarChar(50)
   description String   @db.Text
+  authorId    String   @map(name: "author_id")
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @default(now()) @map(name: "updated_at")
 
   // Relations
   categories Category[]
+  author     User          @relation(references: [ID], fields: [authorId])
 }
 
 model Category {
