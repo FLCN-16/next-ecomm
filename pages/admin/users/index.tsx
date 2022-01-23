@@ -143,7 +143,7 @@ const UsersComponent: NextPage = () => {
   // Applied Filters
   const appliedFilters: AppliedFilterInterface[] = []
   if (roles.length) {
-    let selectedRoles = rolesOptions?.filter((role: RoleOption) =>
+    const selectedRoles = rolesOptions?.filter((role: RoleOption) =>
       roles.includes(role.value)
     )
 
