@@ -2,7 +2,14 @@ import type { NextPage } from "next"
 import React from "react"
 import { withRouter, NextRouter } from "next/router"
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
-import { Form, FormLayout, TextField, Checkbox, Button, Card } from "@shopify/polaris"
+import {
+  Form,
+  FormLayout,
+  TextField,
+  Checkbox,
+  Button,
+  Card,
+} from "@shopify/polaris"
 
 // Store
 import { useDispatch, useSelector } from "react-redux"
@@ -60,7 +67,9 @@ const AdminLogin: NextPage<Props> = ({ router }: Props) => {
                     autoComplete="email"
                     requiredIndicator={true}
                     disabled={loading}
-                    error={errors.login?.type === "required" && "Login is required"}
+                    error={
+                      errors.login?.type === "required" && "Login is required"
+                    }
                     {...field_props}
                   />
                 )}
@@ -79,7 +88,10 @@ const AdminLogin: NextPage<Props> = ({ router }: Props) => {
                     autoComplete="off"
                     requiredIndicator={true}
                     disabled={loading}
-                    error={errors.password?.type === "required" && "Password is required"}
+                    error={
+                      errors.password?.type === "required" &&
+                      "Password is required"
+                    }
                     {...field_props}
                   />
                 )}
@@ -97,7 +109,13 @@ const AdminLogin: NextPage<Props> = ({ router }: Props) => {
                   control={control}
                   name="remember"
                   render={({ field: { value, ref, ...field_props } }) => (
-                    <Checkbox id="remember" label="Remember Me" checked={value} disabled={loading} {...field_props} />
+                    <Checkbox
+                      id="remember"
+                      label="Remember Me"
+                      checked={value}
+                      disabled={loading}
+                      {...field_props}
+                    />
                   )}
                 />
 
@@ -108,7 +126,12 @@ const AdminLogin: NextPage<Props> = ({ router }: Props) => {
 
               <div style={{ textAlign: "center" }}>
                 Forgot your account password?{" "}
-                <Button url="/admin/auth/forgot" disabled={loading} plain monochrome>
+                <Button
+                  url="/admin/auth/forgot"
+                  disabled={loading}
+                  plain
+                  monochrome
+                >
                   Click here
                 </Button>
               </div>

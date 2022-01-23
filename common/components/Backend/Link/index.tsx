@@ -1,7 +1,8 @@
 import React from "react"
 import Link from "next/link"
 
-export interface LinkLikeComponentProps extends React.HTMLProps<HTMLAnchorElement> {
+export interface LinkLikeComponentProps
+  extends React.HTMLProps<HTMLAnchorElement> {
   /** The url to link to */
   url: string
   /**	The content to display inside the link */
@@ -13,7 +14,12 @@ export interface LinkLikeComponentProps extends React.HTMLProps<HTMLAnchorElemen
   [key: string]: any
 }
 
-const LinkComponent = ({ url, as, children, ...props }: LinkLikeComponentProps) => {
+const LinkComponent = ({
+  url,
+  as,
+  children,
+  ...props
+}: LinkLikeComponentProps) => {
   return (
     <Link href={url} as={as}>
       <a {...props}>{children}</a>

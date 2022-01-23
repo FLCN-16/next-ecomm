@@ -11,7 +11,12 @@ import withAuth from "../../../common/hocs/withAuth"
 const SettingsPage: NextPage = () => {
   return (
     <BackendLayout>
-      <Page title="Settings" subtitle="List of all settings" compactTitle fullWidth>
+      <Page
+        title="Settings"
+        subtitle="List of all settings"
+        compactTitle
+        fullWidth
+      >
         <Card>App Settings</Card>
       </Page>
     </BackendLayout>

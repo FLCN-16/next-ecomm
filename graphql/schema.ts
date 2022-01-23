@@ -13,10 +13,20 @@ const jsonScalar = new GraphQLScalarType({
 const dateTimeScalar = new GraphQLScalarType(DateTimeResolver)
 
 export const schema = makeSchema({
-  types: [asNexusMethod(jsonScalar, "json"), asNexusMethod(dateTimeScalar, "dateTime"), types],
+  types: [
+    asNexusMethod(jsonScalar, "json"),
+    asNexusMethod(dateTimeScalar, "dateTime"),
+    types,
+  ],
   shouldGenerateArtifacts: process.env.NODE_ENV === "development",
   outputs: {
-    typegen: join(process.cwd(), "node_modules", "@types", "nexus-typegen", "index.d.ts"),
+    typegen: join(
+      process.cwd(),
+      "node_modules",
+      "@types",
+      "nexus-typegen",
+      "index.d.ts"
+    ),
     schema: join(process.cwd(), "graphql", "schema.graphql"),
   },
   contextType: {

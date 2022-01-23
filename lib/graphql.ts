@@ -1,4 +1,11 @@
-import { ApolloClient, HttpLink, ApolloLink, InMemoryCache, concat, NormalizedCacheObject } from "@apollo/client"
+import {
+  ApolloClient,
+  HttpLink,
+  ApolloLink,
+  InMemoryCache,
+  concat,
+  NormalizedCacheObject,
+} from "@apollo/client"
 
 const httpLink = new HttpLink({
   uri: process.env.GRAPHQL_API || "/api/graphql",

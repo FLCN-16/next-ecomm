@@ -1,6 +1,12 @@
 import type { NextPage } from "next"
 import React, { FormEvent } from "react"
-import { Page, Card, Layout, TextField, ContextualSaveBar } from "@shopify/polaris"
+import {
+  Page,
+  Card,
+  Layout,
+  TextField,
+  ContextualSaveBar,
+} from "@shopify/polaris"
 
 // Components
 import BackendLayout from "../../../../common/containers/Backend/Layout"
@@ -17,7 +23,12 @@ const ProductsComponent: NextPage = () => {
 
   return (
     <BackendLayout>
-      <Page title="Add Product" subtitle="Add a new product for your shop." compactTitle fullWidth>
+      <Page
+        title="Add Product"
+        subtitle="Add a new product for your shop."
+        compactTitle
+        fullWidth
+      >
         <ContextualSaveBar
           message="Your changes have been saved."
           saveAction={{

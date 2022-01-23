@@ -33,7 +33,9 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
   const isValid = await bcrypt.compare(password, user.password)
   if (!isValid) return res.status(401).json({ error: "Invalid credentials" })
 
-  const capabilities = user.user_role.capabilities.map((cap) => cap.capabilityId)
+  const capabilities = user.user_role.capabilities.map(
+    (cap) => cap.capabilityId
+  )
 
   const dayInSeconds = 60 * 60 * 24
   const expiresIn = dayInSeconds * (remember ? 7 : 1)
@@ -46,7 +48,8 @@ const handle = async (req: ApiRequest, res: ApiResponse) => {
       expires: new Date(Date.now() + expiresIn * 1000),
     },
   })
-  if (!userSession) return res.status(500).json({ error: "Internal server error" })
+  if (!userSession)
+    return res.status(500).json({ error: "Internal server error" })
 
   const token = jwt.sign(
     {

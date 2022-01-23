@@ -9,14 +9,21 @@ import UnauthorizedContainer from "../containers/Backend/Unauthorized"
 
 type AuthType = object | boolean | null
 
-function withAuth(WrappedComponent: React.ComponentType, capabilities: string | string[] = []) {
+function withAuth(
+  WrappedComponent: React.ComponentType,
+  capabilities: string | string[] = []
+) {
   const AuthComponent = () => {
     const [auth, setAuth] = useState<AuthType>(null)
     const router = useRouter()
 
     const isReady = useSelector((state: RootState) => state.app.get("ready"))
-    const isAuthenticated = useSelector((state: RootState) => state.auth.get("isAuthenticated"))
-    const account: any = useSelector((state: RootState) => state.auth.get("account"))
+    const isAuthenticated = useSelector((state: RootState) =>
+      state.auth.get("isAuthenticated")
+    )
+    const account: any = useSelector((state: RootState) =>
+      state.auth.get("account")
+    )
 
     const validateCapability = () => {
       if (!capabilities.length) return true

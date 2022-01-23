@@ -47,8 +47,10 @@ const ForgotContainer = () => {
                   requiredIndicator={true}
                   helpText="We'll send you a link to reset your password."
                   error={
-                    (errors.email?.type === "required" && "Email is required") ||
-                    (errors.email?.type === "pattern" && "Invalid Email Address")
+                    (errors.email?.type === "required" &&
+                      "Email is required") ||
+                    (errors.email?.type === "pattern" &&
+                      "Invalid Email Address")
                   }
                   {...field_props}
                 />

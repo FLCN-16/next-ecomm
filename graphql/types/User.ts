@@ -1,4 +1,12 @@
-import { objectType, stringArg, nonNull, extendType, intArg, list } from "nexus"
+import {
+  objectType,
+  stringArg,
+  nonNull,
+  extendType,
+  booleanArg,
+  intArg,
+  list,
+} from "nexus"
 import { Prisma } from "@prisma/client"
 import { ProductType } from "./Product"
 import type { JwtPayload } from "jsonwebtoken"
@@ -57,6 +65,7 @@ export const UsersQuery = extendType({
       type: UserType,
       args: {
         search: nonNull(stringArg()),
+        verified: booleanArg(),
         roles: list(stringArg({ description: "Roles to filter by" })),
         page: nonNull(intArg({ default: 1 })),
         limit: nonNull(intArg({ default: 10 })),
@@ -68,6 +77,10 @@ export const UsersQuery = extendType({
           where.role = {
             in: args.roles as string[],
           }
+        }
+
+        if (typeof args.verified === "boolean") {
+          where.verified = args.verified
         }
 
         return ctx.prisma.user.findMany({
@@ -119,7 +132,10 @@ export const Query = extendType({
 
         let tokenDecoded: JwtPayload
         try {
-          tokenDecoded = jwt.verify(args.token, process.env.JWT_SECRET!) as JwtPayload
+          tokenDecoded = jwt.verify(
+            args.token,
+            process.env.JWT_SECRET!
+          ) as JwtPayload
           if (!tokenDecoded) return null
         } catch (error) {
           return null

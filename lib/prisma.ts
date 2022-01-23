@@ -14,7 +14,10 @@ if (process.env.NODE_ENV === "production") {
 
 /************************ Middlewares **********************/
 
-const userMiddleware: Prisma.Middleware = async (params: Prisma.MiddlewareParams, next) => {
+const userMiddleware: Prisma.Middleware = async (
+  params: Prisma.MiddlewareParams,
+  next
+) => {
   if (params.model !== "User") return next(params)
 
   if (["create", "update"].indexOf(params.action) === -1) return next(params)

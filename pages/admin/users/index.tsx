@@ -1,9 +1,19 @@
-import type { NextPage } from "next"
 import React from "react"
-import { gql, useQuery, useLazyQuery } from "@apollo/client"
-import { Page, Card, Filters, ChoiceList, Badge, Link, IndexTable, useIndexResourceState } from "@shopify/polaris"
+import type { NextPage } from "next"
 import type { AppliedFilterInterface } from "@shopify/polaris"
+import { gql, useQuery, useLazyQuery } from "@apollo/client"
 import Moment from "react-moment"
+import {
+  Page,
+  Card,
+  Filters,
+  ChoiceList,
+  Badge,
+  Link,
+  IndexTable,
+  useIndexResourceState,
+  Pagination,
+} from "@shopify/polaris"
 
 // Components
 import BackendLayout from "../../../common/containers/Backend/Layout"
@@ -12,8 +22,20 @@ import BackendLayout from "../../../common/containers/Backend/Layout"
 import withAuth from "../../../common/hocs/withAuth"
 
 const USERS_QUERY = gql`
-  query Users($roles: [String], $search: String!, $page: Int, $limit: Int) {
-    users(roles: $roles, search: $search, page: $page, limit: $limit) {
+  query Users(
+    $roles: [String]
+    $search: String!
+    $verified: Boolean
+    $page: Int
+    $limit: Int
+  ) {
+    users(
+      roles: $roles
+      search: $search
+      verified: $verified
+      page: $page
+      limit: $limit
+    ) {
       ID
       firstName
       lastName
@@ -35,32 +57,48 @@ const ROLES_QUERY = gql`
     }
   }
 `
-function disambiguateLabel(key: string, value: string[]) {
+function disambiguateLabel(key: string, value: string | string[]) {
   switch (key) {
     case "roles":
-      return value.join(", ")
+      return "Have Roles: " + (value as string[]).join(", ")
+    case "verified":
+      return "Is Verified: " + (value === "yes" ? "Yes" : "No")
   }
 
   return value
 }
 
+interface RoleOption {
+  label: string
+  value: string
+}
+
 const UsersComponent: NextPage = () => {
-  const [query, setQuery] = React.useState("")
-  const [roles, setRoles] = React.useState([])
+  const [limit, setLimit] = React.useState(25)
   const [page, setPage] = React.useState(1)
+
+  const [query, setQuery] = React.useState("")
+  const [roles, setRoles] = React.useState<string[]>([])
+  const [verified, setVerified] = React.useState("both")
 
   const handleRolesChange = React.useCallback((value) => setRoles(value), [])
   const handleResetRoles = React.useCallback(() => setRoles([]), [])
   const handleQueryChange = React.useCallback((value) => setQuery(value), [])
   const handleResetQuery = React.useCallback(() => setQuery(""), [])
+  const handleVerifiedChange = React.useCallback(
+    (value) => setVerified(value[0]),
+    []
+  )
+  const handleResetVerified = React.useCallback(() => setVerified("both"), [])
 
   const handleFiltersClearAll = React.useCallback(() => {
     handleResetRoles()
     handleResetQuery()
-  }, [handleResetRoles, handleResetQuery])
+    handleResetVerified()
+  }, [handleResetRoles, handleResetQuery, handleResetVerified])
 
   // Filters
-  const { data: rolesData } = useQuery(ROLES_QUERY)
+  const { data: rolesData } = useQuery(ROLES_QUERY, { pollInterval: 60 * 1000 })
   const rolesOptions = rolesData?.roles?.map((role: any) => ({
     label: role.name,
     value: role.slug,
@@ -82,30 +120,77 @@ const UsersComponent: NextPage = () => {
       ),
       shortcut: true,
     },
+    {
+      key: "verified",
+      label: "Verified",
+      filter: (
+        <ChoiceList
+          title="Verified"
+          titleHidden
+          choices={[
+            { label: "Both", value: "both" },
+            { label: "Yes", value: "yes" },
+            { label: "No", value: "no" },
+          ]}
+          selected={[verified]}
+          onChange={handleVerifiedChange}
+        />
+      ),
+      shortcut: true,
+    },
   ]
 
   // Applied Filters
   const appliedFilters: AppliedFilterInterface[] = []
   if (roles.length) {
+    let selectedRoles = rolesOptions?.filter((role: RoleOption) =>
+      roles.includes(role.value)
+    )
+
     appliedFilters.push({
       key: "roles",
-      label: disambiguateLabel("roles", roles).toString(),
+      label: disambiguateLabel(
+        "roles",
+        selectedRoles.map((role: RoleOption) => role.label)
+      ).toString(),
       onRemove: handleResetRoles,
+    })
+  }
+  if (verified !== "both") {
+    appliedFilters.push({
+      key: "verified",
+      label: disambiguateLabel("verified", verified).toString(),
+      onRemove: handleResetVerified,
     })
   }
 
   // Fetch Data
   const [fetchUsers, { loading, error, data }] = useLazyQuery(USERS_QUERY)
   const users = data?.users || []
-  const { selectedResources, allResourcesSelected, handleSelectionChange } = useIndexResourceState(users)
+  const { selectedResources, allResourcesSelected, handleSelectionChange } =
+    useIndexResourceState(users)
 
   React.useEffect(() => {
-    fetchUsers({ variables: { roles, page, search: query, limit: 25 } })
-  }, [query, roles])
+    let isVerified: boolean | null = verified === "yes" ? true : false
+    if (verified === "both") {
+      isVerified = null
+    }
+
+    fetchUsers({
+      variables: { roles, verified: isVerified, search: query, limit, page },
+    })
+  }, [query, roles, verified, page, limit])
 
   return (
     <BackendLayout>
-      <Page title="Users" subtitle="List of all users" compactTitle fullWidth>
+      <Page
+        title="Users"
+        primaryAction={{
+          content: "Add User",
+          url: "/admin/users/create",
+        }}
+        fullWidth
+      >
         <Card>
           <Card.Section>
             <Filters
@@ -121,7 +206,9 @@ const UsersComponent: NextPage = () => {
           <IndexTable
             resourceName={{ singular: "user", plural: "users" }}
             itemCount={users.length}
-            selectedItemsCount={allResourcesSelected ? "All" : selectedResources.length}
+            selectedItemsCount={
+              allResourcesSelected ? "All" : selectedResources.length
+            }
             onSelectionChange={handleSelectionChange}
             headings={[
               { title: "Username" },
@@ -136,9 +223,18 @@ const UsersComponent: NextPage = () => {
             loading={loading}
           >
             {users.map((user: any, index: number) => (
-              <IndexTable.Row id={user.ID} key={user.ID} selected={selectedResources.includes(user.ID)} position={index}>
+              <IndexTable.Row
+                id={user.ID}
+                key={user.ID}
+                selected={selectedResources.includes(user.ID)}
+                position={index}
+              >
                 <IndexTable.Cell>
-                  <Link key={user.ID} url={`/admin/users/${user.ID}`} removeUnderline>
+                  <Link
+                    key={user.ID}
+                    url={`/admin/users/${user.ID}`}
+                    removeUnderline
+                  >
                     {user.username}
                   </Link>
                 </IndexTable.Cell>
@@ -149,22 +245,44 @@ const UsersComponent: NextPage = () => {
                 <IndexTable.Cell>
                   <Badge status="info">{user.role.toUpperCase()}</Badge>
                 </IndexTable.Cell>
-                <IndexTable.Cell>{user.verified ? "YES" : "NO"}</IndexTable.Cell>
                 <IndexTable.Cell>
-                  <Moment date={user.createdAt} titleFormat="YYYY-MM-DD h:mm:ss a" fromNow withTitle />
+                  {user.verified ? "YES" : "NO"}
                 </IndexTable.Cell>
                 <IndexTable.Cell>
-                  <Moment date={user.updatedAt} titleFormat="YYYY-MM-DD h:mm:ss a" fromNow withTitle />
+                  <Moment
+                    date={user.createdAt}
+                    titleFormat="YYYY-MM-DD h:mm:ss a"
+                    fromNow
+                    withTitle
+                  />
+                </IndexTable.Cell>
+                <IndexTable.Cell>
+                  <Moment
+                    date={user.updatedAt}
+                    titleFormat="YYYY-MM-DD h:mm:ss a"
+                    fromNow
+                    withTitle
+                  />
                 </IndexTable.Cell>
                 <IndexTable.Cell></IndexTable.Cell>
               </IndexTable.Row>
             ))}
           </IndexTable>
+
+          <Card.Section>
+            {users.length === 25 && (
+              <Pagination
+                hasPrevious={page > 1}
+                hasNext={users.length === 25}
+                onPrevious={() => setPage(page - 1)}
+                onNext={() => setPage(page + 1)}
+              />
+            )}
+          </Card.Section>
         </Card>
       </Page>
     </BackendLayout>
   )
 }
 
-export default withAuth(UsersComponent, ["create_user"])
-// export default withAuth(UsersComponent, [ 'manage_users' ])
+export default withAuth(UsersComponent, ["create_user", "manage_users"])

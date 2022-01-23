@@ -24,7 +24,12 @@ function* authAccount(action: AnyAction) {
   const { login, password, remember, redirectTo } = action.payload
 
   try {
-    const account: LoginResponse = yield call(authModel.login, login, password, remember)
+    const account: LoginResponse = yield call(
+      authModel.login,
+      login,
+      password,
+      remember
+    )
 
     yield put({ type: AUTH_ACCOUNT_SUCCESS, payload: account })
     yield call(Storage.set, "account", account)

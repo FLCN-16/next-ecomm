@@ -11,7 +11,11 @@ export interface LoginResponse {
 }
 
 export default class Auth {
-  public static async login(login: string, password: string, remember: boolean): Promise<LoginResponse> {
+  public static async login(
+    login: string,
+    password: string,
+    remember: boolean
+  ): Promise<LoginResponse> {
     try {
       const response = await request.post("auth/login", {
         login,

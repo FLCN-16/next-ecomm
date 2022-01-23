@@ -1,6 +1,12 @@
 import type { NextPage } from "next"
 import React from "react"
-import { Page, Card, EmptyState, IndexTable, useIndexResourceState } from "@shopify/polaris"
+import {
+  Page,
+  Card,
+  EmptyState,
+  IndexTable,
+  useIndexResourceState,
+} from "@shopify/polaris"
 
 // Components
 import BackendLayout from "../../../common/containers/Backend/Layout"
@@ -24,7 +30,8 @@ const ProductsComponent: NextPage = () => {
       ID: "1",
       name: "Product 1",
       price: "$10.00",
-      thumbnail: "https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg",
+      thumbnail:
+        "https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg",
       status: "Active",
       haveStock: true,
       createdAt: "2020-01-01",
@@ -33,16 +40,24 @@ const ProductsComponent: NextPage = () => {
   ]
   products = []
 
-  const { selectedResources, allResourcesSelected, handleSelectionChange } = useIndexResourceState(products)
+  const { selectedResources, allResourcesSelected, handleSelectionChange } =
+    useIndexResourceState(products)
 
   return (
     <BackendLayout>
-      <Page title="Products" subtitle="List of all products" compactTitle fullWidth>
+      <Page
+        title="Products"
+        subtitle="List of all products"
+        compactTitle
+        fullWidth
+      >
         <Card>
           <IndexTable
             resourceName={{ singular: "product", plural: "products" }}
             itemCount={products.length}
-            selectedItemsCount={allResourcesSelected ? "All" : selectedResources.length}
+            selectedItemsCount={
+              allResourcesSelected ? "All" : selectedResources.length
+            }
             onSelectionChange={handleSelectionChange}
             emptyState={<ProductEmptyState />}
             headings={[
@@ -57,12 +72,19 @@ const ProductsComponent: NextPage = () => {
             ]}
           >
             {products.map((product, index) => (
-              <IndexTable.Row id={product.ID} key={product.ID} selected={selectedResources.includes(product.ID)} position={index}>
+              <IndexTable.Row
+                id={product.ID}
+                key={product.ID}
+                selected={selectedResources.includes(product.ID)}
+                position={index}
+              >
                 <IndexTable.Cell>{product.ID}</IndexTable.Cell>
                 <IndexTable.Cell>{product.name}</IndexTable.Cell>
                 <IndexTable.Cell>{product.status}</IndexTable.Cell>
                 <IndexTable.Cell>{product.price}</IndexTable.Cell>
-                <IndexTable.Cell>{product.haveStock ? "Yes" : "No"}</IndexTable.Cell>
+                <IndexTable.Cell>
+                  {product.haveStock ? "Yes" : "No"}
+                </IndexTable.Cell>
                 <IndexTable.Cell>{product.createdAt}</IndexTable.Cell>
                 <IndexTable.Cell>{product.updatedAt}</IndexTable.Cell>
                 <IndexTable.Cell></IndexTable.Cell>

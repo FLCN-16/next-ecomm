@@ -37,7 +37,10 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   return (
     <React.Fragment>
-      <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
+      <IntlProvider
+        locale={currentAppLocale.locale}
+        messages={currentAppLocale.messages}
+      >
         {children}
       </IntlProvider>
     </React.Fragment>

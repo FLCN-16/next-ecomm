@@ -7,10 +7,15 @@ import type { RootState } from "../../../../../store/rootReducer"
 import { logoutAccount } from "../../../../../store/auth/action"
 
 import { TopBar, Icon } from "@shopify/polaris"
-import { ArrowLeftMinor, NotificationMajor, LogOutMinor } from "@shopify/polaris-icons"
+import {
+  ArrowLeftMinor,
+  NotificationMajor,
+  LogOutMinor,
+} from "@shopify/polaris-icons"
 
 const ActionsMenu = () => {
-  const [isNotificationMenuOpen, setIsNotificationMenuOpen] = React.useState(false)
+  const [isNotificationMenuOpen, setIsNotificationMenuOpen] =
+    React.useState(false)
 
   return (
     <React.Fragment>
@@ -36,7 +41,9 @@ const ActionsMenu = () => {
 const UserMenuMarkup = () => {
   const dispatch = useDispatch()
   const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false)
-  const account: any = useSelector((state: RootState) => state.auth.get("account") || {})
+  const account: any = useSelector(
+    (state: RootState) => state.auth.get("account") || {}
+  )
 
   return (
     <TopBar.UserMenu
@@ -56,18 +63,19 @@ const UserMenuMarkup = () => {
       ]}
       name={`${account.firstName} ${account.lastName}`}
       detail={account.username}
-      initials="D"
+      initials={account.firstName.charAt(0) + account.lastName.charAt(0)}
       open={isUserMenuOpen}
       onToggle={() => setIsUserMenuOpen(!isUserMenuOpen)}
     />
   )
 }
 
-const Header: React.FC = () => {
-  const handleNavigationToggle = () => {
-    console.log("Toggle navigation")
-  }
+export interface Props {
+  isNavOpen?: boolean
+  toggleNav: () => void
+}
 
+const Header: React.FC<Props> = ({ toggleNav }) => {
   return (
     <React.Fragment>
       <BackendHead />
@@ -75,7 +83,7 @@ const Header: React.FC = () => {
         showNavigationToggle
         userMenu={<UserMenuMarkup />}
         secondaryMenu={<ActionsMenu />}
-        onNavigationToggle={handleNavigationToggle}
+        onNavigationToggle={toggleNav}
       />
     </React.Fragment>
   )

@@ -118,7 +118,6 @@ const Sidebar: React.FC<Props> = ({ router }) => {
               icon: SettingsMajor,
             },
           ]}
-          separator
         />
       </Navigation>
     </React.Fragment>

@@ -1,7 +1,11 @@
 import { take, put, takeEvery } from "redux-saga/effects"
 
 import { INITIALIZE, INITIALIZED, LOADING_START, LOADING_STOP } from "./action"
-import { VALIDATE_SESSION, VALIDATE_SESSION_SUCCESS, VALIDATE_SESSION_FAILURE } from "../auth/action"
+import {
+  VALIDATE_SESSION,
+  VALIDATE_SESSION_SUCCESS,
+  VALIDATE_SESSION_FAILURE,
+} from "../auth/action"
 
 function* initializeApp() {
   yield put({ type: LOADING_START }) // Start Loading

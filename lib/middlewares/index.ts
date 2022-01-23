@@ -19,13 +19,18 @@ const rootMiddleware =
   (next: any, options: MiddlewareOptions = defaultOptions) =>
   async (req: ApiRequest, res: ApiResponse) => {
     try {
-      const middlewares = [prismaMiddleware(), defaultOptions.needAuth && authMiddleware(options.capabilities)].filter(Boolean)
+      const middlewares = [
+        prismaMiddleware(),
+        defaultOptions.needAuth && authMiddleware(options.capabilities),
+      ].filter(Boolean)
 
       // each middleware will then be wrapped within its own promise
       const promises = middlewares.map((middleware) => {
         if (!middleware) return
         const promise = new Promise((resolve, reject) => {
-          middleware(req, res, (result) => (result instanceof Error ? reject(result) : resolve(result || "OK")))
+          middleware(req, res, (result) =>
+            result instanceof Error ? reject(result) : resolve(result || "OK")
+          )
         })
         return promise
       })

@@ -40,7 +40,13 @@ const UserComponent: NextPage = () => {
 
   return (
     <BackendLayout>
-      <Page title="User" subtitle={data ? `Edit ${data.user.username}` : ""} compactTitle fullWidth>
+      <Page
+        title="User"
+        subtitle={data ? `Edit ${data.user.username}` : ""}
+        breadcrumbs={[{ content: "Users", url: "/admin/users" }]}
+        compactTitle
+        fullWidth
+      >
         <Card></Card>
       </Page>
     </BackendLayout>

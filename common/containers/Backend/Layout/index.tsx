@@ -18,9 +18,18 @@ export interface Props {
 }
 
 const LayoutComponent: React.FC<Props> = ({ children }) => {
+  const [isNavigationOpen, setNavigationToggle] = React.useState(false)
+
   return (
     <AppProvider i18n={translations} linkComponent={Link} theme={theme}>
-      <Frame topBar={<Header />} navigation={<Sidebar />}>
+      <Frame
+        showMobileNavigation={isNavigationOpen}
+        topBar={
+          <Header toggleNav={() => setNavigationToggle(!isNavigationOpen)} />
+        }
+        navigation={<Sidebar />}
+        onNavigationDismiss={() => setNavigationToggle(false)}
+      >
         {children}
       </Frame>
     </AppProvider>
