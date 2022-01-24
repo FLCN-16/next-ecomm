@@ -31,7 +31,7 @@
     "@shopify/polaris": "8.0.0",
     "@shopify/polaris-icons": "^4.12.0",
     "apollo-server-micro": "^3.6.1",
-    "axios": "^0.24.0",
+    "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "graphql": "^15.8.0",
     "idb-keyval": "^6.0.3",
