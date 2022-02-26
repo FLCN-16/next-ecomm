@@ -48,10 +48,13 @@ function* validateSession() {
   const account: LoginResponse = yield call(Storage.get, "account", null)
   if (!account) yield put({ type: VALIDATE_SESSION_FAILURE })
 
+  // Assigning jwt auth token to global variable for easy access across application
+  global.authToken = account.token
+
   yield put({ type: LOADING_START }) // Start Loading
 
   try {
-    const { data } = yield call(authModel.account, account.token)
+    const { data } = yield call(authModel.account)
 
     if (!data.me.ID) throw new Error("Invalid Session!")
 

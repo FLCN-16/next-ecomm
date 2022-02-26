@@ -124,32 +124,7 @@ export const Query = extendType({
     // Query for a user by token
     t.field("me", {
       type: UserType,
-      args: {
-        token: nonNull(stringArg()),
-      },
-      resolve: async (root, args, ctx) => {
-        if (!args.token) return null
-
-        let tokenDecoded: JwtPayload
-        try {
-          tokenDecoded = jwt.verify(
-            args.token,
-            process.env.JWT_SECRET!
-          ) as JwtPayload
-          if (!tokenDecoded) return null
-        } catch (error) {
-          return null
-        }
-
-        if (!tokenDecoded?.ID) return null
-
-        const user = await ctx.prisma.user.findUnique({
-          where: { ID: tokenDecoded.ID },
-        })
-        if (!user) return null
-
-        return user
-      },
+      resolve: async (root, args, ctx) => ctx.user,
     })
     // Query User
     t.field("user", {

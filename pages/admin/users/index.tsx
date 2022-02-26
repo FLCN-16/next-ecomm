@@ -3,6 +3,8 @@ import type { NextPage } from "next"
 import type { AppliedFilterInterface } from "@shopify/polaris"
 import { gql, useQuery, useLazyQuery } from "@apollo/client"
 import Moment from "react-moment"
+import useLazyEffect from "../../../common/hooks/useLazyHook"
+
 import {
   Page,
   Card,
@@ -170,7 +172,7 @@ const UsersComponent: NextPage = () => {
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(users)
 
-  React.useEffect(() => {
+  useLazyEffect(() => {
     let isVerified: boolean | null = verified === "yes" ? true : false
     if (verified === "both") {
       isVerified = null

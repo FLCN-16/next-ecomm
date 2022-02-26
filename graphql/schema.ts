@@ -45,6 +45,6 @@ export const schema = makeSchema({
       DateTime: "Date",
       UUID: "string",
     },
-    debug: false,
+    debug: process.env.NODE_ENV === "production",
   },
 })

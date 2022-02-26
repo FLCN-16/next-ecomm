@@ -112,6 +112,7 @@ model Session {
   userId       String   @map(name: "user_id")
   sessionToken String   @unique @map(name: "session_token")
   expires      DateTime
+  isExpired    Boolean  @default(false)
   createdAt    DateTime @default(now()) @map(name: "created_at")
   updatedAt    DateTime @default(now()) @map(name: "updated_at")
 

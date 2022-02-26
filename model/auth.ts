@@ -31,10 +31,10 @@ export default class Auth {
     }
   }
 
-  public static async account(token: string) {
+  public static async account() {
     const query = gql`
-      query Me($token: String!) {
-        me(token: $token) {
+      query Me {
+        me {
           ID
           firstName
           lastName
@@ -49,6 +49,6 @@ export default class Auth {
       }
     `
 
-    return await graphql.query({ query, variables: { token } })
+    return await graphql.query({ query })
   }
 }
