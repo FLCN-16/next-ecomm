@@ -7,9 +7,6 @@ import Header from "./Header"
 import Sidebar from "./Sidebar"
 import Link from "../../../components/Backend/Link"
 
-// Theme
-import theme from "../theme"
-
 // Styling
 import "@shopify/polaris/build/esm/styles.css"
 
@@ -21,7 +18,7 @@ const LayoutComponent: React.FC<Props> = ({ children }) => {
   const [isNavigationOpen, setNavigationToggle] = React.useState(false)
 
   return (
-    <AppProvider i18n={translations} linkComponent={Link} theme={theme}>
+    <AppProvider i18n={translations} linkComponent={Link}>
       <Frame
         showMobileNavigation={isNavigationOpen}
         topBar={
