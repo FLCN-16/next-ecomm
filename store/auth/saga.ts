@@ -46,7 +46,7 @@ function* authAccount(action: AnyAction) {
 
 function* validateSession() {
   const account: LoginResponse = yield call(Storage.get, "account", null)
-  if (!account) yield put({ type: VALIDATE_SESSION_FAILURE })
+  if (!account) return put({ type: VALIDATE_SESSION_FAILURE })
 
   // Assigning jwt auth token to global variable for easy access across application
   global.authToken = account.token
