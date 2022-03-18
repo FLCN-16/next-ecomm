@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken"
+import type { JwtPayload } from "jsonwebtoken"
 import type { ApiRequest, ApiResponse } from "../../../lib/types/api"
 import withMiddlewares from "../../../lib/middlewares"
 
 const handle = async (req: ApiRequest, res: ApiResponse) => {
   const { token } = req.body
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET!)
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
 
   const response = await req.prisma.session.update({
     data: { isExpired: true },
