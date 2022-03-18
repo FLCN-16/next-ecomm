@@ -4,8 +4,6 @@ import { connect } from "react-redux"
 import Router from "next/router"
 import { RootState } from "../../../../store/rootReducer"
 
-import theme from "../theme"
-
 import Link from "../../../components/Backend/Link"
 import Loading from "../Loading"
 
@@ -31,7 +29,7 @@ const AuthContainer: React.FC<Props> = ({
   if (loading) return <Loading />
 
   return (
-    <AppProvider i18n={{}} linkComponent={Link} theme={theme}>
+    <AppProvider i18n={{}} linkComponent={Link}>
       <styled.Wrapper>
         <styled.FormContainer>{children}</styled.FormContainer>
       </styled.Wrapper>
