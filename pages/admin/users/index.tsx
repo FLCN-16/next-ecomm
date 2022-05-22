@@ -1,11 +1,10 @@
 import React from "react"
 import type { NextPage } from "next"
-import type { AppliedFilterInterface } from "@shopify/polaris"
-import { gql, useQuery, useLazyQuery } from "@apollo/client"
-import Moment from "react-moment"
-import useLazyEffect from "../../../common/hooks/useLazyHook"
-
 import {
+  ActionList,
+  AppliedFilterInterface,
+  Popover,
+  Button,
   Page,
   Card,
   Filters,
@@ -16,6 +15,9 @@ import {
   useIndexResourceState,
   Pagination,
 } from "@shopify/polaris"
+import { gql, useQuery, useLazyQuery } from "@apollo/client"
+import Moment from "react-moment"
+import useLazyEffect from "../../../common/hooks/useLazyHook"
 
 // Components
 import BackendLayout from "../../../common/containers/Backend/Layout"
@@ -82,13 +84,22 @@ const UsersComponent: NextPage = () => {
   const [query, setQuery] = React.useState("")
   const [roles, setRoles] = React.useState<string[]>([])
   const [verified, setVerified] = React.useState("both")
+  const [activeActionUser, setActiveActionUser] = React.useState<string | null>(
+    null
+  )
 
-  const handleRolesChange = React.useCallback((value) => setRoles(value), [])
+  const handleRolesChange = React.useCallback(
+    (value: string[]) => setRoles(value),
+    []
+  )
   const handleResetRoles = React.useCallback(() => setRoles([]), [])
-  const handleQueryChange = React.useCallback((value) => setQuery(value), [])
+  const handleQueryChange = React.useCallback(
+    (value: string) => setQuery(value),
+    []
+  )
   const handleResetQuery = React.useCallback(() => setQuery(""), [])
   const handleVerifiedChange = React.useCallback(
-    (value) => setVerified(value[0]),
+    (value: string[]) => setVerified(value[0]),
     []
   )
   const handleResetVerified = React.useCallback(() => setVerified("both"), [])
@@ -202,11 +213,12 @@ const UsersComponent: NextPage = () => {
               onQueryChange={handleQueryChange}
               onQueryClear={handleResetQuery}
               onClearAll={handleFiltersClearAll}
+              disabled={loading}
             />
           </Card.Section>
 
           <IndexTable
-            resourceName={{ singular: "user", plural: "users" }}
+            resourceName={{ singular: "User", plural: "Users" }}
             itemCount={users.length}
             selectedItemsCount={
               allResourcesSelected ? "All" : selectedResources.length
@@ -266,16 +278,42 @@ const UsersComponent: NextPage = () => {
                     withTitle
                   />
                 </IndexTable.Cell>
-                <IndexTable.Cell></IndexTable.Cell>
+                <IndexTable.Cell>
+                  <Popover
+                    active={activeActionUser === user.ID}
+                    activator={
+                      <Button
+                        onClick={() => setActiveActionUser(user.ID)}
+                        disclosure
+                      >
+                        More actions
+                      </Button>
+                    }
+                    onClose={() => setActiveActionUser(null)}
+                  >
+                    <ActionList
+                      actionRole="menuitem"
+                      items={[
+                        {
+                          content: "Edit",
+                          url: `/admin/users/${user.ID}`,
+                        },
+                        {
+                          content: "Delete",
+                        },
+                      ]}
+                    />
+                  </Popover>
+                </IndexTable.Cell>
               </IndexTable.Row>
             ))}
           </IndexTable>
 
           <Card.Section>
-            {users.length === 25 && (
+            {users.length === limit && (
               <Pagination
                 hasPrevious={page > 1}
-                hasNext={users.length === 25}
+                hasNext={users.length === limit}
                 onPrevious={() => setPage(page - 1)}
                 onNext={() => setPage(page + 1)}
               />

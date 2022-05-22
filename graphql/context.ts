@@ -29,7 +29,9 @@ export async function createContext({ req }: any): Promise<Context> {
           where: { ID: tokenDecoded.ID },
         })
       }
-    } catch (error) {}
+    } catch (error) {
+      // Do nothing
+    }
   }
 
   return { prisma, user, capabilities: user?.user_role?.capabilities || [] }

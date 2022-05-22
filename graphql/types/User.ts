@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt"
 import {
   objectType,
   stringArg,
@@ -6,6 +7,7 @@ import {
   booleanArg,
   intArg,
   list,
+  inputObjectType,
 } from "nexus"
 import { Prisma } from "@prisma/client"
 import { ProductType } from "./Product"
@@ -155,6 +157,51 @@ export const Query = extendType({
       type: CapabilityType,
       resolve: async (root, args, ctx) => {
         return ctx.prisma.roleCapability.findMany()
+      },
+    })
+  },
+})
+
+/**************** MUTATIONS *******************/
+
+export const CreateUserInput = inputObjectType({
+  name: "CreateUserInput",
+  description: "Create User Input",
+  definition(t) {
+    t.nonNull.string("firstName")
+    t.nonNull.string("lastName")
+    t.nonNull.string("username")
+    t.nonNull.string("email")
+    t.nonNull.string("password")
+    t.nonNull.string("role")
+    t.nonNull.boolean("verified")
+  },
+})
+
+export const CreateUserMutation = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.nonNull.field("createUser", {
+      type: UserType,
+      args: {
+        input: nonNull(CreateUserInput),
+      },
+      resolve: async (root, { input }, ctx) => {
+        const password = await bcrypt.hash(input.password, 10)
+
+        const user = await ctx.prisma.user.create({
+          data: {
+            firstName: input.firstName,
+            lastName: input.lastName,
+            username: input.username,
+            email: input.email,
+            role: input.role,
+            verified: input.verified,
+            password,
+          },
+        })
+
+        return user
       },
     })
   },

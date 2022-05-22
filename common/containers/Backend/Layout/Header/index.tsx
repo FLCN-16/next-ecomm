@@ -3,8 +3,8 @@ import BackendHead from "../Head"
 
 // State
 import { useSelector, useDispatch } from "react-redux"
-import type { RootState } from "../../../../../store/rootReducer"
-import { logoutAccount } from "../../../../../store/auth/action"
+import type { RootState } from "../../../../../redux/rootReducer"
+import { logoutAccount } from "../../../../../redux/auth/action"
 
 import { TopBar, Icon } from "@shopify/polaris"
 import {
@@ -41,9 +41,12 @@ const ActionsMenu = () => {
 const UserMenuMarkup = () => {
   const dispatch = useDispatch()
   const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false)
-  const account: any = useSelector(
-    (state: RootState) => state.auth.get("account") || {}
+  const account: any = useSelector((state: RootState) =>
+    state.auth.get("account")
   )
+
+  // Return null if account is not loaded
+  if (!account) return null
 
   return (
     <TopBar.UserMenu

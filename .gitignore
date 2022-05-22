@@ -44,3 +44,5 @@ yarn-error.log*
 
 # vs code
 .devcontainer
+
+pnpm-lock.yaml

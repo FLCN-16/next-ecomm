@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 
 // State
 import { useDispatch } from "react-redux"
-import { initialize } from "../store/app/action"
+import { initialize } from "../redux/app/action"
 
 // Intl
 import { IntlProvider } from "react-intl"
@@ -15,7 +15,7 @@ import { ApolloProvider } from "@apollo/client"
 import graphql from "../lib/graphql"
 
 // Store
-import { wrapper } from "../store"
+import { wrapper } from "../redux"
 
 export interface AppProviderProps {
   children: JSX.Element | JSX.Element[]

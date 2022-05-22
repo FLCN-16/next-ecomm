@@ -46,7 +46,10 @@ function* authAccount(action: AnyAction) {
 
 function* validateSession() {
   const account: LoginResponse = yield call(Storage.get, "account", null)
-  if (!account) return put({ type: VALIDATE_SESSION_FAILURE })
+  if (!account) {
+    yield put({ type: VALIDATE_SESSION_FAILURE })
+    return
+  }
 
   // Assigning jwt auth token to global variable for easy access across application
   global.authToken = account.token
@@ -81,7 +84,7 @@ function* logoutAccount() {
   yield Router.push({ pathname: "/admin/auth" })
 }
 
-export default function* appSaga() {
+export default function* authSaga() {
   yield takeLatest(AUTH_ACCOUNT, authAccount)
   yield takeLatest(VALIDATE_SESSION, validateSession)
   yield takeLatest(AUTH_ACCOUNT_LOGOUT, logoutAccount)

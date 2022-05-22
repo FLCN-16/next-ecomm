@@ -30,7 +30,8 @@
     "indent": ["off", 2],
     "linebreak-style": ["warn", "unix"],
     "quotes": ["warn", "double"],
-    "semi": ["warn", "never"]
+    "semi": ["warn", "never"],
+    "react/prop-types": "off"
   },
   "ignorePatterns": ["next.config.js", "global.d.ts", "next-env.d.ts"]
 }

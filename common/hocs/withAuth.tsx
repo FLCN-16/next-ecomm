@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 import { intersection } from "lodash"
 
-import type { RootState } from "../../store/rootReducer"
+import type { RootState } from "../../redux/rootReducer"
 import LoadingComponent from "../containers/Backend/Loading"
 import UnauthorizedContainer from "../containers/Backend/Unauthorized"
 
@@ -13,8 +13,8 @@ function withAuth(
   WrappedComponent: React.ComponentType,
   capabilities: string | string[] = []
 ) {
-  const AuthComponent = () => {
-    const [auth, setAuth] = useState<AuthType>(null)
+  const AuthComponent = (props: any) => {
+    const [auth, setAuth] = React.useState<AuthType>(null)
     const router = useRouter()
 
     const isReady = useSelector((state: RootState) => state.app.get("ready"))
@@ -39,7 +39,7 @@ function withAuth(
       }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
       if (auth !== null || !isReady) return
 
       const haveCapability = isAuthenticated ? validateCapability() : false
@@ -55,7 +55,7 @@ function withAuth(
       router.push("/admin/auth?next=" + window.encodeURI(router.pathname))
     }
 
-    return auth ? <WrappedComponent /> : <LoadingComponent />
+    return auth ? <WrappedComponent {...props} /> : <LoadingComponent />
   }
 
   return AuthComponent

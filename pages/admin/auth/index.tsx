@@ -13,10 +13,10 @@ import {
 
 // Store
 import { useDispatch, useSelector } from "react-redux"
-import { authAccount } from "../../../store/auth/action"
-import { AuthForm } from "../../../store/auth/types"
+import { authAccount } from "../../../redux/auth/action"
+import { AuthForm } from "../../../redux/auth/types"
 
-import type { RootState } from "../../../store/rootReducer"
+import type { RootState } from "../../../redux/rootReducer"
 
 // Containers
 import BackendHead from "../../../common/containers/Backend/Layout/Head"

@@ -1,7 +1,7 @@
 const isProduction = process.env.NODE_ENV === "production"
 
 const moduleExports = {
-  reactStrictMode: true,
+  reactStrictMode: isProduction,
   swcMinify: true,
   env: {
     isProduction,
@@ -28,7 +28,7 @@ const moduleExports = {
     includes: ["./**/*.ts"],
     excludes: ["**/__tests__/**", "./node_modules/**"],
   },
-  experimental: {
+  compiler: {
     // ssr and displayName are configured by default
     styledComponents: true,
   },

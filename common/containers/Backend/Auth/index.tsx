@@ -2,7 +2,7 @@ import React from "react"
 import { AppProvider } from "@shopify/polaris"
 import { connect } from "react-redux"
 import Router from "next/router"
-import { RootState } from "../../../../store/rootReducer"
+import { RootState } from "../../../../redux/rootReducer"
 
 import Link from "../../../components/Backend/Link"
 import Loading from "../Loading"
